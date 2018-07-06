@@ -5,10 +5,10 @@ public class TestBattle {
 
 		Player player = new Player(1, 1);
 		Trainer mike = new Hiker(4,4); //arbitrary coordinates
-		Species pikachu = new Species();
-		Species squirtle = new Species();
-		Species charmander = new Species();
-		Species bulbasaur = new Species();
+		Species pikachu = new Species(Type.ELECTRIC);
+		Species squirtle = new Species(Type.WATER);
+		Species charmander = new Species(Type.FIRE);
+		Species bulbasaur = new Species(Type.GRASS, Type.POISON);
 
 		Pokemon sparky = new Pokemon("Sparky", pikachu );
 		Pokemon torcher = new Pokemon("Torcher", charmander);
@@ -39,6 +39,7 @@ public class TestBattle {
 
 
 		battle1.testTwoTurns();
+		//Type.printAllTypeInfo();
 	}
 
 }

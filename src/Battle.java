@@ -45,12 +45,26 @@ public class Battle {
 		}
 	}
 	public void damageAttack(Pokemon user, Pokemon target, Move move){
-
-		double modifier = 1; //can be affected by many things	
+		double typeEffectiveness = Type.typeEffectiveness(move.type, target.species);
+		
+		
+		double modifier = typeEffectiveness; //can be affected by many things	
 		int damage = (int)((((((2*user.level)/5)+2)*move.power*((user.stats.attack*Stats.stageMultiplier(user.statStages.attackStage))/(target.stats.deffense*Stats.stageMultiplier(target.statStages.deffenseStage)))/50)+2)*modifier + 0.5); //formula from bulbapedia
 		
-		System.out.println(user.name + " hit " + target.name + " with " + move.name + " for " + damage + " damage.");
+		System.out.println(user.name + " hit " + target.name + " with " + move.name + " for " + damage + " damage. It was " + typeEffectivenessMessage(typeEffectiveness)); //temporarily here);
 		target.stats.hpRemaining -= damage;
+	}
+	
+	public String typeEffectivenessMessage(double typeEffectiveness){
+		switch((int)(typeEffectiveness*4)){
+		case 0:return "Not effective at all";
+		case 1:return "Minimally effective";
+		case 2:return "Not very effective";
+		case 4:return "Normally effective";
+		case 8:return "Super effective";
+		case 16:return "Hyper effective";
+		default:return "Invalid typeEffectiveness double input to typeEffectivenessMessage()";
+		}
 	}
 	
 	public boolean PPLeft(Move move){
