@@ -8,7 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public abstract class AbstractPanel extends JPanel{
+public abstract class GamePiecePanel extends JPanel{
 	protected int xDrawLoc;
 	protected int yDrawLoc;
 	protected BufferedImage img;
@@ -16,12 +16,12 @@ public abstract class AbstractPanel extends JPanel{
 	protected String imageName;
 	
 	
-	public AbstractPanel(int gridWidth){
+	public GamePiecePanel(int gridWidth){
 		imageName = "temporary_image";
 		img = createImage();
 		this.scaleFactor = (double)gridWidth/img.getWidth();
 	}
-	public AbstractPanel(int gridWidth, String imageName){
+	public GamePiecePanel(int gridWidth, String imageName){
 		this.imageName = imageName;
 		img = createImage();
 		this.scaleFactor = (double)gridWidth/img.getWidth();

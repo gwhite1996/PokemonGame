@@ -1,18 +1,23 @@
 import java.util.Random;
 
 
-public class Hiker extends Turnable{
-
+public class Hiker extends Trainer{
+	
+	
 	private int delay = 0;
 	Random rand = new Random();
 
 
 	public Hiker(int xStart, int yStart) {
 		super(xStart, yStart);
+		greeting = "Oh shit whatup! I'm Hiker Mike. Lets battle!";
+		battleIntro = "This aint my first rodeo kid.";
+		battleDefeated = "Damn you're a tougher trainer than you look!";
+		afterBattle = "Good luck out there kid.";
 	}
 
 	public void update(){
-		if(!interacting){
+		if(!getInteracting()){
 			delay = (delay+1) % 10;
 			if(delay == 0){ //chooses random direction 1/2 of updates
 				switch(rand.nextInt(8)){
@@ -29,6 +34,6 @@ public class Hiker extends Turnable{
 				}
 			}
 		}
-		findSpaceAhead();
+		super.update();
 	}
 }

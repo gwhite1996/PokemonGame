@@ -1,18 +1,18 @@
 
 
-public class Turnable extends GamePiece{
+public abstract class TurnablePiece extends GamePiece{
 	protected Direction dir;
 	protected int xAhead;
 	protected int yAhead;
 
 
-	public Turnable(int xStart, int yStart) {
+	public TurnablePiece(int xStart, int yStart) {
 		super(xStart, yStart);
-		this.dir = Direction.SOUTH;
+		this.dir = Direction.SOUTH; //default direction
 		findSpaceAhead();
 	}
 
-	public Turnable(int xStart, int yStart, Direction dir) {
+	public TurnablePiece(int xStart, int yStart, Direction dir) {
 		super(xStart, yStart);
 		this.dir = dir;
 		findSpaceAhead();
@@ -20,6 +20,13 @@ public class Turnable extends GamePiece{
 
 	public Direction getDirection(){
 		return dir;
+	}
+	
+	public int getXAhead(){
+		return xAhead;
+	}
+	public int getYAhead(){
+		return yAhead;
 	}
 
 	public void moveForward(){
@@ -41,13 +48,14 @@ public class Turnable extends GamePiece{
 	}
 
 	public boolean willRemainInBounds() {
-		if(xAhead<0 || xAhead>15 || yAhead<0 || yAhead>15){
+		if(xAhead<0 || xAhead>15 || yAhead<0 || yAhead>15){ //should take grid size somehow
 			return false;
 		}
 		return true;
 	}
 
 	public boolean willCollide(){
+		//add stuff later to determine this
 		return false;
 	}
 
@@ -60,5 +68,9 @@ public class Turnable extends GamePiece{
 		case SOUTH:yAhead++;break;
 		case WEST:xAhead--;break;
 		}
+	}
+	public void update(){
+		findSpaceAhead();
+		//more can be done here in the future
 	}
 }

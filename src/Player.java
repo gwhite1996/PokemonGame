@@ -2,17 +2,12 @@
 import java.awt.event.KeyEvent;
 
 
-public class Player extends Turnable{
-
+public class Player extends Trainer{
+	private boolean tryingToInteract; //Indicates the interact button was pressed
+	
 	public Player(int xStart, int yStart) {
 		super(xStart, yStart);
-	}
-
-	public void setXLoc(int xLoc){
-		this.xLoc = xLoc;
-	}	
-	public void setYLoc(int yLoc){
-		this.yLoc = yLoc;
+		tryingToInteract = false;
 	}
 	
 	//If arrow key is pressed, player direction/location is updated
@@ -24,7 +19,7 @@ public class Player extends Turnable{
 		case KeyEvent.VK_RIGHT:moveDirection = Direction.EAST;break;
 		case KeyEvent.VK_UP:moveDirection = Direction.NORTH;break;
 		case KeyEvent.VK_DOWN:moveDirection = Direction.SOUTH;break;
-		case KeyEvent.VK_SPACE:interacting = true;break;
+		case KeyEvent.VK_SPACE:setTryingToInteract(true);break;
 		default:System.out.println("Invalid key input. In Player");return;
 		}
 		if(moveDirection != null){
@@ -35,6 +30,12 @@ public class Player extends Turnable{
 				dir = moveDirection;
 			}
 		}	
-		findSpaceAhead();//after moving or turning, the space ahead is found
+		super.update();//after moving or turning, the space ahead is found
+	}
+	public boolean getTryingToInteract() {
+		return tryingToInteract;
+	}
+	public void setTryingToInteract(boolean tryingToInteract) {
+		this.tryingToInteract = tryingToInteract;
 	}
 }

@@ -1,6 +1,3 @@
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -8,14 +5,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 
-public abstract class TurnablePanel extends AbstractPanel{
+public abstract class TurnablePiecePanel extends GamePiecePanel{
 	protected Direction dir;
 	private BufferedImage imgNorth;
 	private BufferedImage imgSouth;
 	private BufferedImage imgEast;
 	private BufferedImage imgWest;
 
-	public TurnablePanel(int gridWidth, String imageName, Direction dir) {
+	public TurnablePiecePanel(int gridWidth, String imageName, Direction dir) {
 		super(gridWidth);
 		this.imageName = imageName;
 		this.dir = dir;

@@ -1,7 +1,7 @@
 
-public class TrainerPanel extends TurnablePanel{
+public abstract class TrainerPanel extends TurnablePiecePanel{
 
-	public TrainerPanel(int gridWidth, Direction dir) {
-		super(gridWidth, "hiker", dir);
+	public TrainerPanel(int gridWidth, String imageName, Direction dir) {
+		super(gridWidth, imageName, dir);
 	}
 }
