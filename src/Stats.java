@@ -2,7 +2,6 @@
 
 public class Stats { //permenant stats
 	int totalHP;
-	int hpRemaining;
 	int attack;
 	int deffense;
 	int spAtk;
@@ -17,7 +16,6 @@ public class Stats { //permenant stats
 		this.spAtk = spAtk;
 		this.spDef = spDef;
 		this.speed = speed;
-		hpRemaining = totalHP;
 	}
 	
 	public static double stageMultiplier(int statStage){

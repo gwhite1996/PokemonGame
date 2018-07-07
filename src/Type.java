@@ -18,7 +18,7 @@ public enum Type {
 	DARK("dark", new String[]{"PSYCHIC", "GHOST"}, new String[]{"FIGHTING", "DARK", "FAIRY"}, new String[]{}),
 	STEEL("steel", new String[]{"ICE", "ROCK", "FAIRY"}, new String[]{"FIRE", "WATER", "ELECTRIC", "STEEL"}, new String[]{}),
 	FAIRY("fairy", new String[]{"FIGHTING", "DRAGON", "DARK"}, new String[]{"FIRE", "POISON", "STEEL"}, new String[]{}),
-	NONE("none", null, null, null); //prevents null pointer exceptions for pokemon with just one type
+	NONE("none", new String[]{}, new String[]{}, new String[]{}); //prevents null pointer exceptions for pokemon with just one type
 	
 	private String name = null;
 	private String[] superEffective;
@@ -86,5 +86,12 @@ public enum Type {
 			}
 		}
 		return multiplier;
+	}
+	
+	public static double stab(Type moveType, Species userSpecies){ //Same Type Attack Bonus
+		if(moveType == userSpecies.type1 || moveType == userSpecies.type2){
+			return 1.5;
+		}
+		else return 1;
 	}
 }
