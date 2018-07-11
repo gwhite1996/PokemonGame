@@ -7,6 +7,8 @@ public class Stats { //permenant stats
 	int spAtk;
 	int spDef;
 	int speed;
+	StatStages stages;
+	StatMultipliers multipliers;
 	
 	
 	Stats(int totalHP, int attack, int deffense, int spAtk, int spDef, int speed){  //all pokemon are hardy nature with 0 EV and IV
@@ -16,9 +18,11 @@ public class Stats { //permenant stats
 		this.spAtk = spAtk;
 		this.spDef = spDef;
 		this.speed = speed;
+		this.stages = new StatStages();
+		this.multipliers = new StatMultipliers();
 	}
 	
-	public static double stageMultiplier(int statStage){
+	private static double getMultiplier(int statStage){
 		if(statStage > 6){
 			statStage = 6;
 		}
@@ -42,5 +46,15 @@ public class Stats { //permenant stats
 		case 6:return 8/2;
 		default :return 0;
 		}
+	}
+	
+	public void updateMultipliersFromStages(){ //this must be run every turn
+		multipliers.attack = getMultiplier(stages.attack);
+		multipliers.deffense = getMultiplier(stages.deffense);
+		multipliers.spAtk = getMultiplier(stages.spAtk);
+		multipliers.spDef = getMultiplier(stages.spDef);
+		multipliers.speed = getMultiplier(stages.speed);
+		multipliers.accuracy = getMultiplier(stages.accuracy);
+		multipliers.evasion = getMultiplier(stages.evasion);
 	}
 }

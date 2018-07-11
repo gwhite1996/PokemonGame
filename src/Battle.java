@@ -1,22 +1,24 @@
 import java.util.Random;
+import java.util.Scanner;
 
 
 public class Battle {
 	private Pokemon playerPokemon;
 	private Pokemon enemyPokemon;
-	Random rand = new Random();
+	private Random rand = new Random();
+	Scanner in = new Scanner(System.in); // should probably be in a higher up class
 
 	boolean playerAttacksFirst;
 
 
 	public boolean playerAttacksFirst(){
-		return playerPokemon.stats.speed*Stats.stageMultiplier(playerPokemon.statStages.speedStage) >= enemyPokemon.stats.speed*Stats.stageMultiplier(enemyPokemon.statStages.speedStage);
+		return playerPokemon.stats.speed*playerPokemon.stats.multipliers.speed >= enemyPokemon.stats.speed*enemyPokemon.stats.multipliers.speed;
 	}
 
-	public String useMove(Pokemon user, Pokemon target, int moveNumber){
+	public void useMove(Pokemon user, Pokemon target, int moveNumber){
 		
 		if(!PPLeft(user, moveNumber)){
-			return "There is no pp left for that move!";
+			return;
 		}
 
 		Move move = null;
@@ -28,16 +30,18 @@ public class Battle {
 		default: System.out.println("Invalid moveNumber given to useMove()");
 		}
 		
-		double chanceOfHit = ((move.accuracy)/100.0)*(Stats.stageMultiplier(user.statStages.accuracyStage)/Stats.stageMultiplier(target.statStages.evasionStage));
+		double chanceOfHit = ((move.accuracy)/100.0)*(user.stats.multipliers.accuracy/target.stats.multipliers.evasion);
 		if(chanceOfHit > rand.nextDouble()){ //the attack hits
-			damageAttack(user, target, move); //temporary
-			return user.name + " used " + move.name + ".";
+			if(move.moveCategory == MoveCategory.STATUS){
+				statusAttack(target, move);
+			}
+			else{
+				damageAttack(user, target, move);
+			}
 		}
 		else{
 			System.out.println(user.name + " used " + move.name + " but it missed!");
-			return user.name + " used " + move.name + " but it missed!";
 		}
-
 	}
 
 	public boolean PPLeft(Pokemon user, int moveNumber){
@@ -58,7 +62,7 @@ public class Battle {
 	}
 
 
-	public void damageAttack(Pokemon user, Pokemon target, Move move){
+	private void damageAttack(Pokemon user, Pokemon target, Move move){
 		double typeEffectiveness = Type.typeEffectiveness(move.type, target.species);
 		double stab = Type.stab(move.type, user.species);
 		double criticalHit = criticalHit();
@@ -68,13 +72,13 @@ public class Battle {
 		double calculatedDeffense;
 
 		if(move.moveCategory == MoveCategory.PHYSICAL){ //physical or special?
-			calculatedAttack = user.stats.attack*Stats.stageMultiplier(user.statStages.attackStage);
-			calculatedDeffense = target.stats.deffense*Stats.stageMultiplier(target.statStages.deffenseStage);
+			calculatedAttack = user.stats.attack*user.stats.multipliers.attack;
+			calculatedDeffense = target.stats.deffense*target.stats.multipliers.deffense;
 
 		}
 		else{
-			calculatedAttack = user.stats.spAtk*Stats.stageMultiplier(user.statStages.spAtkStage);
-			calculatedDeffense = target.stats.spDef*Stats.stageMultiplier(target.statStages.spDefStage);
+			calculatedAttack = user.stats.spAtk*user.stats.multipliers.spAtk;
+			calculatedDeffense = target.stats.spDef*user.stats.multipliers.spDef;
 		}
 
 
@@ -85,6 +89,11 @@ public class Battle {
 		System.out.println("It was " + typeEffectivenessMessage(typeEffectiveness) + " and STAB was " + stab + "."); //temporarily here);
 		target.hpRemaining -= damage;
 	}
+	
+	private void statusAttack(Pokemon target, Move move) {
+		target.setStatus(move.statusInflicted);
+	}
+	
 
 	public double criticalHit(){
 		if(rand.nextInt(16) == 0){
@@ -110,31 +119,72 @@ public class Battle {
 		default:return "Invalid typeEffectiveness double input to typeEffectivenessMessage()";
 		}
 	}
-
-	public void testThreeTurns(){ // temporary test method
-		takeTurn();
-		useMove(playerPokemon, enemyPokemon, 1);
-		useMove(enemyPokemon, playerPokemon, 1);
-		takeTurn();
-		useMove(playerPokemon, enemyPokemon, 2);
-		useMove(enemyPokemon, playerPokemon, 2);
-		takeTurn();
-		useMove(playerPokemon, enemyPokemon, 3);
-		useMove(enemyPokemon, playerPokemon, 3);
-		takeTurn();
+	public void runTillFaint(){
+		while(playerPokemon.hpRemaining > 0 && enemyPokemon.hpRemaining > 0){
+			fullTurn();
+		}
+		if(playerPokemon.hpRemaining <= 0){
+			System.out.println(playerPokemon.name + " has fainted!");
+		}
+		if(enemyPokemon.hpRemaining <= 0){
+			System.out.println(enemyPokemon.name + " has fainted!");
+		}
 	}
 	
-	
-
-	private void takeTurn() {
+	private void fullTurn() { //A half turn for each pokemon
 		if(playerAttacksFirst()){
 			System.out.println(" The player attacks first");
+			halfTurn(playerPokemon);
+			halfTurn(enemyPokemon);
 		}
-		else System.out.println( "The enemy attacks first");
-		System.out.println(playerPokemon.name + "'s hpRemaining is: " + playerPokemon.hpRemaining);
-		System.out.println(enemyPokemon.name + "'s hpRemaining is: " + enemyPokemon.hpRemaining);
+		else{
+			System.out.println( "The enemy attacks first");
+			halfTurn(enemyPokemon);
+			halfTurn(playerPokemon);
+		}
+		System.out.println("\n");
+		LostMethods.showHealth(playerPokemon);
+		LostMethods.showHealth(enemyPokemon);
 	}
-
+	
+	private void halfTurn(Pokemon user){ //Basically a turn for a single pokemon
+		user.stats.updateMultipliersFromStages();
+		
+		Pokemon target;
+		if(user == playerPokemon){
+			target = enemyPokemon;
+		}
+		else{
+			target = playerPokemon;
+		}
+		
+		int moveNumber;
+		System.out.println();
+		LostMethods.showMoveSet(user);
+		System.out.println("Enter the move number for " + user.name + " to use:  (1 through 4 then Enter");
+		
+		String moveNumberString = in.nextLine(); //User input selects move to use
+		switch(moveNumberString){
+		case "1":moveNumber = 1;break;
+		case "2":moveNumber = 2;break;
+		case "3":moveNumber = 3;break;
+		case "4":moveNumber = 4;break;
+		default:moveNumber = 0;System.out.println("Invalid input string!");
+		}
+		useMove(user, target, moveNumber);
+		
+		if(user.statusTurnsRemaining > 0){
+			Status.takeEffectOfStatus(user);
+			if(user.getStatus().wearsOff()){
+				user.statusTurnsRemaining --;
+			}
+		}
+		else{
+			Status.removeStatus(user);
+		}
+	}
+	
+	
 	public void setPlayerPokemon(Pokemon playerPokemon){
 		this.playerPokemon = playerPokemon;
 	}

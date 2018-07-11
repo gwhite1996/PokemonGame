@@ -15,15 +15,17 @@ public class Pokemon {
 	int move3PP;
 	int move4PP;
 	Stats stats;
-	StatStages statStages;
-	Status status;
+	private Status status;
+	int statusTurnsRemaining;
 	int hpRemaining;
+	boolean canAttack;
 	
 	
 	public Pokemon(String name,Species species){
 		this.name = name;
 		this.species = species;
-		statStages = new StatStages(); //set to 0 when a pokemon is created and after each battle
+		canAttack = true;
+		
 		status = Status.NONE;
 		
 		setMove(new Move("None", Type.NONE, MoveCategory.NONE, 0, 0, 0), 1); //initializes all moves to NONE
@@ -73,5 +75,19 @@ public class Pokemon {
 		int tempPP = move1PP; //swaps PP remaining
 		move1PP = move2PP;
 		move2PP = tempPP;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+		// NEEDS WORK. CALL OTHER METHODS OR DO TYPE CHECKING HERE
+	}
+	
+	@Override
+	public String toString(){
+		return name;
 	}
 }

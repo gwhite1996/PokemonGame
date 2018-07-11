@@ -1,4 +1,3 @@
-
 public class TestBattle {
 
 	public static void main(String[] args) {
@@ -30,26 +29,21 @@ public class TestBattle {
 		Move bite = new Move("Bite", Type.DARK, MoveCategory.PHYSICAL, 60, 100, 25);
 		Move thunder = new Move("Thunder", Type.ELECTRIC, MoveCategory.SPECIAL, 110, 70, 10);
 		Move hydroPump = new Move("Hydro Pump", Type.WATER, MoveCategory.SPECIAL, 110, 80, 5);
-
+		Move thunderWave = new Move("Thunder Wave", Type.ELECTRIC, Status.PARALYZED, 90, 20);
+		
 		sparky.setMove(thunderShock, 1);
 		sparky.setMove(tackle, 2);
 		sparky.setMove(thunder, 3);
+		sparky.setMove(thunderWave, 4);
 		juicer.setMove(waterGun, 1);
 		juicer.setMove(bite, 2);
 		juicer.setMove(hydroPump, 3);
+		juicer.setMove(thunderWave, 4);
 		
-		LostMethods.heal(sparky);
-		LostMethods.heal(juicer);
-
-		int count = 0;
-		while(sparky.hpRemaining > 15){
-			System.out.println("*************************");  
-			LostMethods.heal(sparky);
-			LostMethods.heal(juicer);
-			battle1.testThreeTurns();
-			count ++;
-		}
-		System.out.println("Count is: " + count);
+		LostMethods.healFull(sparky);
+		LostMethods.healFull(juicer);
+		
+		battle1.runTillFaint();
 	}
 
 }

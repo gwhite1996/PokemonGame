@@ -1,20 +1,30 @@
 
-public class StatStages {
-	int attackStage;
-	int deffenseStage;
-	int spAtkStage;
-	int spDefStage;
-	int speedStage;
-	int accuracyStage;
-	int evasionStage;
+public class StatStages{
+	int attack;
+	int deffense;
+	int spAtk;
+	int spDef;
+	int speed;
+	int accuracy;
+	int evasion;
 	
 	public StatStages(){
-		attackStage = 0;
-		deffenseStage = 0;
-		spAtkStage = 0;
-		spDefStage = 0;
-		speedStage = 0;
-		accuracyStage = 0;
-		evasionStage = 0;
+		attack = 0;
+		deffense = 0;
+		spAtk = 0;
+		spDef = 0;
+		speed = 0;
+		accuracy = 0;
+		evasion = 0;
+	}
+	
+	public void resetAll(){
+		attack = 0;
+		deffense = 0;
+		spAtk = 0;
+		spDef = 0;
+		speed = 0;
+		accuracy = 0;
+		evasion = 0;
 	}
 }

@@ -11,7 +11,21 @@ public class TrainerBattle {
 	public TrainerBattle(Player player, Trainer enemy){
 		this.player = player;
 		this.enemy = enemy;
+		resetAllStatStages();
+		
+		//Battle happens here!
+		
+		
+		resetAllStatStages();
 	}
-
+	
+	public void resetAllStatStages(){
+		for(Pokemon p: player.party.partyArray){
+			p.stats.stages.resetAll();
+		}
+		for(Pokemon p: enemy.party.partyArray){
+			p.stats.stages.resetAll();
+		}
+	}
 	
 }
