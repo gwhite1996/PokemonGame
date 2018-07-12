@@ -2,7 +2,7 @@
 
 public class Pokemon {
 
-	String name;
+	private String name;
 	Species species;
 	int level;
 	int experience;
@@ -81,9 +81,8 @@ public class Pokemon {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	void setStatus(Status status) {
 		this.status = status;
-		// NEEDS WORK. CALL OTHER METHODS OR DO TYPE CHECKING HERE
 	}
 	
 	@Override

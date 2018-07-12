@@ -23,14 +23,14 @@ public class Party{
 		for(int i = 0; i < partyArray.length; i++) {
 			if(partyArray[i] == null){
 				partyArray[i] = pokemon;
-				System.out.println(pokemon.name + " added.");
+				System.out.println(pokemon + " added.");
 				return;
 			}
 		}
 	}
 	public void printParty(){
 		for(Pokemon p: partyArray){
-			if(p != null)System.out.print(p.name + ", ");
+			if(p != null)System.out.print(p + ", ");
 		}
 		System.out.println(); //prints new line
 	}

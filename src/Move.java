@@ -1,13 +1,16 @@
 
 
 public class Move {
-	String name;
+	private String name;
 	Type type;
 	MoveCategory moveCategory;
 	Status statusInflicted;
+	String statAffected;
+	int stageIncrease;
 	int power;
 	int accuracy;
 	int basePP;
+	boolean targetsSelf;
 	
 	//damage dealing moves (physical and special)
 	public Move(String name, Type type, MoveCategory moveCategory, int power, int accuracy, int basePP){
@@ -17,6 +20,7 @@ public class Move {
 		this.power = power;
 		this.accuracy = accuracy;
 		this.basePP = basePP;
+		targetsSelf = false;
 	}
 	
 	//status moves
@@ -28,7 +32,22 @@ public class Move {
 		power = 0;
 		this.accuracy = accuracy;
 		this.basePP = basePP;
+		targetsSelf = false;
 	}
+	
+	//stat moves (raise or lower stats)
+	public Move(String name, Type type, String statAffected, int stageIncrease, int accuracy, int basePP, boolean targetsSelf){
+		this.name = name;
+		this.type = type;
+		moveCategory = MoveCategory.STAT;
+		this.statAffected = statAffected;
+		this.stageIncrease = stageIncrease; //negative if it decreases the stage
+		power = 0;
+		this.accuracy = accuracy;
+		this.basePP = basePP;
+		this.targetsSelf = targetsSelf;
+	}
+	
 	
 	@Override
 	public String toString(){

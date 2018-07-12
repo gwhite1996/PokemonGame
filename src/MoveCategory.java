@@ -3,6 +3,7 @@ public enum MoveCategory {
 	PHYSICAL("physical"),
 	SPECIAL("special"),
 	STATUS("status"),
+	STAT("stat"),
 	NONE("none");
 	
 	String name;

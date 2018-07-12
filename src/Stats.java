@@ -24,27 +24,27 @@ public class Stats { //permenant stats
 	
 	private static double getMultiplier(int statStage){
 		if(statStage > 6){
-			statStage = 6;
+			statStage = 6; //Doesn't change actual value
 		}
 		else if(statStage < -6){
 			statStage = -6;
 		}
 		//should probably be a message if the multiplyer cant be raised any more
 		switch(statStage){
-		case -6:return 2/8;
-		case -5:return 2/7;
-		case -4:return 2/6;
-		case -3:return 2/5;
-		case -2:return 2/4;
-		case -1:return 2/3;
-		case 0:return 2/2;
-		case 1:return 3/2;
-		case 2:return 4/2;
-		case 3:return 5/2;
-		case 4:return 6/2;
-		case 5:return 7/2;
-		case 6:return 8/2;
-		default :return 0;
+		case -6:return 2/8.0;
+		case -5:return 2/7.0;
+		case -4:return 2/6.0;
+		case -3:return 2/5.0;
+		case -2:return 2/4.0;
+		case -1:return 2/3.0;
+		case 0:return 2/2.0;
+		case 1:return 3/2.0;
+		case 2:return 4/2.0;
+		case 3:return 5/2.0;
+		case 4:return 6/2.0;
+		case 5:return 7/2.0;
+		case 6:return 8/2.0;
+		default :return 0.0;
 		}
 	}
 	

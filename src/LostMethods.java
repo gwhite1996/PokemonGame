@@ -12,20 +12,36 @@ public class LostMethods { //these methods don't have a home. Just yet.
 			case 3:move = pokemon.move3; ppLeft = pokemon.move3PP; break;
 			default :move = pokemon.move4; ppLeft = pokemon.move4PP; break;
 			}
-			if(!move.name.equals("None")){
+			if(!move.toString().equals("None")){
 				if(move.moveCategory == MoveCategory.STATUS){
-					System.out.println(move + ": " + move.type + ", " + move.moveCategory + ", " + move.statusInflicted + ", PP(" + ppLeft + "/" + move.basePP + "), Accuracy(" + move.accuracy + ")");
+					System.out.println("  " + move + ": " + move.type + ", " + move.moveCategory + ", " + move.statusInflicted + ", PP(" + ppLeft + "/" + move.basePP + "), Accuracy(" + move.accuracy + ")");
+				}
+				else if(move.moveCategory == MoveCategory.STAT){
+					System.out.println("  " + move + ": " + move.type + ", " + move.moveCategory + ", " + move.statAffected + ", Stage Increase(" + move.stageIncrease + "), PP(" + ppLeft + "/" + move.basePP + "), Accuracy(" + move.accuracy + ")");
 				}
 				else{
-					System.out.println(move + ": " + move.type + ", " + move.moveCategory + ", PP(" + ppLeft + "/" + move.basePP + "), Power(" + move.power + "), Accuracy(" + move.accuracy + ")");
+					System.out.println("  " + move + ": " + move.type + ", " + move.moveCategory + ", PP(" + ppLeft + "/" + move.basePP + "), Power(" + move.power + "), Accuracy(" + move.accuracy + ")");
 				}
 			}
 		}
 	}
 	
+	public static void showStats(Pokemon pokemon){
+		System.out.println("..... " + pokemon + "'s Stats .....");
+		System.out.println("Attack: Fixed(" + pokemon.stats.attack + "), Stage(" + pokemon.stats.stages.attack + "), Multiplier(" + pokemon.stats.multipliers.attack + ")");
+		System.out.println("Deffense: Fixed(" + pokemon.stats.deffense + "), Stage(" + pokemon.stats.stages.deffense + "), Multiplier(" + pokemon.stats.multipliers.deffense + ")");
+		System.out.println("SpAtk: Fixed(" + pokemon.stats.spAtk + "), Stage(" + pokemon.stats.stages.spAtk + "), Multiplier(" + pokemon.stats.multipliers.spAtk + ")");
+		System.out.println("SpDef: Fixed(" + pokemon.stats.spDef + "), Stage(" + pokemon.stats.stages.spDef + "), Multiplier(" + pokemon.stats.multipliers.spDef + ")");
+		System.out.println("Speed: Fixed(" + pokemon.stats.speed + "), Stage(" + pokemon.stats.stages.speed + "), Multiplier(" + pokemon.stats.multipliers.speed + ")");
+		System.out.println("Accuracy: Stage(" + pokemon.stats.stages.accuracy + "), Multiplier(" + pokemon.stats.multipliers.accuracy + ")");
+		System.out.println("Evasion: Stage(" + pokemon.stats.stages.evasion + "), Multiplier(" + pokemon.stats.multipliers.evasion + ")");
+		System.out.println("..........................");
+	}
+	
+	
 	public static void showHealth(Pokemon pokemon){
-		System.out.println(pokemon.name + "'s HP is: " + pokemon.hpRemaining + "/" + pokemon.stats.totalHP + ", Status Ailment: " + pokemon.getStatus());
-		System.out.println("   Turns left of status ailment: " + pokemon.statusTurnsRemaining);
+		System.out.println(pokemon + "'s HP is: " + pokemon.hpRemaining + "/" + pokemon.stats.totalHP + ", Status Ailment: " + pokemon.getStatus());
+		System.out.println(" Turns of status ailment left: " + pokemon.statusTurnsRemaining);
 	}
 	
 	public static void healStatus(Pokemon pokemon){ //Full Heal
@@ -35,7 +51,7 @@ public class LostMethods { //these methods don't have a home. Just yet.
 	public static void healHP(Pokemon pokemon){ //Max Potion
 		pokemon.hpRemaining = pokemon.stats.totalHP;
 		
-		System.out.println(pokemon.name + " has been restored to full health.");
+		System.out.println(pokemon + " has been restored to full health.");
 	}
 	
 	public static void fillPP(Pokemon pokemon, int moveNumber){ //Max Ether

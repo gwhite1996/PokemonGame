@@ -16,7 +16,7 @@ public class Battle {
 	}
 
 	public void useMove(Pokemon user, Pokemon target, int moveNumber){
-		
+
 		if(!PPLeft(user, moveNumber)){
 			return;
 		}
@@ -29,18 +29,21 @@ public class Battle {
 		case 4: move = user.move4;user.move4PP--;break;
 		default: System.out.println("Invalid moveNumber given to useMove()");
 		}
-		
+
 		double chanceOfHit = ((move.accuracy)/100.0)*(user.stats.multipliers.accuracy/target.stats.multipliers.evasion);
 		if(chanceOfHit > rand.nextDouble()){ //the attack hits
 			if(move.moveCategory == MoveCategory.STATUS){
-				statusAttack(target, move);
+				statusAttack(user, target, move);
+			}
+			else if(move.moveCategory == MoveCategory.STAT){
+				statAttack(user, target, move);
 			}
 			else{
 				damageAttack(user, target, move);
 			}
 		}
 		else{
-			System.out.println(user.name + " used " + move.name + " but it missed!");
+			System.out.println(" " + user + " used " + move + " but it missed!");
 		}
 	}
 
@@ -85,15 +88,40 @@ public class Battle {
 		double modifier = typeEffectiveness*stab*criticalHit; //can be affected by many things	
 		int damage = (int)(((((((2*user.level)/5)+2)*move.power*(calculatedAttack/calculatedDeffense))/50)+2)*modifier + 0.5); //formula from bulbapedia
 
-		System.out.println(user.name + " hit " + target.name + " with " + move.name + " for " + damage + " damage.");
-		System.out.println("It was " + typeEffectivenessMessage(typeEffectiveness) + " and STAB was " + stab + "."); //temporarily here);
+		System.out.println(user + " hit " + target + " with " + move + " for " + damage + " damage.");
+		System.out.println(" It was " + typeEffectivenessMessage(typeEffectiveness) + " and STAB was " + stab + "."); //temporarily here);
 		target.hpRemaining -= damage;
 	}
-	
-	private void statusAttack(Pokemon target, Move move) {
-		target.setStatus(move.statusInflicted);
+
+	private void statusAttack(Pokemon user, Pokemon target, Move move) {
+		System.out.println(user + " used " + move + " on " + target);
+
+		if(Status.inflictStatus(target, move.statusInflicted)){
+			System.out.println(" " + target + " is now " + move.statusInflicted);
+		}
 	}
-	
+
+	private void statAttack(Pokemon user, Pokemon target, Move move){
+		if(move.targetsSelf){
+			target = user;
+			System.out.println(user + " used " + move + " on itself. " + move.statAffected + " was increased by " + move.stageIncrease);
+		}
+		else{
+			System.out.println(user + " used " + move + " on " + target + " it's " + move.statAffected + " was increased by " + move.stageIncrease);
+		}
+		
+		switch (move.statAffected){
+		case "attack":target.stats.stages.attack += move.stageIncrease;break;
+		case "deffense":target.stats.stages.deffense += move.stageIncrease;break;
+		case "spAtk":target.stats.stages.spAtk += move.stageIncrease;break;
+		case "spDef":target.stats.stages.spDef += move.stageIncrease;break;
+		case "speed":target.stats.stages.speed += move.stageIncrease;break;
+		case "accuracy":target.stats.stages.accuracy += move.stageIncrease;break;
+		case "evasion":target.stats.stages.evasion += move.stageIncrease;break;
+		default: System.out.println("Invalid statAffected in statAttack. The move used is " + move);
+		}
+	}
+
 
 	public double criticalHit(){
 		if(rand.nextInt(16) == 0){
@@ -124,45 +152,39 @@ public class Battle {
 			fullTurn();
 		}
 		if(playerPokemon.hpRemaining <= 0){
-			System.out.println(playerPokemon.name + " has fainted!");
+			System.out.println(playerPokemon + " has fainted!");
 		}
 		if(enemyPokemon.hpRemaining <= 0){
-			System.out.println(enemyPokemon.name + " has fainted!");
+			System.out.println(enemyPokemon + " has fainted!");
 		}
 	}
-	
+
 	private void fullTurn() { //A half turn for each pokemon
+		int playerMoveNumber = chooseMoveNumber(playerPokemon);
+		int enemyMoveNumber = chooseMoveNumber(enemyPokemon);
+
+		System.out.println("\n******** Turn Results ********");
 		if(playerAttacksFirst()){
-			System.out.println(" The player attacks first");
-			halfTurn(playerPokemon);
-			halfTurn(enemyPokemon);
+			halfTurn(playerPokemon, playerMoveNumber);
+			halfTurn(enemyPokemon, enemyMoveNumber);
 		}
 		else{
-			System.out.println( "The enemy attacks first");
-			halfTurn(enemyPokemon);
-			halfTurn(playerPokemon);
+			halfTurn(enemyPokemon, enemyMoveNumber);
+			halfTurn(playerPokemon, playerMoveNumber);
 		}
-		System.out.println("\n");
-		LostMethods.showHealth(playerPokemon);
-		LostMethods.showHealth(enemyPokemon);
-	}
-	
-	private void halfTurn(Pokemon user){ //Basically a turn for a single pokemon
-		user.stats.updateMultipliersFromStages();
-		
-		Pokemon target;
-		if(user == playerPokemon){
-			target = enemyPokemon;
-		}
-		else{
-			target = playerPokemon;
-		}
-		
-		int moveNumber;
 		System.out.println();
+		LostMethods.showHealth(playerPokemon);
+		LostMethods.showStats(playerPokemon);
+		LostMethods.showHealth(enemyPokemon);
+		LostMethods.showStats(enemyPokemon);
+		System.out.println("******************************\n\n");
+	}
+
+	private int chooseMoveNumber(Pokemon user){
+		int moveNumber;
 		LostMethods.showMoveSet(user);
-		System.out.println("Enter the move number for " + user.name + " to use:  (1 through 4 then Enter");
-		
+		System.out.println(" Chose the move for " + user + " to use:  (Type 1 through 4 then press Enter)");
+
 		String moveNumberString = in.nextLine(); //User input selects move to use
 		switch(moveNumberString){
 		case "1":moveNumber = 1;break;
@@ -171,8 +193,20 @@ public class Battle {
 		case "4":moveNumber = 4;break;
 		default:moveNumber = 0;System.out.println("Invalid input string!");
 		}
-		useMove(user, target, moveNumber);
+		return moveNumber;
+	}
+
+	private void halfTurn(Pokemon user, int moveNumber){ //Basically a turn for a single pokemon
+		user.stats.updateMultipliersFromStages(); //done before in case enemy halfTurn affected stages
 		
+		Pokemon target; //sets the other pokemon to the target
+		if(user == playerPokemon){
+			target = enemyPokemon;
+		}
+		else{
+			target = playerPokemon;
+		}
+
 		if(user.statusTurnsRemaining > 0){
 			Status.takeEffectOfStatus(user);
 			if(user.getStatus().wearsOff()){
@@ -182,9 +216,13 @@ public class Battle {
 		else{
 			Status.removeStatus(user);
 		}
+
+		if(user.canAttack){
+			useMove(user, target, moveNumber);
+		}
+		user.stats.updateMultipliersFromStages(); //done after in case it's move affected itself
 	}
-	
-	
+
 	public void setPlayerPokemon(Pokemon playerPokemon){
 		this.playerPokemon = playerPokemon;
 	}
