@@ -31,7 +31,7 @@ public class StandardViewPanel extends JPanel{
 	}
 
 	public void update(Model m){
-		hikerPanel.update(m.getHiker().getXLoc()*gridWidth, m.getHiker().getYLoc()*gridWidth, m.getHiker().getDirection());
+		hikerPanel.update(m.getHikerMike().getXLoc()*gridWidth, m.getHikerMike().getYLoc()*gridWidth, m.getHikerMike().getDirection());
 		playerPanel.update(m.getPlayer().getXLoc()*gridWidth, m.getPlayer().getYLoc()*gridWidth, m.getPlayer().getDirection());
 		this.repaint();
 	}

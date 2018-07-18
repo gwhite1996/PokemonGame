@@ -8,12 +8,12 @@ public class Hiker extends Trainer{
 	Random rand = new Random();
 
 
-	public Hiker(int xStart, int yStart) {
-		super(xStart, yStart);
+	public Hiker(String name, int xStart, int yStart) {
+		super(name, xStart, yStart);
 		greeting = "Oh shit whatup! I'm Hiker Mike. Lets battle!";
-		battleIntro = "This aint my first rodeo kid.";
-		battleDefeated = "Damn you're a tougher trainer than you look!";
-		afterBattle = "Good luck out there kid.";
+		battleIntro = "This aint my first rodeo kideo.";
+		battleDefeated = "Damn you're tough for someone who's balls haven't dropped!";
+		afterBattle = "Good luck out there pussy.";
 	}
 
 	public void update(){

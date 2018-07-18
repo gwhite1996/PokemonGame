@@ -1,6 +1,13 @@
 
 public class LostMethods { //these methods don't have a home. Just yet.
 	
+	//I'm not sure where i should put these
+	public static final Action bag = new Action("Bag", 6);
+	public static final Action switchPokemon = new Action("Switch Pokemon", 7);
+	public static final Action flee = new Action("Flee", -7);
+	public static final Action none = new Action("None", -10);
+	
+	
 	public static void showMoveSet(Pokemon pokemon){
 		System.out.println("-------" + pokemon + "'s Move Set-------");
 		Move move;
@@ -13,14 +20,15 @@ public class LostMethods { //these methods don't have a home. Just yet.
 			default :move = pokemon.move4; ppLeft = pokemon.move4PP; break;
 			}
 			if(!move.toString().equals("None")){
+				System.out.print("[" + i + "] " + move + ": " + move.type + ", " + move.moveCategory); //This part is the same for each moveCategory
 				if(move.moveCategory == MoveCategory.STATUS){
-					System.out.println("  " + move + ": " + move.type + ", " + move.moveCategory + ", " + move.statusInflicted + ", PP(" + ppLeft + "/" + move.basePP + "), Accuracy(" + move.accuracy + ")");
+					System.out.println(", " + move.statusInflicted + ", PP(" + ppLeft + "/" + move.basePP + "), Accuracy(" + move.accuracy + ")");
 				}
 				else if(move.moveCategory == MoveCategory.STAT){
-					System.out.println("  " + move + ": " + move.type + ", " + move.moveCategory + ", " + move.statAffected + ", Stage Increase(" + move.stageIncrease + "), PP(" + ppLeft + "/" + move.basePP + "), Accuracy(" + move.accuracy + ")");
+					System.out.println(", " + move.statAffected + ", Stage Increase(" + move.stageIncrease + "), PP(" + ppLeft + "/" + move.basePP + "), Accuracy(" + move.accuracy + ")");
 				}
 				else{
-					System.out.println("  " + move + ": " + move.type + ", " + move.moveCategory + ", PP(" + ppLeft + "/" + move.basePP + "), Power(" + move.power + "), Accuracy(" + move.accuracy + ")");
+					System.out.println(", PP(" + ppLeft + "/" + move.basePP + "), Power(" + move.power + "), Accuracy(" + move.accuracy + ")");
 				}
 			}
 		}
@@ -78,7 +86,9 @@ public class LostMethods { //these methods don't have a home. Just yet.
 	
 	public static void pokemonCenter(Party party){ //completely heals entire party
 		for(Pokemon p: party.partyArray){
-			healFull(p);
+			if(p != null){
+				healFull(p);
+			}
 		}
 		System.out.println("The entire party has been healed!");
 	}

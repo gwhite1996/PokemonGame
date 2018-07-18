@@ -31,20 +31,20 @@ public class Stats { //permenant stats
 		}
 		//should probably be a message if the multiplyer cant be raised any more
 		switch(statStage){
-		case -6:return 2/8.0;
-		case -5:return 2/7.0;
-		case -4:return 2/6.0;
-		case -3:return 2/5.0;
-		case -2:return 2/4.0;
-		case -1:return 2/3.0;
-		case 0:return 2/2.0;
-		case 1:return 3/2.0;
-		case 2:return 4/2.0;
-		case 3:return 5/2.0;
-		case 4:return 6/2.0;
-		case 5:return 7/2.0;
-		case 6:return 8/2.0;
-		default :return 0.0;
+		case -6:return 2/8d;
+		case -5:return 2/7d;
+		case -4:return 2/6d;
+		case -3:return 2/5d;
+		case -2:return 2/4d;
+		case -1:return 2/3d;
+		case 0:return 2/2d;
+		case 1:return 3/2d;
+		case 2:return 4/2d;
+		case 3:return 5/2d;
+		case 4:return 6/2d;
+		case 5:return 7/2d;
+		case 6:return 8/2d;
+		default :return 0d;
 		}
 	}
 	

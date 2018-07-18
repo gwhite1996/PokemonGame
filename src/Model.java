@@ -6,7 +6,7 @@ public class Model {
 	private final int width;
 	private final int height;
 	private Player player;
-	private Hiker hiker;
+	private Hiker hikerMike;
 	private String message;
 	ArrayList<GamePiece> interactableList;
 
@@ -14,15 +14,15 @@ public class Model {
 		this.width = 16;
 		this.height = 16;
 		interactableList = new ArrayList<GamePiece>();
-		player = new Player(8, 8);
-		hiker = new Hiker(3,2);
-		interactableList.add(hiker);
+		player = new Player("Player", 8, 8);
+		hikerMike = new Hiker("Hiker Mike", 3,2);
+		interactableList.add(hikerMike);
 	}
 	public Player getPlayer(){
 		return player;
 	}
-	public Hiker getHiker(){
-		return hiker;
+	public Hiker getHikerMike(){
+		return hikerMike;
 	}
 	public void update(KeyEvent userInput) {
 		player.setTryingToInteract(false);
@@ -41,7 +41,7 @@ public class Model {
 				}
 			}
 		}
-		hiker.update();
+		hikerMike.update();
 		
 	}
 	

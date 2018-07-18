@@ -1,7 +1,6 @@
 
 
-public class Move {
-	private String name;
+public class Move extends Action{
 	Type type;
 	MoveCategory moveCategory;
 	Status statusInflicted;
@@ -14,7 +13,7 @@ public class Move {
 	
 	//damage dealing moves (physical and special)
 	public Move(String name, Type type, MoveCategory moveCategory, int power, int accuracy, int basePP){
-		this.name = name;
+		super(name);
 		this.type = type;
 		this.moveCategory = moveCategory;
 		this.power = power;
@@ -25,7 +24,7 @@ public class Move {
 	
 	//status moves
 	public Move(String name, Type type, Status statusInflicted, int accuracy, int basePP){
-		this.name = name;
+		super(name);
 		this.type = type;
 		moveCategory = MoveCategory.STATUS;
 		this.statusInflicted = statusInflicted;
@@ -37,7 +36,7 @@ public class Move {
 	
 	//stat moves (raise or lower stats)
 	public Move(String name, Type type, String statAffected, int stageIncrease, int accuracy, int basePP, boolean targetsSelf){
-		this.name = name;
+		super(name);
 		this.type = type;
 		moveCategory = MoveCategory.STAT;
 		this.statAffected = statAffected;
@@ -46,11 +45,5 @@ public class Move {
 		this.accuracy = accuracy;
 		this.basePP = basePP;
 		this.targetsSelf = targetsSelf;
-	}
-	
-	
-	@Override
-	public String toString(){
-		return name;
 	}
 }

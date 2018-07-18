@@ -5,8 +5,8 @@ import java.awt.event.KeyEvent;
 public class Player extends Trainer{
 	private boolean tryingToInteract; //Indicates the interact button was pressed
 	
-	public Player(int xStart, int yStart) {
-		super(xStart, yStart);
+	public Player(String name, int xStart, int yStart) {
+		super(name, xStart, yStart);
 		tryingToInteract = false;
 	}
 	

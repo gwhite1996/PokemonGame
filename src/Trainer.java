@@ -1,15 +1,21 @@
 
 public abstract class Trainer extends TurnablePiece{
+	private String name;
+	private Action action;
+	
 	String greeting;
 	String battleIntro;
 	String battleDefeated;
 	String afterBattle;
 	
 	Party party;
+	Bag bag;
 	
-	public Trainer(int xStart, int yStart) {
+	public Trainer(String name, int xStart, int yStart) {
 		super(xStart, yStart);
-		setPieceStatus(PieceStatus.BATTLE_ON_INTERACT);
+		this.name = name;
+		this.action = LostMethods.none;
+		bag = new Bag();
 	}
 	@Override
 	public void onInteraction(Player p){
@@ -32,5 +38,16 @@ public abstract class Trainer extends TurnablePiece{
 		case DEFEATED:setMessage(afterBattle);break;
 		default:setMessage("Invalid pieceStatus in updateMessage method");
 		}
+	}
+	
+	@Override
+	public String toString(){
+		return name;
+	}
+	public Action getAction(){
+		return action;
+	}
+	public void setAction(Action action){
+		this.action = action;
 	}
 }

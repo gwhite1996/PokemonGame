@@ -1,25 +1,14 @@
-import java.util.ArrayList;
-
-
 public class Party{
 	Pokemon[] partyArray = new Pokemon[6];
 	int partyCount;
-
-
+	
+	
 	public Party(){
 		partyCount = 0; //empty party
 	}
-	public void setPokemon(Pokemon pokemon, int partyArrayIndex){
-		if(partyArrayIndex >= 1 && partyArrayIndex <= 6){
-			partyArray[partyArrayIndex] = pokemon;
-		}
-		else {
-			System.out.println("Invalid partyNumber argument givent in setPokemon");
-		}
-		//Count should increase if a pokemon is added
-	}
+	
+	
 	public void add(Pokemon pokemon){
-
 		for(int i = 0; i < partyArray.length; i++) {
 			if(partyArray[i] == null){
 				partyArray[i] = pokemon;
@@ -28,10 +17,55 @@ public class Party{
 			}
 		}
 	}
-	public void printParty(){
-		for(Pokemon p: partyArray){
-			if(p != null)System.out.print(p + ", ");
+
+	public void swapWithinParty(int partyIndex1, int partyIndex2){
+		if(indexWithinParty(partyIndex1) && indexWithinParty(partyIndex2)){
+			Pokemon temp = partyArray[partyIndex1];
+			partyArray[partyIndex1] = partyArray[partyIndex2];
+			partyArray[partyIndex2] = temp;
+			System.out.println(partyArray[partyIndex2] + " was swapped with " + partyArray[partyIndex2]);
 		}
-		System.out.println(); //prints new line
+	}
+	
+	
+	public boolean allFainted(){
+		for(Pokemon p: partyArray){
+			if(p.hpRemaining > 0){
+				return false;
+			}
+		}
+		return true; //no pokemon has hp left
+	}
+
+	public boolean indexWithinParty(int index){
+		if(index >= 0 && index <= 5){
+			return true;
+		}
+		else {
+			System.out.println("Invalid partyArray index argument given. (Must be 0 through 5)");
+			return false;
+		}
+	}
+	
+	
+	public void printParty(){
+		for(int i = 0; i < 6; i++){
+			if(partyArray[i] != null){
+				System.out.println("["+ (i+1) + "] " + partyArray[i]);
+			}
+		}
+	}
+	
+	public Pokemon getPokemon(int partyIndex) {
+		if(indexWithinParty(partyIndex)){
+			return(partyArray[partyIndex]);
+		}
+		return null;
+	}
+	public void setPokemon(Pokemon pokemon, int partyArrayIndex){
+		if(indexWithinParty(partyArrayIndex)){
+			partyArray[partyArrayIndex] = pokemon;
+		}
+		//Count should increase if a pokemon is added
 	}
 }
