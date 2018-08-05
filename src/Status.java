@@ -79,19 +79,26 @@ public enum Status{
 		}
 	}
 	public static boolean inflictStatus(Pokemon pokemon, Status status){
-		switch(status){
-		case ASLEEP:return Status.putToSleep(pokemon);
-		case BURNED:return Status.burn(pokemon);
-		case FROZEN:return Status.freeze(pokemon);
-		case PARALYZED:return Status.paralyze(pokemon);
-		case POISONED:return Status.poison(pokemon);
-		case NONE:return false;
-		default: System.out.println("Invalid status in inflictStatus()");
-		return false;
+		if(pokemon.getStatus() == status){
+			System.out.println(pokemon + " is already " + status + ".");
+			return false;
 		}
+		else{
+			switch(status){
+			case ASLEEP:return Status.putToSleep(pokemon);
+			case BURNED:return Status.burn(pokemon);
+			case FROZEN:return Status.freeze(pokemon);
+			case PARALYZED:return Status.paralyze(pokemon);
+			case POISONED:return Status.poison(pokemon);
+			case NONE:return false;
+			default: System.out.println("Invalid status in inflictStatus()");
+			return false;
+			}
+		}
+
 	}
-	
-	
+
+
 	public static void removeStatus(Pokemon pokemon){ // Undo's the effect of the status then removes it
 		pokemon.canAttack = true;
 		pokemon.setStatus(NONE);
@@ -113,7 +120,7 @@ public enum Status{
 			pokemon.statusTurnsRemaining = 1; //thawing takes a turn
 		}
 		System.out.println(pokemon + " is frozen solid and cannot move!");
-		
+
 	}
 	private static void takeEffectOfParalysis(Pokemon pokemon){
 		pokemon.stats.multipliers.speed *= 0.25;

@@ -30,10 +30,13 @@ public class Party{
 	
 	public boolean allFainted(){
 		for(Pokemon p: partyArray){
-			if(p.hpRemaining > 0){
-				return false;
+			if(p != null){
+				if(p.hpRemaining > 0){
+					return false;
+				}
 			}
 		}
+		System.out.println("The party has no more usable pokemon.");
 		return true; //no pokemon has hp left
 	}
 

@@ -10,44 +10,44 @@ public class TestBattle {
 		Species charmander = new Species(Type.FIRE);
 		Species bulbasaur = new Species(Type.GRASS, Type.POISON);
 
-		Pokemon sparky = new Pokemon("Sparky", pikachu );
-		Pokemon torch = new Pokemon("Torch Nigga", charmander);
-		Pokemon juicer = new Pokemon("Juicer", squirtle);
-		Pokemon butt = new Pokemon("Butt-que", bulbasaur );
+		Pokemon pika = new Pokemon("Pikachu", pikachu );
+		Pokemon charm = new Pokemon("Charmander", charmander);
+		Pokemon squirt = new Pokemon("Squirtle", squirtle);
+		Pokemon bulb = new Pokemon("Bulbasaur", bulbasaur );
 
-		sparky.stats = new Stats(44, 27, 21, 25, 25, 41); //level 20
-		juicer.stats = new Stats(47, 24, 31, 22, 30, 22); //level 20
-		torch.stats = new Stats(42, 24, 32, 20, 32, 32);
-		butt.stats = new Stats(55, 21, 12, 25, 41, 35);
+		pika.stats = new Stats(44, 27, 21, 25, 25, 41); //each is level 20, serious nature, 0 IVs, O EVs
+		squirt.stats = new Stats(47, 24, 31, 25, 30, 22);
+		charm.stats = new Stats(45, 25, 22, 29, 25, 31);
+		bulb.stats = new Stats(48, 24, 24, 31, 31, 23);
 		
-		Move tackle = new Move("Tackle", Type.NORMAL, MoveCategory.PHYSICAL, 40, 100, 35);
-		Move thunderShock = new Move("Thunder Shock", Type.ELECTRIC, MoveCategory.SPECIAL, 40, 100, 30);
-		Move waterGun = new Move("Water Gun", Type.WATER, MoveCategory.SPECIAL, 40, 100, 25);
-		Move bite = new Move("Bite", Type.DARK, MoveCategory.PHYSICAL, 60, 100, 25);
-		Move thunder = new Move("Thunder", Type.ELECTRIC, MoveCategory.SPECIAL, 110, 70, 10);
-		Move hydroPump = new Move("Hydro Pump", Type.WATER, MoveCategory.SPECIAL, 110, 80, 5);
-		Move thunderWave = new Move("Thunder Wave", Type.ELECTRIC, Status.PARALYZED, 90, 20);
-		Move tailWhip = new Move("Tail Whip", Type.NORMAL, "deffense", -1, 100, 30, false);
-		Move shoot = new Move("Shoot With Gun", Type.DARK, MoveCategory.PHYSICAL, 2000, 100, 1);
 		
-		sparky.setMove(thunderShock, 1);
-		sparky.setMove(tackle, 2);
-		sparky.setMove(thunderWave, 3);
-		sparky.setMove(thunder, 4);
-		juicer.setMove(waterGun, 1);
-		juicer.setMove(tailWhip, 2);
-		juicer.setMove(bite, 3);
-		juicer.setMove(hydroPump, 4);
-		sparky.setMove(shoot, 3);
+		pika.setMove(MoveList.tailWhip, 1);
+		pika.setMove(MoveList.thunderShock, 2);
+		pika.setMove(MoveList.thunderWave, 3);
+		pika.setMove(MoveList.thunder, 4);
+		squirt.setMove(MoveList.tackle, 1);
+		squirt.setMove(MoveList.tailWhip, 2);
+		squirt.setMove(MoveList.waterGun, 3);
+		squirt.setMove(MoveList.hydroPump, 4);
+		charm.setMove(MoveList.scratch, 1);
+		charm.setMove(MoveList.growl, 2);
+		charm.setMove(MoveList.ember, 3);
+		charm.setMove(MoveList.flamethrower, 4);
+		bulb.setMove(MoveList.tackle, 1);
+		bulb.setMove(MoveList.growl, 2);
+		bulb.setMove(MoveList.vineWhip, 3);
+		bulb.setMove(MoveList.seedBomb, 4);
 		
+		//pika.setMove(MoveList.shoot, 3);
+		//pika.setMove(MoveList.zapCannon, 4);
 		
 		player.party = new Party();
 		mike.party = new Party();
 		
-		player.party.add(sparky);
-		player.party.add(torch);
-		mike.party.add(juicer);
-		mike.party.add(butt);
+		player.party.add(pika);
+		player.party.add(charm);
+		mike.party.add(squirt);
+		mike.party.add(bulb);
 		
 		
 		LostMethods.pokemonCenter(player.party);
@@ -59,8 +59,10 @@ public class TestBattle {
 		player.bag.add(potion);
 		player.bag.add(pokeBall);
 		
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
 		
-		Battle battleMike = new Battle(player, mike);
+		
+		Battle battleMike1 = new Battle(player, mike);
 		/*
 		Action action = LostMethods.none;
 		Move move = hydroPump;
@@ -69,4 +71,8 @@ public class TestBattle {
 		System.out.println("action is " + action + ". move is " + move);
 		*/
 	}
+	
+	
+	///REDO HOW MOVES ARE DONE
+	
 }

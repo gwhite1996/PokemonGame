@@ -31,8 +31,18 @@ public class Bag {
 		item.use();
 	}
 	
+	public void removeEmptyItems(){
+		for(Item item: itemList){
+			if(item.count <= 0){
+				itemList.remove(item);
+			}
+		}
+	}
+	
+	
 	
 	public void printBagContents(){
+		removeEmptyItems();
 		System.out.println("..... Bag Contents .....");
 		int i = 1;
 		for(Item item: itemList){

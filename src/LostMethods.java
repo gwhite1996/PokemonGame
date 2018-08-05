@@ -8,7 +8,7 @@ public class LostMethods { //these methods don't have a home. Just yet.
 	public static final Action none = new Action("None", -10);
 	
 	
-	public static void showMoveSet(Pokemon pokemon){
+	public static void printMoveSet(Pokemon pokemon){
 		System.out.println("-------" + pokemon + "'s Move Set-------");
 		Move move;
 		int ppLeft;
@@ -20,34 +20,15 @@ public class LostMethods { //these methods don't have a home. Just yet.
 			default :move = pokemon.move4; ppLeft = pokemon.move4PP; break;
 			}
 			if(!move.toString().equals("None")){
-				System.out.print("[" + i + "] " + move + ": " + move.type + ", " + move.moveCategory); //This part is the same for each moveCategory
-				if(move.moveCategory == MoveCategory.STATUS){
-					System.out.println(", " + move.statusInflicted + ", PP(" + ppLeft + "/" + move.basePP + "), Accuracy(" + move.accuracy + ")");
-				}
-				else if(move.moveCategory == MoveCategory.STAT){
-					System.out.println(", " + move.statAffected + ", Stage Increase(" + move.stageIncrease + "), PP(" + ppLeft + "/" + move.basePP + "), Accuracy(" + move.accuracy + ")");
-				}
-				else{
-					System.out.println(", PP(" + ppLeft + "/" + move.basePP + "), Power(" + move.power + "), Accuracy(" + move.accuracy + ")");
-				}
+				System.out.println("[" + i + "] " + move + ": " + move.type + ", " + move.moveCategory + ", PP(" + ppLeft + "/" + move.basePP + "), Power(" + move.power + "), Accuracy(" + move.accuracy + ")");
 			}
 		}
 	}
 	
-	public static void showStats(Pokemon pokemon){
-		System.out.println("..... " + pokemon + "'s Stats .....");
-		System.out.println("Attack: Fixed(" + pokemon.stats.attack + "), Stage(" + pokemon.stats.stages.attack + "), Multiplier(" + pokemon.stats.multipliers.attack + ")");
-		System.out.println("Deffense: Fixed(" + pokemon.stats.deffense + "), Stage(" + pokemon.stats.stages.deffense + "), Multiplier(" + pokemon.stats.multipliers.deffense + ")");
-		System.out.println("SpAtk: Fixed(" + pokemon.stats.spAtk + "), Stage(" + pokemon.stats.stages.spAtk + "), Multiplier(" + pokemon.stats.multipliers.spAtk + ")");
-		System.out.println("SpDef: Fixed(" + pokemon.stats.spDef + "), Stage(" + pokemon.stats.stages.spDef + "), Multiplier(" + pokemon.stats.multipliers.spDef + ")");
-		System.out.println("Speed: Fixed(" + pokemon.stats.speed + "), Stage(" + pokemon.stats.stages.speed + "), Multiplier(" + pokemon.stats.multipliers.speed + ")");
-		System.out.println("Accuracy: Stage(" + pokemon.stats.stages.accuracy + "), Multiplier(" + pokemon.stats.multipliers.accuracy + ")");
-		System.out.println("Evasion: Stage(" + pokemon.stats.stages.evasion + "), Multiplier(" + pokemon.stats.multipliers.evasion + ")");
-		System.out.println("..........................");
-	}
 	
 	
-	public static void showHealth(Pokemon pokemon){
+	
+	public static void printHealth(Pokemon pokemon){
 		System.out.println(pokemon + "'s HP is: " + pokemon.hpRemaining + "/" + pokemon.stats.totalHP + ", Status Ailment: " + pokemon.getStatus());
 		System.out.println(" Turns of status ailment left: " + pokemon.statusTurnsRemaining);
 	}
