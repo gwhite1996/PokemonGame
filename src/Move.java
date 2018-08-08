@@ -35,12 +35,12 @@ public class Move extends Action{
 		double calculatedDeffense;
 
 		if(this.moveCategory == MoveCategory.PHYSICAL){ //physical or special?
-			calculatedAttack = user.stats.attack*user.stats.multipliers.attack;
-			calculatedDeffense = target.stats.deffense*target.stats.multipliers.deffense;
+			calculatedAttack = user.stats.attack.getBattleValue();
+			calculatedDeffense = target.stats.deffense.getBattleValue();
 		}
 		else{
-			calculatedAttack = user.stats.spAtk*user.stats.multipliers.spAtk;
-			calculatedDeffense = target.stats.spDef*user.stats.multipliers.spDef;
+			calculatedAttack = user.stats.spAtk.getBattleValue();
+			calculatedDeffense = target.stats.spDef.getBattleValue();
 		}
 		
 		double modifier = typeEffectiveness*stab*criticalHit; //can be affected by many things	
@@ -64,17 +64,17 @@ public class Move extends Action{
 	void statAttack(Pokemon user, Pokemon target, String statAffected, int stageIncrease){
 
 		switch (statAffected){ //IMPORTANT that statAffected is lowercase
-		case "attack":target.stats.stages.attack += stageIncrease;break;
-		case "deffense":target.stats.stages.deffense += stageIncrease;break;
-		case "spAtk":target.stats.stages.spAtk += stageIncrease;break;
-		case "spDef":target.stats.stages.spDef += stageIncrease;break;
-		case "speed":target.stats.stages.speed += stageIncrease;break;
-		case "accuracy":target.stats.stages.accuracy += stageIncrease;break;
-		case "evasion":target.stats.stages.evasion += stageIncrease;break;
+		case "attack":target.stats.attack.increaseStage(stageIncrease);break;
+		case "deffense":target.stats.deffense.increaseStage(stageIncrease);break;
+		case "spAtk":target.stats.spAtk.increaseStage(stageIncrease);break;
+		case "spDef":target.stats.spDef.increaseStage(stageIncrease);break;
+		case "speed":target.stats.speed.increaseStage(stageIncrease);break;
+		case "accuracy":target.stats.accuracy.increaseStage(stageIncrease);break;
+		case "evasion":target.stats.evasion.increaseStage(stageIncrease);break;
 		default: System.out.println("Invalid statAffected in statAttack. The move used is " + this);
 		}
 		System.out.println(user + " used " + this + " on " + target + " it's " + statAffected + " was increased by " + stageIncrease + ".");
-		LostMethods.printStats(target);
+		target.stats.printStats();;
 	}
 	
 	

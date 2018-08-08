@@ -18,13 +18,6 @@ public class Stat {
 	}
 	
 	private double getStageMultiplier(){
-		if(stage > 6){
-			stage = 6; //Doesn't change actual value
-		}
-		else if(stage < -6){
-			stage = -6;
-		}
-		//should probably be a message if the multiplyer cant be raised any more
 		switch(stage){
 		case -6:return 2/8d;
 		case -5:return 2/7d;
@@ -46,7 +39,6 @@ public class Stat {
 	public int getBattleValue(){
 		return (int)(trueValue*getTotalMultiplier());
 	}
-	
 	public int getTrueValue(){
 		return trueValue;
 	}
@@ -54,10 +46,28 @@ public class Stat {
 		return stage;
 	}
 	
+	//stacks on another multiplier
+	public void addMultiplier(double multiplicationFactor){
+		otherMultipliers *= multiplicationFactor;
+	}
+	
+	public void increaseStage(int increaseAmount){
+		stage += increaseAmount;
+		if(stage > 6){
+			stage = 6; //Doesn't change actual value
+		}
+		else if(stage < -6){
+			stage = -6;
+		}
+		//should probably be a message if the multiplyer cant be raised any more
+	}
+	public void resetStage(){
+		stage = 0;
+	}
+	
 	public void printStat(){
 		System.out.println(name + ": Fixed(" + getTrueValue() + "), Stage(" + getStage() + "), Multiplier(" + getTotalMultiplier() + ")");
 	}
-	
 	
 	@Override
 	public String toString(){

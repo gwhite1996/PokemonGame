@@ -156,7 +156,6 @@ public class Battle {
 	}
 
 	private void fight(Pokemon user, Move move){ //Basically a turn for a single pokemon
-		user.stats.updateMultipliersFromStages(); //done before in case enemy halfTurn affected stages
 
 		int moveNumber = 0;
 		if(move == user.move1)moveNumber = 1;
@@ -174,20 +173,13 @@ public class Battle {
 			target = playerPokemon;
 		}
 
-		if(user.statusTurnsRemaining > 0){
+		if(user.getStatus() != Status.NONE){
 			Status.takeEffectOfStatus(user);
-			if(user.getStatus().wearsOff()){
-				user.statusTurnsRemaining --;
-			}
 		}
-		else{
-			Status.removeStatus(user);
-		}
-
+		
 		if(user.canAttack){
 			useMove(user, target, moveNumber);
 		}
-		user.stats.updateMultipliersFromStages(); //done after in case it's move affected itself
 	}
 
 	public void useMove(Pokemon user, Pokemon target, int moveNumber){
@@ -205,7 +197,7 @@ public class Battle {
 		default: System.out.println("Invalid moveNumber given to useMove()");
 		}
 
-		double chanceOfHit = ((move.accuracy)/100d)*(user.stats.multipliers.accuracy/target.stats.multipliers.evasion);
+		double chanceOfHit = ((move.accuracy)/100d)*(user.stats.accuracy.getBattleValue()/target.stats.evasion.getBattleValue());
 		if(chanceOfHit > rand.nextDouble() || move.accuracy == 0){ //the attack hits no matter what if accuracy is 0
 			move.useMove(user, target);
 		}
@@ -259,20 +251,20 @@ public class Battle {
 	public void resetAllStatStages(){ //resets stages to 0 for both parties before and after battle
 		for(Pokemon p: player.party.partyArray){
 			if(p != null){
-				p.stats.stages.resetAll();
+				p.stats.resetAllStages();
 			}
 		}
 		for(Pokemon p: enemy.party.partyArray){
 			if(p != null){
-				p.stats.stages.resetAll();
+				p.stats.resetAllStages();
 			}
 		}
 	}
-
+	
 
 	public boolean playerActsFirst(){
 		if(player.getAction().getPriority() == enemy.getAction().getPriority()){ //checks pokemon speed only if priorities are the same
-			return playerPokemon.stats.speed*playerPokemon.stats.multipliers.speed >= enemyPokemon.stats.speed*enemyPokemon.stats.multipliers.speed;
+			return playerPokemon.stats.speed.getBattleValue() >= enemyPokemon.stats.speed.getBattleValue();
 		}
 		else{
 			return player.getAction().getPriority() > enemy.getAction().getPriority();

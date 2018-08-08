@@ -61,15 +61,7 @@ public class TestBattle {
 		
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
 		
-		
 		Battle battleMike1 = new Battle(player, mike);
-		/*
-		Action action = LostMethods.none;
-		Move move = hydroPump;
-		System.out.println("action is " + action + ". move is " + move);
-		action = move;
-		System.out.println("action is " + action + ". move is " + move);
-		*/
 	}
 	
 	

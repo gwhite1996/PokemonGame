@@ -2,19 +2,12 @@ import java.util.Random;
 
 
 public enum Status{
-	ASLEEP(true),
-	BURNED(false),
-	FROZEN(true),
-	PARALYZED(false),
-	POISONED(false),
-	NONE(false);
-
-	private boolean wearsOff; //the effect goes away after enough turns
-
-
-	private Status(boolean wearsOff){
-		this.wearsOff = wearsOff;
-	}
+	ASLEEP,
+	BURNED,
+	FROZEN,
+	PARALYZED,
+	POISONED,
+	NONE;
 
 
 	// Methods to inflict each status ailment
@@ -33,7 +26,7 @@ public enum Status{
 		else{
 			removeStatus(pokemon);
 			pokemon.setStatus(Status.BURNED);
-			pokemon.statusTurnsRemaining = 10;
+			pokemon.stats.deffense.addMultiplier(0.5);
 			return true;
 		}
 	}
@@ -45,8 +38,8 @@ public enum Status{
 		else{
 			removeStatus(pokemon);
 			pokemon.setStatus(Status.FROZEN);
-			pokemon.statusTurnsRemaining = 10;
 			pokemon.canAttack = false;
+			pokemon.statusTurnsRemaining = 1; //can be infinite really
 			return true;
 		}
 	}
@@ -58,7 +51,7 @@ public enum Status{
 		else{
 			removeStatus(pokemon);
 			pokemon.setStatus(Status.PARALYZED);
-			pokemon.statusTurnsRemaining = 10;
+			pokemon.stats.speed.addMultiplier(0.25);
 			return true;
 		}
 	}
@@ -74,7 +67,6 @@ public enum Status{
 		else{
 			removeStatus(pokemon);
 			pokemon.setStatus(Status.POISONED);
-			pokemon.statusTurnsRemaining = 10;
 			return true;
 		}
 	}
@@ -97,33 +89,73 @@ public enum Status{
 		}
 
 	}
+	public static boolean removeStatus(Pokemon pokemon){
 
-
-	public static void removeStatus(Pokemon pokemon){ // Undo's the effect of the status then removes it
-		pokemon.canAttack = true;
+		Status status = pokemon.getStatus();
+		switch(status){ //special action that must be taken for certain statuses when removed
+		case ASLEEP:removeSleep(pokemon);break;
+		case BURNED:removeBurn(pokemon);break;
+		case FROZEN:removeFreeze(pokemon);break;
+		case PARALYZED:removeParalysis(pokemon);break;
+		case POISONED:removePoison(pokemon);break;
+		case NONE:System.out.println(pokemon + " has no status to remove!");return false;
+		default: System.out.println("Invalid status in removeStatus()");return false;
+		}
+		System.out.println(pokemon + " is no longer " + status + ".");
 		pokemon.setStatus(NONE);
-		pokemon.statusTurnsRemaining = 0;
+		return true;
+	}
+
+	private static void removePoison(Pokemon pokemon) {
+	}
+	private static void removeParalysis(Pokemon pokemon){
+		pokemon.stats.speed.addMultiplier(4);
+		pokemon.canAttack = true;
+	}
+	private static void removeFreeze(Pokemon pokemon){
+		pokemon.canAttack = true;
+		System.out.println(pokemon + " thawed.");
+	}
+	private static void removeBurn(Pokemon pokemon){
+		pokemon.stats.deffense.addMultiplier(2);
+	}
+	private static void removeSleep(Pokemon pokemon){
+		pokemon.canAttack = true;
+		System.out.println(pokemon + " woke up.");
 	}
 
 	//the following methods run each turn while the pokemon is affected
 	private static void takeEffectOfSleep(Pokemon pokemon){
-		System.out.println(pokemon + " is fast asleep!");
+		if(pokemon.statusTurnsRemaining > 0){
+			System.out.println(pokemon + " is fast asleep!");
+			pokemon.statusTurnsRemaining --;
+		}
+		else{
+			removeSleep(pokemon);
+		}
+		
 	}
 	private static void takeEffectOfBurn(Pokemon pokemon){
-		pokemon.stats.multipliers.deffense *= 0.5;
+
 		int burnDamage = (int)(((double)pokemon.stats.totalHP)/8.0);
 		pokemon.hpRemaining -= burnDamage;
 		System.out.println(pokemon + " was hurt for " + burnDamage + " HP by it's burn!");
 	}
 	private static void takeEffectOfFreeze(Pokemon pokemon){
-		if(pokemon.statusTurnsRemaining > 1 && new Random().nextInt(5) == 0){
-			pokemon.statusTurnsRemaining = 1; //thawing takes a turn
-		}
-		System.out.println(pokemon + " is frozen solid and cannot move!");
 
+		if(pokemon.statusTurnsRemaining > 0){
+			System.out.println(pokemon + " is frozen solid and cannot move!");
+			if(new Random().nextInt(5) == 0){
+				pokemon.statusTurnsRemaining = 0;
+				return; //next turn it will be thawed
+			}
+		}
+		else{
+			removeFreeze(pokemon);
+		}
 	}
 	private static void takeEffectOfParalysis(Pokemon pokemon){
-		pokemon.stats.multipliers.speed *= 0.25;
+
 		if(new Random().nextInt(4) == 0){
 			pokemon.canAttack = false;
 			System.out.println(pokemon + " is paralyzed. It can't move!");
@@ -155,9 +187,5 @@ public enum Status{
 		default:System.out.println("Invalid status in TakeEffectOfStatus");
 		break;
 		}
-	}
-
-	public boolean wearsOff() {
-		return wearsOff;
 	}
 }
