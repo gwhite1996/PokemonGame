@@ -101,16 +101,17 @@ public enum Status{
 		case NONE:System.out.println(pokemon + " has no status to remove!");return false;
 		default: System.out.println("Invalid status in removeStatus()");return false;
 		}
-		System.out.println(pokemon + " is no longer " + status + ".");
 		pokemon.setStatus(NONE);
 		return true;
 	}
 
-	private static void removePoison(Pokemon pokemon) {
+	private static void removePoison(Pokemon pokemon){
+		System.out.println(pokemon + " is no longer poisoned.");
 	}
 	private static void removeParalysis(Pokemon pokemon){
 		pokemon.stats.speed.addMultiplier(4);
 		pokemon.canAttack = true;
+		System.out.println(pokemon + "is no longer paralyzed.");
 	}
 	private static void removeFreeze(Pokemon pokemon){
 		pokemon.canAttack = true;
@@ -118,6 +119,7 @@ public enum Status{
 	}
 	private static void removeBurn(Pokemon pokemon){
 		pokemon.stats.deffense.addMultiplier(2);
+		System.out.println(pokemon + " is no longer burned.");
 	}
 	private static void removeSleep(Pokemon pokemon){
 		pokemon.canAttack = true;

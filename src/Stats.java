@@ -18,8 +18,8 @@ public class Stats {
 		this.spAtk = new Stat("Special Attack", spAtk);
 		this.spDef = new Stat("Special Deffense", spDef);
 		this.speed = new Stat("Speed", speed);
-		accuracy = new Stat("Accuracy", 1); //accuracy and evasion have no base value
-		evasion = new Stat("Evasion", 1);
+		accuracy = new Stat("Accuracy", 100); //accuracy and evasion always have 100 base value
+		evasion = new Stat("Evasion", 100);
 	}
 	
 	public void resetAllStages(){ //resets each stat back to 0
@@ -34,7 +34,7 @@ public class Stats {
 	
 	public void printStats(){
 		System.out.println("..... Stats .....");
-		System.out.println(totalHP);
+		System.out.println("Total HP(" + totalHP + ")");
 		attack.printStat();
 		deffense.printStat();
 		spAtk.printStat();

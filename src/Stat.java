@@ -66,7 +66,7 @@ public class Stat {
 	}
 	
 	public void printStat(){
-		System.out.println(name + ": Fixed(" + getTrueValue() + "), Stage(" + getStage() + "), Multiplier(" + getTotalMultiplier() + ")");
+		System.out.println(name + ": Fixed(" + getTrueValue() + "), Stage(" + getStage() + "), Multiplier(" + getTotalMultiplier() + "), Battle Value(" + getBattleValue() + ")");
 	}
 	
 	@Override

@@ -20,6 +20,7 @@ public class Battle {
 
 		resetAllStatStages();
 		runUntilEnd();
+		resetAllStatStages();
 	}
 
 
@@ -68,6 +69,8 @@ public class Battle {
 		//LostMethods.showStats(playerPokemon);
 		LostMethods.printHealth(enemyPokemon);
 		//LostMethods.showStats(enemyPokemon);
+		playerPokemon.stats.printStats();
+		enemyPokemon.stats.printStats();
 		System.out.println("******************************\n\n");
 	}
 
