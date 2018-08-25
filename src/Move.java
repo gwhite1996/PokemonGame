@@ -77,6 +77,15 @@ public class Move extends Action{
 		target.stats.printStats();;
 	}
 	
+	void healAttack(Pokemon user, int hpRestored){
+		int hpActuallyRestored = hpRestored;
+		if(user.hpRemaining + hpRestored > user.stats.totalHP){
+			hpActuallyRestored = user.stats.totalHP - user.hpRemaining;
+		}
+		user.hpRemaining += hpActuallyRestored;
+		System.out.println(user + " healed itself for " + hpActuallyRestored + " HP.");
+	}
+	
 	
 	public double criticalHit(){
 		if(rand.nextInt(16) == 0){

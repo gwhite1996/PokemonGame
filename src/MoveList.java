@@ -27,6 +27,7 @@ public class MoveList {
 		public void useMove(Pokemon user, Pokemon target){
 			damageAttack(user, target);
 			statusAttack(user, target, Status.PARALYZED, 30);
+			//if raining should always hit and if harsh sunlight, accuracy is 50
 		}
 	};
 	final static Move seedBomb = new Move("Seed Bomb", Type.GRASS, MoveCategory.PHYSICAL, 80, 100, 15);
@@ -47,6 +48,26 @@ public class MoveList {
 			statusAttack(user, target, Status.PARALYZED, 100);
 		}
 	};
+	final static Move gust = new Move("Gust", Type.FLYING, MoveCategory.SPECIAL, 40, 100, 35);
+	final static Move iceBeam = new Move("IceBeam", Type.ICE, MoveCategory.SPECIAL, 90, 100, 10){
+		public void useMove(Pokemon user, Pokemon target){
+			damageAttack(user, target);
+			statusAttack(user, target, Status.FROZEN, 10);
+		}
+	};
+	final static Move blizzard = new Move("Blizzard", Type.ICE, MoveCategory.SPECIAL, 110, 70, 5){
+		public void useMove(Pokemon user, Pokemon target){
+			damageAttack(user, target);
+			statusAttack(user, target, Status.FROZEN, 10);
+			//if hail, should always hit
+		}
+	};
+	final static Move roost = new Move("Roost", Type.FLYING, MoveCategory.STATUS, 0, 0, 10){
+		public void useMove(Pokemon user, Pokemon target){
+			healAttack(user, user.stats.totalHP/2);
+		}
+	};
+	
 	
 	
 	final static Move shoot = new Move("Shoot With Gun", Type.DARK, MoveCategory.PHYSICAL, 2000, 100, 3);

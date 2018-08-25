@@ -9,17 +9,19 @@ public class TestBattle {
 		Species squirtle = new Species(Type.WATER);
 		Species charmander = new Species(Type.FIRE);
 		Species bulbasaur = new Species(Type.GRASS, Type.POISON);
+		Species articuno = new Species(Type.ICE, Type.FLYING);
 
 		Pokemon pika = new Pokemon("Pikachu", pikachu );
 		Pokemon charm = new Pokemon("Charmander", charmander);
 		Pokemon squirt = new Pokemon("Squirtle", squirtle);
 		Pokemon bulb = new Pokemon("Bulbasaur", bulbasaur );
+		Pokemon arct = new Pokemon("Articuno", articuno);
 
 		pika.stats = new Stats(44, 27, 21, 25, 25, 41); //each is level 20, serious nature, 0 IVs, O EVs
 		squirt.stats = new Stats(47, 24, 31, 25, 30, 22);
 		charm.stats = new Stats(45, 25, 22, 29, 25, 31);
 		bulb.stats = new Stats(48, 24, 24, 31, 31, 23);
-		
+		arct.stats = new Stats(66, 39, 45, 43, 55, 39);
 		
 		pika.setMove(MoveList.tailWhip, 1);
 		pika.setMove(MoveList.thunderShock, 2);
@@ -37,6 +39,10 @@ public class TestBattle {
 		bulb.setMove(MoveList.growl, 2);
 		bulb.setMove(MoveList.vineWhip, 3);
 		bulb.setMove(MoveList.seedBomb, 4);
+		arct.setMove(MoveList.gust, 1);
+		arct.setMove(MoveList.iceBeam, 2);
+		arct.setMove(MoveList.blizzard, 3);
+		arct.setMove(MoveList.roost, 4);
 		
 		//pika.setMove(MoveList.shoot, 3);
 		//pika.setMove(MoveList.zapCannon, 4);
@@ -48,6 +54,7 @@ public class TestBattle {
 		player.party.add(charm);
 		mike.party.add(squirt);
 		mike.party.add(bulb);
+		mike.party.add(arct);
 		
 		
 		LostMethods.pokemonCenter(player.party);
