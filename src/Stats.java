@@ -33,7 +33,7 @@ public class Stats {
 	}
 	
 	public void printStats(){
-		System.out.println("..... Stats .....");
+		System.out.println("......... Stats ..........");
 		System.out.println("Total HP(" + totalHP + ")");
 		attack.printStat();
 		deffense.printStat();

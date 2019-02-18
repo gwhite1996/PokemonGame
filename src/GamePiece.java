@@ -1,16 +1,16 @@
 
-
-public abstract class GamePiece implements Interactable{
+//everything that will be displayed on the grid
+public abstract class GamePiece{
 	protected int xLoc;
 	protected int yLoc;
-	private boolean interacting;
-	private String message;
-	private PieceStatus pieceStatus;
+	protected Direction dir;
+	boolean solid;
 
 	public GamePiece(int xStart, int yStart){
 		xLoc = xStart;
 		yLoc = yStart;
-		pieceStatus = PieceStatus.CANNOT_INTERACT;
+		this.dir = Direction.SOUTH; //default direction
+		solid = true; //by default player can't phase through
 	}
 	
 	public int getXLoc() {
@@ -25,27 +25,8 @@ public abstract class GamePiece implements Interactable{
 	public void setYLoc(int yLoc){
 		this.yLoc = yLoc;
 	}
-	public String getMessage(){
-		return message;
-	}
-	public void setMessage(String message){
-		this.message = message;
-	}
-	public PieceStatus getPieceStatus(){
-		return pieceStatus;
-	}
-	public void setPieceStatus(PieceStatus pieceStatus){
-		this.pieceStatus = pieceStatus;
-	}
-	public boolean getInteracting(){
-		return interacting;
-	}
-	public void setInteracting(boolean interacting){
-		this.interacting = interacting;
-	}
-	
-	public void onInteraction(Player p){
-		//Most GamePieces will do nothing
+	public Direction getDirection(){
+		return dir;
 	}
 }
 

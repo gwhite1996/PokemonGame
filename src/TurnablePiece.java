@@ -1,14 +1,12 @@
 
 
-public abstract class TurnablePiece extends GamePiece{
-	protected Direction dir;
+public abstract class TurnablePiece extends InteractablePiece{
 	protected int xAhead;
 	protected int yAhead;
 
 
 	public TurnablePiece(int xStart, int yStart) {
 		super(xStart, yStart);
-		this.dir = Direction.SOUTH; //default direction
 		findSpaceAhead();
 	}
 
@@ -16,10 +14,6 @@ public abstract class TurnablePiece extends GamePiece{
 		super(xStart, yStart);
 		this.dir = dir;
 		findSpaceAhead();
-	}
-
-	public Direction getDirection(){
-		return dir;
 	}
 	
 	public int getXAhead(){

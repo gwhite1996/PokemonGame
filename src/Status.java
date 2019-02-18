@@ -98,7 +98,7 @@ public enum Status{
 		case FROZEN:removeFreeze(pokemon);break;
 		case PARALYZED:removeParalysis(pokemon);break;
 		case POISONED:removePoison(pokemon);break;
-		case NONE:System.out.println(pokemon + " has no status to remove!");return false;
+		case NONE:return false;
 		default: System.out.println("Invalid status in removeStatus()");return false;
 		}
 		pokemon.setStatus(NONE);

@@ -4,6 +4,7 @@ public enum Direction {
 	EAST("east"),
 	SOUTH("south"),
 	WEST("west");
+	
 	private String name = null;
 
 	private Direction(String s){

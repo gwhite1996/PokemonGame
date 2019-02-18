@@ -41,7 +41,7 @@ public class Battle {
 
 	}
 
-	private void fullTurn() { //A half turn for each pokemon
+	private void fullTurn() { //comprised of a half turn for each pokemon
 		player.setAction(LostMethods.none);
 		enemy.setAction(LostMethods.none); // both trainers have their action reset to none
 		selectAction(player);
@@ -52,6 +52,10 @@ public class Battle {
 			halfTurn(player);
 			if(playerPokemon.hpRemaining > 0 && enemyPokemon.hpRemaining > 0){
 				halfTurn(enemy);
+			}
+			else{
+				System.out.println("Someone fainted.");
+				return;
 			}
 		}
 		else{
@@ -85,7 +89,7 @@ public class Battle {
 			user = enemyPokemon;
 		}
 
-		if(action instanceof Move){
+		if(action instanceof Move){//was always told not to use instanceof!!
 			fight(user, (Move)action);
 		}
 		else if(action == LostMethods.bag){
@@ -135,18 +139,24 @@ public class Battle {
 		else{
 			user = enemyPokemon;
 		}
+		
+		if(!user.hasPPLeft()){
+			System.out.println(user + " has no PP left for any move!");
+			trainer.setAction(new Move(MoveList.struggle));
+			return;
+		}
 
 		LostMethods.printMoveSet(user);
 		System.out.println(" Chose the move for " + user + " to use:  (Type 1 through 4 then press Enter)");
 
-		Action action = LostMethods.none;
-		while(action == LostMethods.none){
+		Move moveUsed = new Move(MoveList.none);
+		while(moveUsed.ppLeft <= 0){ //while(moveUsed == LostMethods.none){
 			try{
 				switch(in.nextInt()){ //User input selects move to use
-				case 1:action = user.move1;break;
-				case 2:action = user.move2;break;
-				case 3:action = user.move3;break;
-				case 4:action = user.move4;break;
+				case 1:moveUsed = user.move1;break;
+				case 2:moveUsed = user.move2;break;
+				case 3:moveUsed = user.move3;break;
+				case 4:moveUsed = user.move4;break;
 				default:;System.out.println("Invalid input int! Must be 1 through 4");
 				}
 			}
@@ -154,20 +164,12 @@ public class Battle {
 				System.out.println("The input must be an integer."); 
 				in.next(); //shifts focus to the next thing typed (avoids infinite loop)
 			}
-			trainer.setAction(action); //sets action so the loop in selectAction() ends
+			trainer.setAction(moveUsed); //sets action so the loop in selectAction() ends
 		}
 	}
 
 	private void fight(Pokemon user, Move move){ //Basically a turn for a single pokemon
-
-		int moveNumber = 0;
-		if(move == user.move1)moveNumber = 1;
-		else if(move == user.move2)moveNumber = 2;
-		else if(move == user.move3)moveNumber = 3;
-		else if(move == user.move4)moveNumber = 4;
-		else System.out.println("Problem in fight()");
-
-
+		
 		Pokemon target; //sets the other pokemon to the target
 		if(user == playerPokemon){
 			target = enemyPokemon;
@@ -181,27 +183,15 @@ public class Battle {
 		}
 		
 		if(user.canAttack){
-			useMove(user, target, moveNumber);
+			useMove(user, target, move);
 		}
 	}
 
-	public void useMove(Pokemon user, Pokemon target, int moveNumber){
+	public void useMove(Pokemon user, Pokemon target, Move move){
+		move.ppLeft--; //should be a method for pp!
 
-		if(!PPLeft(user, moveNumber)){
-			return;
-		}
-
-		Move move = null;
-		switch(moveNumber){
-		case 1: move = user.move1;user.move1PP--;break;
-		case 2: move = user.move2;user.move2PP--;break;
-		case 3: move = user.move3;user.move3PP--;break;
-		case 4: move = user.move4;user.move4PP--;break;
-		default: System.out.println("Invalid moveNumber given to useMove()");
-		}
-
-		double chanceOfHit = ((move.accuracy)/100d)*(user.stats.accuracy.getBattleValue()/target.stats.evasion.getBattleValue());
-		if(chanceOfHit > rand.nextDouble() || move.accuracy == 0){ //the attack hits no matter what if accuracy is 0
+		double chanceOfHit = ((move.moveName.accuracy)/100d)*(user.stats.accuracy.getBattleValue()/target.stats.evasion.getBattleValue());
+		if(chanceOfHit > rand.nextDouble() || move.moveName.accuracy == 0){ //the attack hits no matter what if accuracy is 0
 			move.useMove(user, target);
 		}
 		else{
@@ -276,15 +266,16 @@ public class Battle {
 
 
 	public boolean PPLeft(Pokemon user, int moveNumber){
-		int ppLeft;
-		switch(moveNumber){
-		case 1:ppLeft = user.move1PP;break;
-		case 2:ppLeft = user.move2PP;break;
-		case 3:ppLeft = user.move3PP;break;
-		case 4:ppLeft = user.move4PP;break;
-		default:System.out.println("Invalid moveNumber in PPLeft()");
-		return false;
+		int ppLeft = 0;
+		
+		switch(moveNumber) {
+		case 1: ppLeft = user.move1.ppLeft;break;
+		case 2: ppLeft = user.move2.ppLeft;break;
+		case 3: ppLeft = user.move3.ppLeft;break;
+		case 4: ppLeft = user.move4.ppLeft;break;
+		default: System.out.println("Problem in PPLeft()");
 		}
+		
 		if(ppLeft > 0){
 			return true;
 		}

@@ -5,11 +5,11 @@ public class TestBattle {
 		Player player = new Player("Player", 1, 1);
 		Trainer mike = new Hiker("Hiker Mike", 4,4); //arbitrary coordinates
 		
-		Species pikachu = new Species(Type.ELECTRIC);
-		Species squirtle = new Species(Type.WATER);
-		Species charmander = new Species(Type.FIRE);
-		Species bulbasaur = new Species(Type.GRASS, Type.POISON);
-		Species articuno = new Species(Type.ICE, Type.FLYING);
+		Species pikachu = new Species("Pikachu", Type.ELECTRIC);
+		Species squirtle = new Species("Squirtle", Type.WATER);
+		Species charmander = new Species("Charmander", Type.FIRE);
+		Species bulbasaur = new Species("Bulbasaur", Type.GRASS, Type.POISON);
+		Species articuno = new Species("Articuno", Type.ICE, Type.FLYING);
 
 		Pokemon pika = new Pokemon("Pikachu", pikachu );
 		Pokemon charm = new Pokemon("Charmander", charmander);

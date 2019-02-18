@@ -8,12 +8,12 @@ public class Model {
 	private Player player;
 	private Hiker hikerMike;
 	private String message;
-	ArrayList<GamePiece> interactableList;
+	ArrayList<InteractablePiece> interactableList;
 
 	public Model() {
 		this.width = 16;
 		this.height = 16;
-		interactableList = new ArrayList<GamePiece>();
+		interactableList = new ArrayList<InteractablePiece>();
 		player = new Player("Player", 8, 8);
 		hikerMike = new Hiker("Hiker Mike", 3,2);
 		interactableList.add(hikerMike);
@@ -30,12 +30,12 @@ public class Model {
 			player.update(userInput);
 		}
 		if(player.getTryingToInteract()){
-			for(GamePiece gamePiece: interactableList){
-				if(player.getXAhead() == gamePiece.xLoc && player.getYAhead() == gamePiece.yLoc){
-					gamePiece.onInteraction(player);
-					gamePiece.setInteracting(true);
+			for(InteractablePiece interactablePiece: interactableList){
+				if(player.getXAhead() == interactablePiece.xLoc && player.getYAhead() == interactablePiece.yLoc){
+					interactablePiece.onInteraction(player);
+					interactablePiece.setInteracting(true);
 					player.setInteracting(true); // this pauses (stops the game from updating)
-					message = gamePiece.getMessage();
+					message = interactablePiece.getMessage();
 					
 					return; //player can't interact with more than one GamePiece at a time)
 				}

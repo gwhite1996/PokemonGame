@@ -7,10 +7,6 @@ public class Action {
 		this.name = name;
 		this.priority = priority;
 	}
-	public Action(String name){
-		this.name = name;
-		this.priority = 0;
-	}
 	
 	public String getName(){
 		return name;

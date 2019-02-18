@@ -10,10 +10,6 @@ public class Pokemon {
 	Move move2;
 	Move move3;
 	Move move4;
-	int move1PP;
-	int move2PP;
-	int move3PP;
-	int move4PP;
 	Stats stats;
 	private Status status;
 	int statusTurnsRemaining;
@@ -28,24 +24,10 @@ public class Pokemon {
 		
 		status = Status.NONE;
 		
-		setMove(new Move("None", Type.NONE, MoveCategory.NONE, 0, 0, 0), 1); //initializes all moves to NONE
-		setMove(new Move("None", Type.NONE, MoveCategory.NONE, 0, 0, 0), 2);
-		setMove(new Move("None", Type.NONE, MoveCategory.NONE, 0, 0, 0), 3);
-		setMove(new Move("None", Type.NONE, MoveCategory.NONE, 0, 0, 0), 4);
-	}
-	
-	public void setMove(Move move, int moveNumber){
-		switch(moveNumber){
-		case 1: move1 = move;
-		move1PP = move1.basePP;return;
-		case 2: move2 = move;
-		move2PP = move2.basePP;return;
-		case 3: move3 = move;
-		move3PP = move3.basePP;return;
-		case 4: move4 = move;
-		move4PP = move4.basePP;return;
-		default: System.out.println("Invalid moveNumber given to useMove()");
-		}
+		move1 = new Move(MoveList.none);
+		move2 = new Move(MoveList.none);
+		move3 = new Move(MoveList.none);
+		move4 = new Move(MoveList.none);
 	}
 	
 	public void swapMoves(int firstMoveNumber, int secondMoveNumber){
@@ -71,10 +53,6 @@ public class Pokemon {
 		Move tempMove = firstMove; //swaps moves
 		firstMove = secondMove;
 		secondMove = tempMove;
-		
-		int tempPP = move1PP; //swaps PP remaining
-		move1PP = move2PP;
-		move2PP = tempPP;
 	}
 
 	public Status getStatus() {
@@ -85,8 +63,26 @@ public class Pokemon {
 		this.status = status;
 	}
 	
+	boolean hasPPLeft(){ //if false, only struggle can be used
+		if(move1.ppLeft > 0)return true;
+		if(move2.ppLeft > 0)return true;
+		if(move3.ppLeft > 0)return true;
+		if(move4.ppLeft > 0)return true;
+		return false;
+	}
+	
 	@Override
 	public String toString(){
 		return name;
+	}
+
+	public void setMove(MoveName moveName, int moveNumber){
+		switch(moveNumber) {
+		case 1: move1 = new Move(moveName);break;
+		case 2: move2 = new Move(moveName);break;
+		case 3: move3 = new Move(moveName);break;
+		case 4: move4 = new Move(moveName);break;
+		default: System.out.println("Invalid moveNumber in setMove()");return;
+		}
 	}
 }

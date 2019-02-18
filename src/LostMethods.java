@@ -3,30 +3,19 @@ public class LostMethods { //these methods don't have a home. Just yet.
 	
 	//I'm not sure where i should put these
 	public static final Action bag = new Action("Bag", 6);
-	public static final Action switchPokemon = new Action("Switch Pokemon", 7);
+	public static final Action switchPokemon = new Action("Switch Pokemon", 6);
 	public static final Action flee = new Action("Flee", -7);
 	public static final Action none = new Action("None", -10);
 	
 	
 	public static void printMoveSet(Pokemon pokemon){
 		System.out.println("-------" + pokemon + "'s Move Set-------");
-		Move move;
-		int ppLeft;
-		for(int i=1; i<=4; i ++){ //Prints each move that isn't "None"
-			switch(i){
-			case 1:move = pokemon.move1; ppLeft = pokemon.move1PP; break;
-			case 2:move = pokemon.move2; ppLeft = pokemon.move2PP; break;
-			case 3:move = pokemon.move3; ppLeft = pokemon.move3PP; break;
-			default :move = pokemon.move4; ppLeft = pokemon.move4PP; break;
-			}
-			if(!move.toString().equals("None")){
-				System.out.println("[" + i + "] " + move + ": " + move.type + ", " + move.moveCategory + ", PP(" + ppLeft + "/" + move.basePP + "), Power(" + move.power + "), Accuracy(" + move.accuracy + ")");
-			}
-		}
+		System.out.print("[1] ");pokemon.move1.printMove();
+		System.out.print("[2] ");pokemon.move2.printMove();
+		System.out.print("[3] ");pokemon.move3.printMove();
+		System.out.print("[4] ");pokemon.move4.printMove();
+		System.out.println("------------------------------");
 	}
-	
-	
-	
 	
 	public static void printHealth(Pokemon pokemon){
 		System.out.println(pokemon + "'s HP is: " + pokemon.hpRemaining + "/" + pokemon.stats.totalHP + ", Status Ailment: " + pokemon.getStatus());
@@ -47,10 +36,10 @@ public class LostMethods { //these methods don't have a home. Just yet.
 	
 	public static void fillPP(Pokemon pokemon, int moveNumber){ //Max Ether
 		switch(moveNumber){
-		case 1:pokemon.move1PP = pokemon.move1.basePP;break;
-		case 2:pokemon.move2PP = pokemon.move2.basePP;break;
-		case 3:pokemon.move3PP = pokemon.move3.basePP;break;
-		case 4:pokemon.move4PP = pokemon.move4.basePP;break;
+		case 1:pokemon.move1.ppLeft = pokemon.move1.totalPP;break;
+		case 2:pokemon.move1.ppLeft = pokemon.move1.totalPP;break;
+		case 3:pokemon.move1.ppLeft = pokemon.move1.totalPP;break;
+		case 4:pokemon.move1.ppLeft = pokemon.move1.totalPP;break;
 		default:System.out.println("Invalid moveNumber in fillPP()");
 		}
 	}

@@ -1,19 +1,31 @@
 
 
 public class Species { //all pokemon are hardy nature with 0 EV and IV
-	String name;
+	String speciesName;
 	Type type1;
 	Type type2;
 	Species nextEvolution;
 	int evolutionLevel;
 	Stats baseStats;
 	
-	public Species(Type type){
-		type1 = type;
-		type2 = Type.NONE;
+	
+	public Species(String speciesName, Type type){
+		this.speciesName = speciesName;
+		this.type1 = type;
+		this.type2 = Type.NONE;
 	}
-	public Species(Type type1, Type type2){
+	public Species(String speciesName, Type type1, Type type2){
+		this.speciesName = speciesName;
 		this.type1 = type1;
 		this.type2 = type2;
+	}
+	
+	
+	public String getName(){
+		return speciesName;
+	}
+	@Override
+	public String toString(){
+		return getName();
 	}
 }
