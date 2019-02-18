@@ -24,10 +24,10 @@ public class Pokemon {
 		
 		status = Status.NONE;
 		
-		move1 = new Move(MoveList.none);
-		move2 = new Move(MoveList.none);
-		move3 = new Move(MoveList.none);
-		move4 = new Move(MoveList.none);
+		move1 = MoveList.none;
+		move2 = MoveList.none;
+		move3 = MoveList.none;
+		move4 = MoveList.none;
 	}
 	
 	public void swapMoves(int firstMoveNumber, int secondMoveNumber){

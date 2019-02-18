@@ -12,13 +12,13 @@ public enum Type {
 	PSYCHIC("psychic", new String[]{"FIGHTING", "POISON"}, new String[]{"PSYCHIC", "STEEL"}, new String[]{"DARK"}),
 	ROCK("rock", new String[]{"FIRE", "ICE", "FLYING", "BUG"}, new String[]{"FIGHTING", "GROUND", "STEEL"}, new String[]{}),
 	ICE("ice", new String[]{"GRASS", "GROUND", "FLYING", "DRAGON"}, new String[]{"FIRE", "WATER", "ICE", "STEEL"}, new String[]{}),
-	BUG("bug", new String[]{}, new String[]{"GRASS", "PSYCHIC", "DARK"}, new String[]{"FIRE", "FIGHTING", "POISON", "FLYING", "GHOST", "STEEL", "FAIRY"}),
+	BUG("bug", new String[]{"GRASS", "PSYCHIC", "DARK"}, new String[]{"FIRE", "FIGHTING", "POISON", "FLYING", "GHOST", "STEEL", "FAIRY"}, new String[]{}),
 	DRAGON("dragon", new String[]{"DRAGON"}, new String[]{"STEEL"}, new String[]{"FAIRY"}),
 	GHOST("ghost", new String[]{"PSYCHIC", "GHOST"}, new String[]{"DARK"}, new String[]{"NORMAL"}),
 	DARK("dark", new String[]{"PSYCHIC", "GHOST"}, new String[]{"FIGHTING", "DARK", "FAIRY"}, new String[]{}),
 	STEEL("steel", new String[]{"ICE", "ROCK", "FAIRY"}, new String[]{"FIRE", "WATER", "ELECTRIC", "STEEL"}, new String[]{}),
 	FAIRY("fairy", new String[]{"FIGHTING", "DRAGON", "DARK"}, new String[]{"FIRE", "POISON", "STEEL"}, new String[]{}),
-	NONE("none", new String[]{}, new String[]{}, new String[]{}); //prevents null pointer exceptions for pokemon with just one type
+	NONE("none", new String[]{}, new String[]{}, new String[]{}); //prevents null pointer exceptions for pokemon with just one type. Also is the type of 'Struggle'
 	
 	private String name = null;
 	private String[] superEffective;

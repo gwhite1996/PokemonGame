@@ -28,7 +28,7 @@ public class MoveName{ //important to realize this does NOT extend Action
 		System.out.println(this + " doesn't do anything! You must define it's useMove() method");
 	}
 		
-	void damageAttack(Pokemon user, Pokemon target){
+	int damageAttack(Pokemon user, Pokemon target){
 		double typeEffectiveness = Type.typeEffectiveness(this.type, target.species);
 		double stab = Type.stab(this.type, user.species);
 		double criticalHit = criticalHit();
@@ -52,6 +52,7 @@ public class MoveName{ //important to realize this does NOT extend Action
 		System.out.println(user + " hit " + target + " with " + this + " for " + damage + " damage.");
 		System.out.println(" It was " + typeEffectivenessMessage(typeEffectiveness) + " and STAB was " + stab + "."); //temporarily here);
 		target.hpRemaining -= damage;
+		return damage; //the return value is only sometimes used
 	}
 
 	void statusAttack(Pokemon user, Pokemon target, Status statusInflicted, int chancePercentage) {
@@ -81,12 +82,19 @@ public class MoveName{ //important to realize this does NOT extend Action
 	}
 	
 	void healAttack(Pokemon user, int hpRestored){
-		int hpActuallyRestored = hpRestored;
 		if(user.hpRemaining + hpRestored > user.stats.totalHP){
-			hpActuallyRestored = user.stats.totalHP - user.hpRemaining;
+			hpRestored = user.stats.totalHP - user.hpRemaining;
 		}
-		user.hpRemaining += hpActuallyRestored;
-		System.out.println(user + " healed itself for " + hpActuallyRestored + " HP.");
+		user.hpRemaining += hpRestored;
+		System.out.println(user + " healed itself for " + hpRestored + " HP.");
+	}
+	
+	void takeRecoil(Pokemon user, int hpTaken){
+		if(user.hpRemaining - hpTaken < 0){
+			hpTaken = user.hpRemaining;
+		}
+		user.hpRemaining -= hpTaken;
+		System.out.println(user + " took "+ hpTaken + " damage from recoil.");
 	}
 	
 	

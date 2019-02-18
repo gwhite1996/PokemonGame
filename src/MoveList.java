@@ -1,17 +1,23 @@
 
 public class MoveList {
 	
-	final static MoveName none = new MoveName("None", Type.NONE, MoveCategory.NONE, 0, 0, 0){
+	
+	final static MoveName noneMoveName = new MoveName("None", Type.NONE, MoveCategory.NONE, 0, 0, 0){
 		public void useMoveName(Pokemon user, Pokemon target){
 			System.out.println("MoveName \"None\" used. You shouldn't be able to do this!");
 		}
 	};
-	final static MoveName struggle = new MoveName("Struggle", Type.NONE, MoveCategory.NONE, 50, 100, 1000) {
+	final static MoveName struggleMoveName = new MoveName("Struggle", Type.NONE, MoveCategory.NONE, 50, 100, 1000) {
 		public void useMoveName(Pokemon user, Pokemon target){
-			damageAttack(user, target);
-			healAttack(user, -user.stats.totalHP/4); //takes away a quarter of the users health
+			int damageDealt = damageAttack(user, target);
+			takeRecoil(user, damageDealt/2);
 		}
 	};
+	final static Move none = new Move(noneMoveName);
+	final static Move struggle = new Move(struggleMoveName); //each pokemon uses the same MOVE for 'struggle' and 'none'
+	
+	
+	
 	
 	final static MoveName tackle = new MoveName("Tackle", Type.NORMAL, MoveCategory.PHYSICAL, 40, 100, 35){
 		public void useMoveName(Pokemon user, Pokemon target){

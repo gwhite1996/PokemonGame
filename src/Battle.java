@@ -140,17 +140,17 @@ public class Battle {
 			user = enemyPokemon;
 		}
 		
-		if(!user.hasPPLeft()){
+		if(user.hasPPLeft()){
 			System.out.println(user + " has no PP left for any move!");
-			trainer.setAction(new Move(MoveList.struggle));
+			trainer.setAction(MoveList.struggle);
 			return;
 		}
 
 		LostMethods.printMoveSet(user);
 		System.out.println(" Chose the move for " + user + " to use:  (Type 1 through 4 then press Enter)");
 
-		Move moveUsed = new Move(MoveList.none);
-		while(moveUsed.ppLeft <= 0){ //while(moveUsed == LostMethods.none){
+		Move moveUsed = MoveList.none;
+		do{
 			try{
 				switch(in.nextInt()){ //User input selects move to use
 				case 1:moveUsed = user.move1;break;
@@ -166,6 +166,7 @@ public class Battle {
 			}
 			trainer.setAction(moveUsed); //sets action so the loop in selectAction() ends
 		}
+		while(moveUsed.ppLeft <= 0);
 	}
 
 	private void fight(Pokemon user, Move move){ //Basically a turn for a single pokemon
@@ -188,7 +189,7 @@ public class Battle {
 	}
 
 	public void useMove(Pokemon user, Pokemon target, Move move){
-		move.ppLeft--; //should be a method for pp!
+		move.ppLeft--;
 
 		double chanceOfHit = ((move.moveName.accuracy)/100d)*(user.stats.accuracy.getBattleValue()/target.stats.evasion.getBattleValue());
 		if(chanceOfHit > rand.nextDouble() || move.moveName.accuracy == 0){ //the attack hits no matter what if accuracy is 0

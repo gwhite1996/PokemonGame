@@ -68,6 +68,7 @@ public class TestBattle {
 		
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
 		
+		
 		Battle battleMike1 = new Battle(player, mike);
 	}
 	
