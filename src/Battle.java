@@ -140,7 +140,7 @@ public class Battle {
 			user = enemyPokemon;
 		}
 		
-		if(user.hasPPLeft()){
+		if(!user.hasPPLeft()){
 			System.out.println(user + " has no PP left for any move!");
 			trainer.setAction(MoveList.struggle);
 			return;
