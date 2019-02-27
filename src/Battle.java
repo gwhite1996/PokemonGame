@@ -111,14 +111,15 @@ public class Battle {
 		}
 
 
-		System.out.println("What will " + trainer + " do?\n[1] Fight (" + pokemon + ")\n[2] Bag\n[3] Swap Pokemon\n[4] Run");
+		boolean actionSelected = false;
 
-		while(trainer.getAction() == LostMethods.none){
+		do{
+			System.out.println("What will " + trainer + " do?\n[1] Fight (" + pokemon + ")\n[2] Bag\n[3] Swap Pokemon\n[4] Run");
 			try{
 				switch(in.nextInt()){
-				case 1:chooseMove(trainer); break;
-				case 2:trainer.setAction(LostMethods.bag); trainer.bag.chooseItem(); break;
-				case 3:trainer.setAction(LostMethods.switchPokemon); break;
+				case 1:actionSelected = trainer.chooseMove(pokemon); break;
+				case 2:actionSelected = trainer.bag.chooseItem(); break;
+				case 3:actionSelected = trainer.switchPokemon(); break;
 				case 4:System.out.println("There is no running from a trainer battle you big fat pussy!");break;
 				default:System.out.println("1 through 4 must be selected.");
 				}
@@ -128,46 +129,10 @@ public class Battle {
 				in.next(); //shifts focus to the next thing typed (avoids infinite loop)
 			}
 		}
+		while(!actionSelected);
 	}
 
-
-	private void chooseMove(Trainer trainer){
-		Pokemon user;
-		if(trainer == player){
-			user = playerPokemon;
-		}
-		else{
-			user = enemyPokemon;
-		}
-		
-		if(!user.hasPPLeft()){
-			System.out.println(user + " has no PP left for any move!");
-			trainer.setAction(MoveList.struggle);
-			return;
-		}
-
-		LostMethods.printMoveSet(user);
-		System.out.println(" Chose the move for " + user + " to use:  (Type 1 through 4 then press Enter)");
-
-		Move moveUsed = MoveList.none;
-		do{
-			try{
-				switch(in.nextInt()){ //User input selects move to use
-				case 1:moveUsed = user.move1;break;
-				case 2:moveUsed = user.move2;break;
-				case 3:moveUsed = user.move3;break;
-				case 4:moveUsed = user.move4;break;
-				default:;System.out.println("Invalid input int! Must be 1 through 4");
-				}
-			}
-			catch(InputMismatchException e){
-				System.out.println("The input must be an integer."); 
-				in.next(); //shifts focus to the next thing typed (avoids infinite loop)
-			}
-			trainer.setAction(moveUsed); //sets action so the loop in selectAction() ends
-		}
-		while(moveUsed.ppLeft <= 0);
-	}
+	
 
 	private void fight(Pokemon user, Move move){ //Basically a turn for a single pokemon
 		

@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 
@@ -15,30 +17,47 @@ public class Bag {
 		itemList.add(item);
 	}
 	
-	public void chooseItem(){
+	public boolean chooseItem(){
+		removeEmptyItems();
+		if(itemList.size() < 1){
+			System.out.println("The bag is empty!");
+			return false;
+		}
+		
 		printBagContents();
-		System.out.println("Type the index of the item and then press enter.");
+		System.out.println(" Type the index of the item and then press enter.");
+		System.out.println(" Type 0 to exit");
 		
 		Item item = null;
 		while(item == null){
 			try{
-				item = itemList.get(in.nextInt()-1); //User input selects item
+				int index = in.nextInt();
+				if(index == 0) {
+					return false;
+				}
+				item = itemList.get(index-1); //User input selects item
 			}
 			catch(IndexOutOfBoundsException e){
 				System.out.println("Invalid index!");
 			}
-		}
-		item.use();
-	}
-	
-	public void removeEmptyItems(){
-		for(Item item: itemList){
-			if(item.count <= 0){
-				itemList.remove(item);
+			catch(InputMismatchException e){
+				System.out.println("Input must be an integer.");
+				in.next();
 			}
 		}
+		
+		item.use();
+		return true;
 	}
 	
+	
+	public void removeEmptyItems(){
+		for(Iterator<Item> itemIterator = itemList.iterator(); itemIterator.hasNext(); ){ //iterator needed to remove items
+		    if(itemIterator.next().count <= 0){
+		    	itemIterator.remove();
+		    }
+		}
+	}
 	
 	
 	public void printBagContents(){
@@ -49,6 +68,7 @@ public class Bag {
 			System.out.println("[" + i + "] " + item + " (" + item.count + ")");
 			i++;
 		}
+		System.out.println("........................");
 	}
 }
 

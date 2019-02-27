@@ -119,5 +119,9 @@ public class MoveList {
 	};
 	
 	
-	final static MoveName shoot = new MoveName("Shoot With Gun", Type.DARK, MoveCategory.PHYSICAL, 2000, 100, 3);
+	final static MoveName shoot = new MoveName("Shoot With Gun", Type.DARK, MoveCategory.PHYSICAL, 2000, 100, 3){
+		public void useMoveName(Pokemon user, Pokemon target){
+			damageAttack(user, target);
+		}
+	};
 }

@@ -26,6 +26,7 @@ public class TestBattle {
 		pika.setMove(MoveList.tailWhip, 1);
 		pika.setMove(MoveList.thunderShock, 2);
 		pika.setMove(MoveList.thunderWave, 3);
+		pika.setMove(MoveList.shoot, 3);
 		pika.setMove(MoveList.thunder, 4);
 		squirt.setMove(MoveList.tackle, 1);
 		squirt.setMove(MoveList.tailWhip, 2);
