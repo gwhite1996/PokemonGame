@@ -117,11 +117,26 @@ public class MoveList {
 			healAttack(user, user.stats.totalHP/2);
 		}
 	};
-	
-	
-	final static MoveName shoot = new MoveName("Shoot With Gun", Type.DARK, MoveCategory.PHYSICAL, 2000, 100, 3){
+	final static MoveName stringShot = new MoveName("String Shot", Type.BUG, MoveCategory.STATUS, 0, 95, 40){
+		public void useMoveName(Pokemon user, Pokemon target){
+			statAttack(user, target, "speed", -2);
+		}
+	};
+	final static MoveName bugBite = new MoveName("Bug Bite", Type.BUG, MoveCategory.PHYSICAL, 60, 100, 20){
 		public void useMoveName(Pokemon user, Pokemon target){
 			damageAttack(user, target);
+		}
+	};
+	
+	
+	final static MoveName shoot1 = new MoveName("Shoot With Gun", Type.DARK, MoveCategory.PHYSICAL, 5000, 100, 3){
+		public void useMoveName(Pokemon user, Pokemon target){
+			damageAttack(user, target);
+		}
+	};
+	final static MoveName shoot2 = new MoveName("Shoot Self", Type.DARK, MoveCategory.PHYSICAL, 5000, 100, 3){
+		public void useMoveName(Pokemon user, Pokemon target){
+			damageAttack(user, user);
 		}
 	};
 }

@@ -10,13 +10,13 @@ public class Battle {
 	private Pokemon enemyPokemon;
 	boolean playerAttacksFirst;
 	private Random rand = new Random();
-	Scanner in = new Scanner(System.in); // should probably be in a higher up class
+	
 
 	public Battle(Player player, Trainer enemy){
 		this.player = player;
 		this.enemy = enemy;
-		playerPokemon = player.party.getPokemon(0);
-		enemyPokemon = enemy.party.getPokemon(0);
+		playerPokemon = player.party.getPokemon(1);
+		enemyPokemon = enemy.party.getPokemon(1);
 
 		resetAllStatStages();
 		while(!(player.party.allFainted() || enemy.party.allFainted())){
@@ -73,15 +73,25 @@ public class Battle {
 		else if(action == LostMethods.bag){
 			System.out.println("This is where using an item should happen");
 		}
-		else if(action == LostMethods.switchPokemon){
-			System.out.println("This is where switching pokemon should happen.");
+		else if(action instanceof SwapPokemon){
+			Pokemon nextPokemon = ((SwapPokemon)action).getNextPokemon();
+			
+			if(trainer == player){ //temp. there has to be a better way than just constantly checking this
+				playerPokemon = nextPokemon;
+			}
+			else{
+				enemyPokemon = nextPokemon;
+			}
+
+			
+			System.out.println(user + " has been switched out for " + nextPokemon);
 		}
 		
 		if(isFainted(playerPokemon)){
-			swapPokemon(player);
+			player.party.swapFromParty(true);
 		}
 		if(isFainted(enemyPokemon)){
-			swapPokemon(enemy);
+			enemy.party.swapFromParty(true);
 		}
 		
 		if(target.getStatus() == Status.FAINTED){
@@ -108,32 +118,25 @@ public class Battle {
 
 
 	public void selectAction(Trainer trainer){
-		Pokemon pokemon;
+		Pokemon user;
 		if(trainer == player){
-			pokemon = playerPokemon;
+			user = playerPokemon;
 		}
 		else{
-			pokemon = enemyPokemon;
+			user = enemyPokemon;
 		}
 
 
 		boolean actionSelected = false;
 
 		do{
-			System.out.println("What will " + trainer + " do?\n[1] Fight (" + pokemon + ")\n[2] Bag\n[3] Swap Pokemon\n[4] Run");
-			try{
-				switch(in.nextInt()){
-				case 1:actionSelected = trainer.chooseMove(pokemon); break;
+			System.out.println("What will " + trainer + " do?\n[1] Fight (" + user + ")\n[2] Bag\n[3] Swap Pokemon\n[4] Run");
+				switch(LostMethods.chooseOption(1, 4)){
+				case 1:actionSelected = trainer.chooseMove(user); break;
 				case 2:actionSelected = trainer.bag.chooseItem(); break;
-				case 3:actionSelected = trainer.switchPokemon(); break;
+				case 3:actionSelected = trainer.willSwapPokemon(); break;
 				case 4:System.out.println("There is no running from a trainer battle you big fat pussy!");break;
-				default:System.out.println("1 through 4 must be selected.");
 				}
-			}
-			catch(InputMismatchException e){
-				System.out.println("The input must be an integer."); 
-				in.next(); //shifts focus to the next thing typed (avoids infinite loop)
-			}
 		}
 		while(!actionSelected);
 	}
@@ -170,20 +173,41 @@ public class Battle {
 			System.out.println(user + " used " + move + " but it missed!");
 		}
 	}
+	
+	
+	
+/*
+	public boolean swapPokemon(Trainer trainer, boolean mustSwap){
+		Pokemon selectedPokemon = null;
 
-	public void swapPokemon(Trainer trainer){
-		System.out.println(trainer + " needs to select the next pokemon to bring out. (1 through 6)");
-
-		Pokemon nextPokemon = null;
-
-		while(nextPokemon == null || nextPokemon.getStatus() == Status.FAINTED){
-			trainer.party.printParty();
-
+		while(selectedPokemon == null || selectedPokemon.getStatus() == Status.FAINTED){
 			try{
-				nextPokemon = trainer.party.getPokemon(in.nextInt()-1); //User input selects next pokemon
-			}
-			catch(IndexOutOfBoundsException e){
-				System.out.println("Index out of party bounds!");
+				trainer.party.printParty();
+				
+				if(mustSwap) {
+					System.out.println(trainer + " needs to select the next pokemon to bring out. (1 through " + trainer.party.partyCount + ")");
+				}
+				else {
+					System.out.println(" Type the index of the pokemon to bring out and then press enter.");
+					System.out.println(" Type 0 to exit");
+				}
+				
+				switch(in.nextInt()){
+				case 0:
+					if(!mustSwap){
+						return false;
+					}
+					else{
+						break;
+					}
+				case 1:selectedPokemon = trainer.party.getPokemon(1);break;
+				case 2:selectedPokemon = trainer.party.getPokemon(2);break;
+				case 3:selectedPokemon = trainer.party.getPokemon(3);break;
+				case 4:selectedPokemon = trainer.party.getPokemon(4);break;
+				case 5:selectedPokemon = trainer.party.getPokemon(5);break;
+				case 6:selectedPokemon = trainer.party.getPokemon(6);break;
+				default:;System.out.println("Invalid input integer!");
+				}
 			}
 			catch(InputMismatchException e){
 				System.out.println("The input must be an integer."); 
@@ -191,22 +215,23 @@ public class Battle {
 			}
 
 
-			if(nextPokemon == null){
+			if(selectedPokemon == null){
 				System.out.println("You must select an index that holds a pokemon.");
 			}
-			else if(nextPokemon.getStatus() == Status.FAINTED){
-				System.out.println(nextPokemon + " has no HP remaining!");
+			else if(selectedPokemon.getStatus() == Status.FAINTED){
+				System.out.println(selectedPokemon + " has no HP remaining!");
 			}
 		}
 		if(trainer == player){
-			playerPokemon = nextPokemon;
+			playerPokemon = selectedPokemon;
 		}
 		else{
-			enemyPokemon = nextPokemon;
+			enemyPokemon = selectedPokemon;
 		}
-		System.out.println(nextPokemon + " has been switched out!");
+		System.out.println(selectedPokemon + " has been switched out!");
+		return true;
 	}
-
+*/
 
 
 

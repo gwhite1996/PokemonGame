@@ -1,9 +1,12 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class LostMethods { //these methods don't have a home. Just yet.
 	
+	static Scanner in = new Scanner(System.in);
+	
 	//I'm not sure where i should put these
-	public static final Action bag = new Action("Bag", 6);
-	public static final Action switchPokemon = new Action("Switch Pokemon", 6);
+	public static final Action bag = new Action("Bag", 6); //should change this like i did with swapping pokemon
 	public static final Action flee = new Action("Flee", -7);
 	public static final Action none = new Action("None", -10);
 	
@@ -63,5 +66,35 @@ public class LostMethods { //these methods don't have a home. Just yet.
 			}
 		}
 		System.out.println("The entire party has been healed!");
+	}
+	
+	//prevents need for a new try/catch and scanner each time an integer is needed from the user
+	public static int chooseOption(int min, int max){
+		int index = -1;
+		boolean outOfRange = true;
+		
+		while(outOfRange){ //said to be bad practice but seems to be simplest solution here
+			System.out.println("Type a number from " + min + " to " + max + " then press enter.");
+			
+			try{
+				index = in.nextInt();
+			}
+			catch(InputMismatchException e){
+				System.out.println("The input must be an integer."); 
+				in.next(); //shifts focus to the next thing typed (avoids infinite loop)
+				continue;
+			}
+			if(index >= min && index <= max){
+				outOfRange = false;
+			}
+			else {
+				System.out.println("Number out of range.");
+			}
+		}
+		return index;
+	}
+
+	public static void printReturnOption(){
+		System.out.println("[0] Return");
 	}
 }

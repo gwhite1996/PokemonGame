@@ -12,12 +12,14 @@ public class TestBattle {
 		Pokemon squirt = new Pokemon("Squirtle", SpeciesList.squirtle);
 		Pokemon bulb = new Pokemon("Bulbasaur", SpeciesList.bulbasaur );
 		Pokemon arct = new Pokemon("Articuno", SpeciesList.articuno);
+		Pokemon cater = new Pokemon("Caterpie", SpeciesList.caterpie);
 
 		pika.stats = new Stats(44, 27, 21, 25, 25, 41); //each is level 20, serious nature, 0 IVs, O EVs
 		squirt.stats = new Stats(47, 24, 31, 25, 30, 22);
 		charm.stats = new Stats(45, 25, 22, 29, 25, 31);
 		bulb.stats = new Stats(48, 24, 24, 31, 31, 23);
 		arct.stats = new Stats(66, 39, 45, 43, 55, 39);
+		cater.stats = new Stats(48, 17, 19, 13, 13, 23);
 		
 		pika.setMove(MoveList.tailWhip, 1);
 		pika.setMove(MoveList.thunderShock, 2);
@@ -39,8 +41,11 @@ public class TestBattle {
 		arct.setMove(MoveList.iceBeam, 2);
 		arct.setMove(MoveList.blizzard, 3);
 		arct.setMove(MoveList.roost, 4);
+		cater.setMove(MoveList.tackle, 1);
+		cater.setMove(MoveList.stringShot, 2);
+		cater.setMove(MoveList.bugBite, 3);
 		
-		pika.setMove(MoveList.shoot, 2);
+		pika.setMove(MoveList.shoot2, 2);
 		//pika.setMove(MoveList.zapCannon, 4);
 		
 		player.party = new Party();
@@ -48,6 +53,7 @@ public class TestBattle {
 		
 		player.party.add(pika);
 		player.party.add(charm);
+		player.party.add(cater);
 		mike.party.add(squirt);
 		mike.party.add(bulb);
 		mike.party.add(arct);

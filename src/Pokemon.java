@@ -84,4 +84,11 @@ public class Pokemon {
 		default: System.out.println("Invalid moveNumber in setMove()");return;
 		}
 	}
+
+	public void viewSummary(){
+		System.out.println("=======" + this + "'s Summary=======");
+		stats.printStats();
+		System.out.println("====================================");
+		
+	}
 }

@@ -10,8 +10,6 @@ public abstract class Trainer extends TurnablePiece{
 	String battleDefeated;
 	String afterBattle;
 	
-	Scanner in = new Scanner(System.in); // should probably be in a higher up class
-	
 	
 	Party party;
 	Bag bag;
@@ -52,29 +50,21 @@ public abstract class Trainer extends TurnablePiece{
 			return true;
 		}
 		
-		LostMethods.printMoveSet(user);
-		System.out.println(" Chose the move for " + user + " to use:  (Type 1 through 4 then press Enter)");
-		System.out.println(" Type 0 to exit");
-
 		Move moveUsed;
 		do{
 			moveUsed = MoveList.none;
-			try{
-				switch(in.nextInt()){ //User input selects move to use
-				case 0:return false;
-				case 1:moveUsed = user.move1;break;
-				case 2:moveUsed = user.move2;break;
-				case 3:moveUsed = user.move3;break;
-				case 4:moveUsed = user.move4;break;
-				default:;System.out.println("Invalid input int! Must be 0 through 4");
-				}
-				if(!(moveUsed == MoveList.none) && moveUsed.ppLeft <= 0){
-					System.out.println(moveUsed + " has no PP left!");
-				}
+			LostMethods.printReturnOption();
+			LostMethods.printMoveSet(user);
+			
+			switch(LostMethods.chooseOption(0,4)){
+			case 0:return false;
+			case 1:moveUsed = user.move1;break;
+			case 2:moveUsed = user.move2;break;
+			case 3:moveUsed = user.move3;break;
+			case 4:moveUsed = user.move4;break;
 			}
-			catch(InputMismatchException e){
-				System.out.println("The input must be an integer.");
-				in.next(); //shifts focus to the next thing typed (avoids infinite loop)
+			if(!(moveUsed == MoveList.none) && moveUsed.ppLeft <= 0){
+				System.out.println(moveUsed + " has no PP left!");
 			}
 		}
 		while(moveUsed.ppLeft <= 0);
@@ -82,10 +72,13 @@ public abstract class Trainer extends TurnablePiece{
 		return true;
 	}
 	
-	public boolean switchPokemon(){
+	/*
+	public Pokemon switchPokemon(){
 		int index = -1;
+		Pokemon pokemonSelected = null;
+		
 		do{
-			Pokemon pokemonSelected;
+			
 			try{
 				party.printParty();
 				System.out.println(" Type the index of the pokemon to bring out and then press enter.");
@@ -94,7 +87,7 @@ public abstract class Trainer extends TurnablePiece{
 				
 				index = in.nextInt();
 				switch(index){ //User input selects move to use
-				case 0:return false;
+				case 0:break;
 				case 1:pokemonSelected = party.getPokemon(1);break;
 				case 2:pokemonSelected = party.getPokemon(2);break;
 				case 3:pokemonSelected = party.getPokemon(3);break;
@@ -111,8 +104,9 @@ public abstract class Trainer extends TurnablePiece{
 		}
 		while(index < 0 || index > 6);
 		//setAction(moveUsed); //sets action so the loop in selectAction() ends
-		return true;
+		return pokemonSelected;
 	}
+	*/
 	
 	
 	
@@ -125,6 +119,20 @@ public abstract class Trainer extends TurnablePiece{
 	}
 	public void setAction(Action action){
 		this.action = action;
+	}
+	
+	
+	
+	public boolean willSwapPokemon(){
+		Pokemon nextPokemon = party.swapFromParty(false);
+		
+		if(nextPokemon != null){
+			setAction(new SwapPokemon(nextPokemon));
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 }

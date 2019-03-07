@@ -1,3 +1,6 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class Party{
 	Pokemon[] partyArray = new Pokemon[6];
 	int partyCount;
@@ -28,6 +31,61 @@ public class Party{
 		}
 	}
 	
+	//simply selects a pokemon in the party
+	public Pokemon choosePokemon(){
+		Pokemon selectedPokemon = null;
+
+		while(selectedPokemon == null){
+			LostMethods.printReturnOption();
+			printParty();
+			
+			int choice = LostMethods.chooseOption(0,6);
+			if(choice == 0){
+				return null;
+			}
+			else{
+				selectedPokemon = getPokemon(choice);
+			}
+		}
+		return selectedPokemon;
+	}
+		
+	
+	//returns the pokemon to be swapped out. null if the user decides to keep the current pokemon
+	public Pokemon swapFromParty(boolean mustSwap){
+		Pokemon selectedPokemon = null;
+		
+		while(selectedPokemon == null){
+			selectedPokemon = choosePokemon();
+			
+			if(selectedPokemon == null){
+				if(!mustSwap){
+					return null;
+				}
+				else {
+					System.out.println("You must select a pokemon to swap out!");
+				}
+			}
+			else{
+				int choice = -1;
+				while(choice != 0){
+					System.out.println(" What do you want to do with: " + selectedPokemon + "?");
+					System.out.println("[0] Go Back");
+					System.out.println("[1] Summary");
+					System.out.println("[2] Swap Out");
+					
+					switch(choice = LostMethods.chooseOption(0, 2)){
+					case 0:selectedPokemon = null; break;
+					case 1:selectedPokemon.viewSummary(); break;
+					case 2:return selectedPokemon;
+					}
+				}
+			}
+		}
+		System.out.println("Within swapFromParty() Im fairly certain this is impossible to reach");
+		return null;
+	}
+	
 	
 	public boolean allFainted(){
 		for(Pokemon p: partyArray){
@@ -42,17 +100,16 @@ public class Party{
 	}
 
 	public boolean indexWithinParty(int index){
-		if(partyCount == 0){
-			System.out.println("The party is empty!");
-			return false;
-		}
-		else if(index >= 0 && index < partyCount){
+		if(index >= 0 && index < partyCount){
 			return true;
 		}
-		else{
-			System.out.println("Invalid partyArray index argument given. (Must be 0 through " + (partyCount-1) + ")");
-			return false;
+		else if(partyCount == 0){
+			System.out.println("The party is empty!");
 		}
+		else{
+			System.out.println("The party only contains " + partyCount + " pokemon.");
+		}
+		return false;
 	}
 	
 	public void printParty(){
@@ -80,8 +137,8 @@ public class Party{
 	}
 	
 	public Pokemon getPokemon(int partyIndex) {
-		if(indexWithinParty(partyIndex)){
-			return(partyArray[partyIndex]);
+		if(indexWithinParty(partyIndex - 1)){
+			return(partyArray[partyIndex -1]);
 		}
 		return null;
 	}

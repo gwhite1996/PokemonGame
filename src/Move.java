@@ -17,7 +17,7 @@ public class Move extends Action{ //a Move in an instance of a moveName. Each Po
 	public void printMove(){
 		System.out.print(this + ": " + moveName.type + ", " + moveName.moveCategory + ", PP(" + ppLeft + "/" + totalPP + "), Power(" + moveName.power + "), Accuracy(" + moveName.accuracy + ")");
 		if(disabled){
-			System.out.print(", DISABLED");
+			System.out.print(", {DISABLED}");
 		}
 		System.out.println();
 	}

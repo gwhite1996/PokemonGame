@@ -24,6 +24,7 @@ public class Bag {
 			return false;
 		}
 		
+		LostMethods.printReturnOption();
 		printBagContents();
 		System.out.println(" Type the index of the item and then press enter.");
 		System.out.println(" Type 0 to exit");
