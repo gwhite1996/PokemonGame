@@ -13,7 +13,6 @@ public class Pokemon {
 	Stats stats;
 	private Status status;
 	int statusTurnsRemaining;
-	int hpRemaining;
 	boolean canAttack;
 	
 	

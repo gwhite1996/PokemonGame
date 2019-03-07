@@ -1,6 +1,6 @@
 import java.util.Random;
 
-
+//temp this whole class needs to be changed. not every hiker should be hiker mike
 public class Hiker extends Trainer{
 	
 	

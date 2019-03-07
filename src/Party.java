@@ -13,6 +13,7 @@ public class Party{
 			if(partyArray[i] == null){
 				partyArray[i] = pokemon;
 				System.out.println(pokemon + " added.");
+				updatePartyCount();
 				return;
 			}
 		}
@@ -31,7 +32,7 @@ public class Party{
 	public boolean allFainted(){
 		for(Pokemon p: partyArray){
 			if(p != null){
-				if(p.hpRemaining > 0){
+				if(p.getStatus() != Status.FAINTED){
 					return false;
 				}
 			}
@@ -41,22 +42,41 @@ public class Party{
 	}
 
 	public boolean indexWithinParty(int index){
-		if(index >= 0 && index <= 5){
+		if(partyCount == 0){
+			System.out.println("The party is empty!");
+			return false;
+		}
+		else if(index >= 0 && index < partyCount){
 			return true;
 		}
-		else {
-			System.out.println("Invalid partyArray index argument given. (Must be 0 through 5)");
+		else{
+			System.out.println("Invalid partyArray index argument given. (Must be 0 through " + (partyCount-1) + ")");
 			return false;
 		}
 	}
 	
-	
 	public void printParty(){
-		for(int i = 0; i < 6; i++){
+		for(int i = 0; i < partyArray.length; i++){
 			if(partyArray[i] != null){
-				System.out.println("["+ (i+1) + "] " + partyArray[i]);
+				System.out.print("["+ (i+1) + "] " + partyArray[i] + ": HP(" + partyArray[i].stats.hpRemaining + "/" + partyArray[i].stats.totalHP + ")");
+				if(partyArray[i].getStatus() != Status.NONE){
+					System.out.println(" {" + partyArray[i].getStatus() + "}");
+				}
+				else{
+					System.out.println();
+				}
 			}
 		}
+	}
+	
+	public void updatePartyCount(){
+		int count = 0;
+		for(int i = 0; i < partyArray.length; i++){
+			if(partyArray[i] != null){
+				count++;
+			}
+		}
+		partyCount = count;
 	}
 	
 	public Pokemon getPokemon(int partyIndex) {
@@ -65,10 +85,23 @@ public class Party{
 		}
 		return null;
 	}
-	public void setPokemon(Pokemon pokemon, int partyArrayIndex){
-		if(indexWithinParty(partyArrayIndex)){
-			partyArray[partyArrayIndex] = pokemon;
+	
+	//this method should only be used to create trainers from nothing
+	public boolean setPokemon(Pokemon pokemon, int partyArrayIndex){
+		if(partyArrayIndex >= 0 && partyArrayIndex < partyArray.length){
+			if(partyArray[partyArrayIndex] == null) {
+				partyArray[partyArrayIndex] = pokemon;
+				updatePartyCount();
+				return true;
+			}
+			else{
+				System.out.println("within setPokemon() partyArray[" + partyArrayIndex + "] already contains a pokemon");
+				return false;
+			}
 		}
-		//Count should increase if a pokemon is added
+		else{
+			System.out.println("within setPokemon() invalid index given");
+			return false;
+		}
 	}
 }

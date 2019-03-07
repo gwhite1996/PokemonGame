@@ -19,26 +19,10 @@ public class Battle {
 		enemyPokemon = enemy.party.getPokemon(0);
 
 		resetAllStatStages();
-		runUntilEnd();
-		resetAllStatStages();
-	}
-
-
-	public void runUntilEnd(){
 		while(!(player.party.allFainted() || enemy.party.allFainted())){
-			if(playerPokemon.hpRemaining <= 0){
-				System.out.println(playerPokemon + " has fainted!");
-				swapPokemon(player);
-			}
-			if(enemyPokemon.hpRemaining <= 0){
-				System.out.println(enemyPokemon + " has fainted!");
-				swapPokemon(enemy);
-			}
-			else{
-				fullTurn();
-			}
+			fullTurn();
 		}
-
+		resetAllStatStages();
 	}
 
 	private void fullTurn() { //comprised of a half turn for each pokemon
@@ -50,7 +34,7 @@ public class Battle {
 		System.out.println("\n******** Turn Results ********");
 		if(playerActsFirst()){
 			halfTurn(player);
-			if(playerPokemon.hpRemaining > 0 && enemyPokemon.hpRemaining > 0){
+			if(playerPokemon.getStatus() != Status.FAINTED && enemyPokemon.getStatus() != Status.FAINTED){
 				halfTurn(enemy);
 			}
 			else{
@@ -60,7 +44,7 @@ public class Battle {
 		}
 		else{
 			halfTurn(enemy);
-			if(playerPokemon.hpRemaining > 0 && enemyPokemon.hpRemaining > 0){
+			if(playerPokemon.getStatus() != Status.FAINTED && enemyPokemon.getStatus() != Status.FAINTED){
 				halfTurn(player);
 			}
 			else{
@@ -97,6 +81,27 @@ public class Battle {
 		}
 		else if(action == LostMethods.switchPokemon){
 			System.out.println("This is where switching pokemon should happen.");
+		}
+		
+		if(isFainted(playerPokemon)){
+			swapPokemon(player);
+		}
+		if(isFainted(enemyPokemon)){
+			swapPokemon(enemy);
+		}
+	}
+	
+	//called each halfturn to check if either current pokemon has fainted
+	public boolean isFainted(Pokemon pokemon){
+		if(pokemon.stats.hpRemaining <= 0){
+			pokemon.stats.hpRemaining = 0;
+			pokemon.setStatus(Status.FAINTED);
+			
+			System.out.println(pokemon + " has fainted!");
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 
@@ -170,7 +175,7 @@ public class Battle {
 
 		Pokemon nextPokemon = null;
 
-		while(nextPokemon == null || nextPokemon.hpRemaining <= 0){
+		while(nextPokemon == null || nextPokemon.getStatus() == Status.FAINTED){
 			trainer.party.printParty();
 
 			try{
@@ -188,7 +193,7 @@ public class Battle {
 			if(nextPokemon == null){
 				System.out.println("You must select an index that holds a pokemon.");
 			}
-			else if(nextPokemon.hpRemaining <= 0){
+			else if(nextPokemon.getStatus() == Status.FAINTED){
 				System.out.println(nextPokemon + " has no HP remaining!");
 			}
 		}

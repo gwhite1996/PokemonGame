@@ -91,6 +91,7 @@ public abstract class Trainer extends TurnablePiece{
 				System.out.println(" Type the index of the pokemon to bring out and then press enter.");
 				System.out.println(" Type 0 to exit");
 				
+				
 				index = in.nextInt();
 				switch(index){ //User input selects move to use
 				case 0:return false;

@@ -7,6 +7,7 @@ public enum Status{
 	FROZEN,
 	PARALYZED,
 	POISONED,
+	FAINTED,
 	NONE;
 
 
@@ -140,7 +141,7 @@ public enum Status{
 	private static void takeEffectOfBurn(Pokemon pokemon){
 
 		int burnDamage = (int)(((double)pokemon.stats.totalHP)/8.0);
-		pokemon.hpRemaining -= burnDamage;
+		pokemon.stats.hpRemaining -= burnDamage;
 		System.out.println(pokemon + " was hurt for " + burnDamage + " HP by it's burn!");
 	}
 	private static void takeEffectOfFreeze(Pokemon pokemon){
@@ -168,7 +169,7 @@ public enum Status{
 	}
 	private static void takeEffectOfPoison(Pokemon pokemon){
 		int poisonDamage = (int)(((double)pokemon.stats.totalHP)/8.0);
-		pokemon.hpRemaining -= poisonDamage;
+		pokemon.stats.hpRemaining -= poisonDamage;
 		System.out.println(pokemon + " was hurt by poison for " + poisonDamage + " HP!");
 	}
 
@@ -185,8 +186,8 @@ public enum Status{
 		case POISONED:takeEffectOfPoison(pokemon);
 		break;
 		case NONE: //Just returns
-			break;
-		default:System.out.println("Invalid status in TakeEffectOfStatus");
+		break;
+		default:System.out.println("Invalid status in TakeEffectOfStatus " + pokemon + ".getStatus() gives: " + pokemon.getStatus());
 		break;
 		}
 	}

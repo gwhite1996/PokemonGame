@@ -5,17 +5,13 @@ public class TestBattle {
 		Player player = new Player("Player", 1, 1);
 		Trainer mike = new Hiker("Hiker Mike", 4,4); //arbitrary coordinates
 		
-		Species pikachu = new Species("Pikachu", Type.ELECTRIC);
-		Species squirtle = new Species("Squirtle", Type.WATER);
-		Species charmander = new Species("Charmander", Type.FIRE);
-		Species bulbasaur = new Species("Bulbasaur", Type.GRASS, Type.POISON);
-		Species articuno = new Species("Articuno", Type.ICE, Type.FLYING);
+		
 
-		Pokemon pika = new Pokemon("Pikachu", pikachu );
-		Pokemon charm = new Pokemon("Charmander", charmander);
-		Pokemon squirt = new Pokemon("Squirtle", squirtle);
-		Pokemon bulb = new Pokemon("Bulbasaur", bulbasaur );
-		Pokemon arct = new Pokemon("Articuno", articuno);
+		Pokemon pika = new Pokemon("Pikachu", SpeciesList.pikachu );
+		Pokemon charm = new Pokemon("Charmander", SpeciesList.charmander);
+		Pokemon squirt = new Pokemon("Squirtle", SpeciesList.squirtle);
+		Pokemon bulb = new Pokemon("Bulbasaur", SpeciesList.bulbasaur );
+		Pokemon arct = new Pokemon("Articuno", SpeciesList.articuno);
 
 		pika.stats = new Stats(44, 27, 21, 25, 25, 41); //each is level 20, serious nature, 0 IVs, O EVs
 		squirt.stats = new Stats(47, 24, 31, 25, 30, 22);
@@ -26,7 +22,6 @@ public class TestBattle {
 		pika.setMove(MoveList.tailWhip, 1);
 		pika.setMove(MoveList.thunderShock, 2);
 		pika.setMove(MoveList.thunderWave, 3);
-		pika.setMove(MoveList.shoot, 3);
 		pika.setMove(MoveList.thunder, 4);
 		squirt.setMove(MoveList.tackle, 1);
 		squirt.setMove(MoveList.tailWhip, 2);
@@ -45,7 +40,7 @@ public class TestBattle {
 		arct.setMove(MoveList.blizzard, 3);
 		arct.setMove(MoveList.roost, 4);
 		
-		//pika.setMove(MoveList.shoot, 3);
+		pika.setMove(MoveList.shoot, 2);
 		//pika.setMove(MoveList.zapCannon, 4);
 		
 		player.party = new Party();

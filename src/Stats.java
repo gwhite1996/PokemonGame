@@ -2,6 +2,7 @@
 
 public class Stats {
 	int totalHP;
+	int hpRemaining;
 	Stat attack;
 	Stat deffense;
 	Stat spAtk;
@@ -34,7 +35,7 @@ public class Stats {
 	
 	public void printStats(){
 		System.out.println("......... Stats ..........");
-		System.out.println("Total HP(" + totalHP + ")");
+		System.out.println("HP: (" + hpRemaining + "/" + totalHP + ")");
 		attack.printStat();
 		deffense.printStat();
 		spAtk.printStat();

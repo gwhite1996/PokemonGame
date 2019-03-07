@@ -18,7 +18,7 @@ public class LostMethods { //these methods don't have a home. Just yet.
 	}
 	
 	public static void printHealth(Pokemon pokemon){
-		System.out.println(pokemon + "'s HP is: " + pokemon.hpRemaining + "/" + pokemon.stats.totalHP + ", Status Ailment: " + pokemon.getStatus());
+		System.out.println(pokemon + "'s HP is: " + pokemon.stats.hpRemaining + "/" + pokemon.stats.totalHP + ", Status Ailment: " + pokemon.getStatus());
 		if(pokemon.getStatus() != Status.NONE){
 			System.out.println(" Turns of status ailment left: " + pokemon.statusTurnsRemaining);
 		}
@@ -29,7 +29,7 @@ public class LostMethods { //these methods don't have a home. Just yet.
 	}
 	
 	public static void healHP(Pokemon pokemon){ //Max Potion
-		pokemon.hpRemaining = pokemon.stats.totalHP;
+		pokemon.stats.hpRemaining = pokemon.stats.totalHP;
 		
 		System.out.println(pokemon + " has been restored to full health.");
 	}
