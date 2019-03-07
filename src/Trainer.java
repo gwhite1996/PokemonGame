@@ -72,43 +72,6 @@ public abstract class Trainer extends TurnablePiece{
 		return true;
 	}
 	
-	/*
-	public Pokemon switchPokemon(){
-		int index = -1;
-		Pokemon pokemonSelected = null;
-		
-		do{
-			
-			try{
-				party.printParty();
-				System.out.println(" Type the index of the pokemon to bring out and then press enter.");
-				System.out.println(" Type 0 to exit");
-				
-				
-				index = in.nextInt();
-				switch(index){ //User input selects move to use
-				case 0:break;
-				case 1:pokemonSelected = party.getPokemon(1);break;
-				case 2:pokemonSelected = party.getPokemon(2);break;
-				case 3:pokemonSelected = party.getPokemon(3);break;
-				case 4:pokemonSelected = party.getPokemon(4);break;
-				case 5:pokemonSelected = party.getPokemon(5);break;
-				case 6:pokemonSelected = party.getPokemon(6);break;
-				default:;System.out.println("Invalid input int! Must be 0 through 6");
-				}
-			}
-			catch(InputMismatchException e){
-				System.out.println("The input must be an integer.");
-				in.next(); //shifts focus to the next thing typed (avoids infinite loop)
-			}
-		}
-		while(index < 0 || index > 6);
-		//setAction(moveUsed); //sets action so the loop in selectAction() ends
-		return pokemonSelected;
-	}
-	*/
-	
-	
 	
 	@Override
 	public String toString(){

@@ -39,7 +39,7 @@ public class Party{
 			LostMethods.printReturnOption();
 			printParty();
 			
-			int choice = LostMethods.chooseOption(0,6);
+			int choice = LostMethods.chooseOption(0,partyCount);
 			if(choice == 0){
 				return null;
 			}
@@ -54,6 +54,7 @@ public class Party{
 	//returns the pokemon to be swapped out. null if the user decides to keep the current pokemon
 	public Pokemon swapFromParty(boolean mustSwap){
 		Pokemon selectedPokemon = null;
+		System.out.println("Select a pokemon to swap out.");
 		
 		while(selectedPokemon == null){
 			selectedPokemon = choosePokemon();
@@ -70,7 +71,7 @@ public class Party{
 				int choice = -1;
 				while(choice != 0){
 					System.out.println(" What do you want to do with: " + selectedPokemon + "?");
-					System.out.println("[0] Go Back");
+					LostMethods.printReturnOption();
 					System.out.println("[1] Summary");
 					System.out.println("[2] Swap Out");
 					

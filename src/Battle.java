@@ -142,7 +142,6 @@ public class Battle {
 	}
 
 	
-
 	private void fight(Pokemon user, Move move){ //Basically a turn for a single pokemon
 		
 		Pokemon target; //sets the other pokemon to the target
@@ -173,69 +172,6 @@ public class Battle {
 			System.out.println(user + " used " + move + " but it missed!");
 		}
 	}
-	
-	
-	
-/*
-	public boolean swapPokemon(Trainer trainer, boolean mustSwap){
-		Pokemon selectedPokemon = null;
-
-		while(selectedPokemon == null || selectedPokemon.getStatus() == Status.FAINTED){
-			try{
-				trainer.party.printParty();
-				
-				if(mustSwap) {
-					System.out.println(trainer + " needs to select the next pokemon to bring out. (1 through " + trainer.party.partyCount + ")");
-				}
-				else {
-					System.out.println(" Type the index of the pokemon to bring out and then press enter.");
-					System.out.println(" Type 0 to exit");
-				}
-				
-				switch(in.nextInt()){
-				case 0:
-					if(!mustSwap){
-						return false;
-					}
-					else{
-						break;
-					}
-				case 1:selectedPokemon = trainer.party.getPokemon(1);break;
-				case 2:selectedPokemon = trainer.party.getPokemon(2);break;
-				case 3:selectedPokemon = trainer.party.getPokemon(3);break;
-				case 4:selectedPokemon = trainer.party.getPokemon(4);break;
-				case 5:selectedPokemon = trainer.party.getPokemon(5);break;
-				case 6:selectedPokemon = trainer.party.getPokemon(6);break;
-				default:;System.out.println("Invalid input integer!");
-				}
-			}
-			catch(InputMismatchException e){
-				System.out.println("The input must be an integer."); 
-				in.next(); //shifts focus to the next thing typed (avoids infinite loop)
-			}
-
-
-			if(selectedPokemon == null){
-				System.out.println("You must select an index that holds a pokemon.");
-			}
-			else if(selectedPokemon.getStatus() == Status.FAINTED){
-				System.out.println(selectedPokemon + " has no HP remaining!");
-			}
-		}
-		if(trainer == player){
-			playerPokemon = selectedPokemon;
-		}
-		else{
-			enemyPokemon = selectedPokemon;
-		}
-		System.out.println(selectedPokemon + " has been switched out!");
-		return true;
-	}
-*/
-
-
-
-
 
 
 	public void resetAllStatStages(){ //resets stages to 0 for both parties before and after battle
@@ -279,8 +215,7 @@ public class Battle {
 		System.out.println("No pp left!");
 		return false;
 	}
-
-
+	
 
 	public void setPlayerPokemon(Pokemon playerPokemon){
 		this.playerPokemon = playerPokemon;
