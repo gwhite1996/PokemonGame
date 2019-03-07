@@ -10,19 +10,26 @@ public class Item {
 	
 	
 	
-	public boolean use(){
-		if(count > 0){
-			System.out.println(name + " used.");
-			if(count == 1){
-				System.out.println("That was the last one!");
-			}
+	public void use(Pokemon targetPokemon){
+		
+		System.out.println(this + " was used on " + targetPokemon);
+		itemEffect(targetPokemon);
+		if(count == 1){
+			System.out.println("That was the last one!");
+		}
 			count --;
-			return true;
+	}
+	
+	public void itemEffect(Pokemon targetPokemon){
+		System.out.println(this + " doesn't do anything! You must define it's itemEffect() method");
+	}
+	
+	void healItem(Pokemon target, int hpRestored){
+		if(target.stats.hpRemaining + hpRestored > target.stats.totalHP){
+			hpRestored = target.stats.totalHP - target.stats.hpRemaining;
 		}
-		else{ //temp. this is likely unreachable
-			System.out.println("No " + name + " left in bag.");
-			return false;
-		}
+		target.stats.hpRemaining += hpRestored;
+		System.out.println(target + " was healed for for " + hpRestored + " HP.");
 	}
 	
 	

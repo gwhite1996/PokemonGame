@@ -1,5 +1,4 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
+
 
 public abstract class Trainer extends TurnablePiece{
 	private String name;
@@ -99,15 +98,26 @@ public abstract class Trainer extends TurnablePiece{
 	}
 	
 	public boolean willUseItem(){
-		Item itemUsed = bag.chooseItem();
+		Item itemUsed = null;
+		Pokemon targetPokemon = null;
 		
-		if(itemUsed != null) {
-			setAction(new UseItem(itemUsed, null)); //TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEMMMMMMMMMMMMMMMMPPPPPPPPPPPPPPPP should pick pokemon at this point not use null
-			return true;
+		while(targetPokemon == null){
+			itemUsed = bag.chooseItem();
+			
+			if(itemUsed != null){
+				System.out.println("Which pokemon will " + itemUsed + " be used on?");
+				targetPokemon = party.choosePokemon();
+				
+				if(targetPokemon != null){ //the user canceled within choosePokemon()
+					setAction(new UseItem(itemUsed, targetPokemon));
+					return true;
+				}
+			}
+			else{
+				return false;
+			}
 		}
-		else{
-			return false;
-		}
+		return false; //temp. this is likely unreachable
 	}
 	
 }

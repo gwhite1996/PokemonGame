@@ -1,5 +1,3 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class Party{
 	Pokemon[] partyArray = new Pokemon[6];

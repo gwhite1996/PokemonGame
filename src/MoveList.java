@@ -7,7 +7,7 @@ public class MoveList {
 			System.out.println("MoveName \"None\" used. You shouldn't be able to do this!");
 		}
 	};
-	final static MoveName struggleMoveName = new MoveName("Struggle", Type.NONE, MoveCategory.NONE, 50, 100, 1000) {
+	final static MoveName struggleMoveName = new MoveName("Struggle", Type.NONE, MoveCategory.NONE, 50, 100, 1000){
 		public void useMoveName(Pokemon user, Pokemon target){
 			int damageDealt = damageAttack(user, target);
 			takeRecoil(user, damageDealt/2);

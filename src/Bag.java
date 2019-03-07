@@ -1,12 +1,9 @@
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Iterator;
-import java.util.Scanner;
 
 
 public class Bag {
 	private ArrayList<Item> itemList;
-	Scanner in = new Scanner(System.in);
 	
 	
 	public Bag(){

@@ -62,16 +62,15 @@ public class TestBattle {
 		LostMethods.pokemonCenter(player.party);
 		LostMethods.pokemonCenter(mike.party);
 		
-		Item potion = new Item("Potion");
-		Item pokeBall = new Item("Poke Ball");
 		
-		player.bag.add(potion);
-		player.bag.add(pokeBall);
+		
+		player.bag.add(ItemList.potion);
+		player.bag.add(ItemList.pokeBall);
 		
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
 		
 		
-		Battle battleMike1 = new Battle(player, mike);
+		new Battle(player, mike);
 	}
 	
 	

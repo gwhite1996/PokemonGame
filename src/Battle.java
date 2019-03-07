@@ -1,6 +1,4 @@
-import java.util.InputMismatchException;
 import java.util.Random;
-import java.util.Scanner;
 
 
 public class Battle {
@@ -71,7 +69,7 @@ public class Battle {
 			fight(user, (Move)action);
 		}
 		else if(action instanceof UseItem){
-			useItem(((UseItem)action).getItemUsed(), ((UseItem)action).getTargetPokemon());
+			((UseItem)action).getItemUsed().use(((UseItem)action).getTargetPokemon());
 		}
 		else if(action instanceof SwapPokemon){
 			Pokemon nextPokemon = ((SwapPokemon)action).getNextPokemon();
@@ -102,9 +100,6 @@ public class Battle {
 		}
 	}
 	
-	private void useItem(Item itemUsed, Pokemon targetPokemon){
-		System.out.println("This is where " + itemUsed + " would be used on " + targetPokemon);
-	}
 
 	//called each halfturn to check if either current pokemon has fainted
 	public boolean isFainted(Pokemon pokemon){
