@@ -33,23 +33,13 @@ public class Battle {
 
 		System.out.println("\n******** Turn Results ********");
 		if(playerActsFirst()){
-			halfTurn(player);
-			if(playerPokemon.getStatus() != Status.FAINTED && enemyPokemon.getStatus() != Status.FAINTED){
+			if(halfTurn(player)){
 				halfTurn(enemy);
-			}
-			else{
-				System.out.println("Someone fainted.");
-				return;
 			}
 		}
 		else{
-			halfTurn(enemy);
-			if(playerPokemon.getStatus() != Status.FAINTED && enemyPokemon.getStatus() != Status.FAINTED){
+			if(halfTurn(enemy)) {
 				halfTurn(player);
-			}
-			else{
-				System.out.println("Someone fainted.");
-				return;
 			}
 		}
 		System.out.println();
@@ -61,16 +51,20 @@ public class Battle {
 		//enemyPokemon.stats.printStats();
 		System.out.println("******************************\n\n");
 	}
-
-	private void halfTurn(Trainer trainer){
+	
+	//returns false if target faints to prevent the next halfturn
+	private boolean halfTurn(Trainer trainer){
 		Pokemon user;
+		Pokemon target;
 		Action action = trainer.getAction();
 
 		if(trainer == player){
 			user = playerPokemon;
+			target = enemyPokemon;
 		}
 		else{
 			user = enemyPokemon;
+			target = playerPokemon;
 		}
 
 		if(action instanceof Move){//was always told not to use instanceof!!
@@ -88,6 +82,13 @@ public class Battle {
 		}
 		if(isFainted(enemyPokemon)){
 			swapPokemon(enemy);
+		}
+		
+		if(target.getStatus() == Status.FAINTED){
+			return false;
+		}
+		else{
+			return true; //allows the target to carry out their half turn
 		}
 	}
 	
