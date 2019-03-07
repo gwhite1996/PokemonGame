@@ -1,4 +1,4 @@
-public enum Type {
+public enum Type{
 	
 	NORMAL("normal", new String[]{}, new String[]{"ROCK, STEEL"}, new String[]{"GHOST"}),
 	FIRE("fire", new String[]{"GRASS", "ICE", "BUG", "STEEL"}, new String[]{"FIRE", "WATER", "ROCK", "DRAGON"}, new String[]{}), //an empty array as opposed to null avoids null pointer exceptions

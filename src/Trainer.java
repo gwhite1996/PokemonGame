@@ -105,11 +105,21 @@ public abstract class Trainer extends TurnablePiece{
 			itemUsed = bag.chooseItem();
 			
 			if(itemUsed != null){
-				System.out.println("Which pokemon will " + itemUsed + " be used on?");
-				targetPokemon = party.choosePokemon();
-				
-				if(targetPokemon != null){ //the user canceled within choosePokemon()
-					setAction(new UseItem(itemUsed, targetPokemon));
+				if(itemUsed.getItemType() == ItemType.USEDONSELF){
+					System.out.println("Which pokemon will " + itemUsed + " be used on?");
+					targetPokemon = party.choosePokemon();
+					
+					if(targetPokemon != null){
+						setAction(new UseItem(itemUsed, targetPokemon));
+						return true;
+					}
+				}
+				else if(itemUsed.getItemType() == ItemType.OUTOFBATTLE){
+					System.out.println(itemUsed + " can only be used outside of battle!");
+					return false;
+				}
+				else{ //no target pokemon but the move does it's thing
+					setAction(new UseItem(itemUsed, null));
 					return true;
 				}
 			}
