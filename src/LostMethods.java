@@ -6,7 +6,6 @@ public class LostMethods { //these methods don't have a home. Just yet.
 	static Scanner in = new Scanner(System.in);
 	
 	//I'm not sure where i should put these
-	public static final Action bag = new Action("Bag", 6); //should change this like i did with swapping pokemon
 	public static final Action flee = new Action("Flee", -7);
 	public static final Action none = new Action("None", -10);
 	

@@ -98,4 +98,16 @@ public abstract class Trainer extends TurnablePiece{
 		}
 	}
 	
+	public boolean willUseItem(){
+		Item itemUsed = bag.chooseItem();
+		
+		if(itemUsed != null) {
+			setAction(new UseItem(itemUsed, null)); //TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEMMMMMMMMMMMMMMMMPPPPPPPPPPPPPPPP should pick pokemon at this point not use null
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 }

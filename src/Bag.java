@@ -17,38 +17,25 @@ public class Bag {
 		itemList.add(item);
 	}
 	
-	public boolean chooseItem(){
+	public Item chooseItem(){
 		removeEmptyItems();
 		if(itemList.size() < 1){
 			System.out.println("The bag is empty!");
-			return false;
+			return null;
 		}
 		
 		LostMethods.printReturnOption();
 		printBagContents();
-		System.out.println(" Type the index of the item and then press enter.");
-		System.out.println(" Type 0 to exit");
 		
 		Item item = null;
 		while(item == null){
-			try{
-				int index = in.nextInt();
-				if(index == 0) {
-					return false;
-				}
-				item = itemList.get(index-1); //User input selects item
+			int index = LostMethods.chooseOption(0,itemList.size());
+			if(index == 0) {
+				return null;
 			}
-			catch(IndexOutOfBoundsException e){
-				System.out.println("Invalid index!");
-			}
-			catch(InputMismatchException e){
-				System.out.println("Input must be an integer.");
-				in.next();
-			}
+			item = itemList.get(index-1); //User input selects item
 		}
-		
-		item.use();
-		return true;
+		return item;
 	}
 	
 	

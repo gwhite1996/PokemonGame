@@ -19,7 +19,7 @@ public class Item {
 			count --;
 			return true;
 		}
-		else{
+		else{ //temp. this is likely unreachable
 			System.out.println("No " + name + " left in bag.");
 			return false;
 		}

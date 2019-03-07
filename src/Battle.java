@@ -70,8 +70,8 @@ public class Battle {
 		if(action instanceof Move){//was always told not to use instanceof!!
 			fight(user, (Move)action);
 		}
-		else if(action == LostMethods.bag){
-			System.out.println("This is where using an item should happen");
+		else if(action instanceof UseItem){
+			useItem(((UseItem)action).getItemUsed(), ((UseItem)action).getTargetPokemon());
 		}
 		else if(action instanceof SwapPokemon){
 			Pokemon nextPokemon = ((SwapPokemon)action).getNextPokemon();
@@ -102,6 +102,10 @@ public class Battle {
 		}
 	}
 	
+	private void useItem(Item itemUsed, Pokemon targetPokemon){
+		System.out.println("This is where " + itemUsed + " would be used on " + targetPokemon);
+	}
+
 	//called each halfturn to check if either current pokemon has fainted
 	public boolean isFainted(Pokemon pokemon){
 		if(pokemon.stats.hpRemaining <= 0){
@@ -133,7 +137,7 @@ public class Battle {
 			System.out.println("What will " + trainer + " do?\n[1] Fight (" + user + ")\n[2] Bag\n[3] Swap Pokemon\n[4] Run");
 				switch(LostMethods.chooseOption(1, 4)){
 				case 1:actionSelected = trainer.chooseMove(user); break;
-				case 2:actionSelected = trainer.bag.chooseItem(); break;
+				case 2:actionSelected = trainer.willUseItem(); break;
 				case 3:actionSelected = trainer.willSwapPokemon(); break;
 				case 4:System.out.println("There is no running from a trainer battle you big fat pussy!");break;
 				}
