@@ -20,6 +20,13 @@ public class Species { //all pokemon are hardy nature with 0 EV and IV
 		this.type2 = type2;
 	}
 	
+	public void SetEvolution(Species nextEvolution, int evolutionLevel){
+		this.nextEvolution = nextEvolution;
+		this.evolutionLevel = evolutionLevel;
+	}
+	public void setBaseStats(Stats baseStats) {
+		this.baseStats = baseStats;
+	}
 	
 	public String getName(){
 		return speciesName;
@@ -28,4 +35,5 @@ public class Species { //all pokemon are hardy nature with 0 EV and IV
 	public String toString(){
 		return getName();
 	}
+	
 }
