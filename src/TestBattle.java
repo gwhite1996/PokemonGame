@@ -66,14 +66,11 @@ public class TestBattle {
 		
 		player.bag.add(ItemList.potion);
 		player.bag.add(ItemList.pokeBall);
+		player.bag.add(ItemList.bike);
 		
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
 		
 		
 		new Battle(player, mike);
 	}
-	
-	
-	///REDO HOW MOVES ARE DONE
-	
 }

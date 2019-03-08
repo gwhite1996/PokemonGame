@@ -86,13 +86,10 @@ public class Battle {
 		}
 		
 		if(isFainted(playerPokemon)){
-			player.party.swapFromParty(true);
+			playerPokemon = player.party.swapFromParty(true);
 		}
 		if(isFainted(enemyPokemon)){
-			enemy.party.swapFromParty(true);
-		}
-		
-		if(target.getStatus() == Status.FAINTED){
+			enemyPokemon = enemy.party.swapFromParty(true);
 			return false;
 		}
 		else{

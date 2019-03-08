@@ -116,7 +116,6 @@ public abstract class Trainer extends TurnablePiece{
 				}
 				else if(itemUsed.getItemType() == ItemType.OUTOFBATTLE){
 					System.out.println(itemUsed + " can only be used outside of battle!");
-					return false;
 				}
 				else{ //no target pokemon but the move does it's thing
 					setAction(new UseItem(itemUsed, null));

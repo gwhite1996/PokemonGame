@@ -76,7 +76,14 @@ public class Party{
 					switch(choice = LostMethods.chooseOption(0, 2)){
 					case 0:selectedPokemon = null; break;
 					case 1:selectedPokemon.viewSummary(); break;
-					case 2:return selectedPokemon;
+					case 2:
+						if(selectedPokemon.getStatus() != Status.FAINTED){
+							return selectedPokemon;
+						}
+						else {
+							System.out.println(selectedPokemon + " has no HP remaining!");
+						}
+						break;
 					}
 				}
 			}
