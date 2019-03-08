@@ -1,25 +1,26 @@
 
-public class Item {
-	private String name;
-	private ItemType type;
+public class Item{ //a specific instance of an ItemType. Bags contain these
+	private ItemType itemType;
 	int count;
-
-	public Item(String name, ItemType type){
-		this.name = name;
-		this.type = type;
+	
+	public Item(ItemType itemType){
+		this.itemType = itemType;
 		count = 1;
 	}
-	
+	public Item(ItemType itemType, int count){
+		this.itemType = itemType;
+		this.count = count;
+	}
 	
 	
 	public void use(Pokemon targetPokemon){
 		if(targetPokemon != null) {
 			System.out.println(this + " was used on " + targetPokemon);
-			itemEffect(targetPokemon);
+			itemType.itemEffect(targetPokemon);
 		}
 		else {
 			System.out.println(this + " was used");
-			itemEffect();
+			itemType.itemEffect();
 		}
 		
 		if(count == 1){
@@ -28,33 +29,11 @@ public class Item {
 			count --;
 	}
 	
-	public void itemEffect(){ //items not used on a specific pokemon
-		System.out.println(this + " doesn't do anything! You must define it's itemEffect() method");
-	}
-	public void itemEffect(Pokemon targetPokemon){
-		System.out.println(this + " doesn't do anything! You must define it's itemEffect() method");
+	public ItemType getItemType() {
+		return itemType;
 	}
 	
-	
-	
-	void healItem(Pokemon target, int hpRestored){
-		if(target.stats.hpRemaining + hpRestored > target.stats.totalHP){
-			hpRestored = target.stats.totalHP - target.stats.hpRemaining;
-		}
-		target.stats.hpRemaining += hpRestored;
-		System.out.println(target + " was healed for for " + hpRestored + " HP.");
-	}
-	
-	
-	public String getName(){
-		return name;
-	}
-	public ItemType getItemType(){
-		return type;
-	}
-	
-	@Override
 	public String toString(){
-		return getName();
+		return itemType.getName();
 	}
 }

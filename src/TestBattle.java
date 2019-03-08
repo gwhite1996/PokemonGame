@@ -45,7 +45,8 @@ public class TestBattle {
 		cater.setMove(MoveList.stringShot, 2);
 		cater.setMove(MoveList.bugBite, 3);
 		
-		pika.setMove(MoveList.shoot2, 2);
+		//pika.setMove(MoveList.shoot1, 1);
+		//pika.setMove(MoveList.shoot2, 2);
 		//pika.setMove(MoveList.zapCannon, 4);
 		
 		player.party = new Party();
@@ -64,9 +65,9 @@ public class TestBattle {
 		
 		
 		
-		player.bag.add(ItemList.potion);
-		player.bag.add(ItemList.pokeBall);
-		player.bag.add(ItemList.bike);
+		player.bag.add(new Item(ItemList.potion, 2));
+		player.bag.add(new Item(ItemList.pokeBall));
+		player.bag.add(new Item(ItemList.bike));
 		
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
 		

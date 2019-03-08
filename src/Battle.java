@@ -55,6 +55,7 @@ public class Battle {
 		Pokemon user;
 		Pokemon target;
 		Action action = trainer.getAction();
+		
 
 		if(trainer == player){
 			user = playerPokemon;
@@ -64,14 +65,20 @@ public class Battle {
 			user = enemyPokemon;
 			target = playerPokemon;
 		}
-
+		
+		if(user.getStatus() != Status.NONE){
+			Status.takeEffectOfStatusBeforeAction(user);
+		}
+		
+		
 		if(action instanceof Move){//was always told not to use instanceof!!
 			fight(user, (Move)action);
 		}
 		else if(action instanceof UseItem){
 			((UseItem)action).getItemUsed().use(((UseItem)action).getTargetPokemon());
 		}
-		else if(action instanceof SwapPokemon){
+		
+		if(action instanceof SwapPokemon){
 			Pokemon nextPokemon = ((SwapPokemon)action).getNextPokemon();
 			
 			if(trainer == player){ //temp. there has to be a better way than just constantly checking this
@@ -84,12 +91,26 @@ public class Battle {
 			
 			System.out.println(user + " has been switched out for " + nextPokemon);
 		}
+		else{ //only swapping the pokemon will prevent damage from a status effect
+			if(user.getStatus() != Status.NONE && user.stats.hpRemaining > 0){
+				Status.takeEffectOfStatusAfterAction(user);
+			}
+		}
+		
 		
 		if(isFainted(playerPokemon)){
+			if(player.party.allFainted()){
+				return false;
+			}
 			playerPokemon = player.party.swapFromParty(true);
 		}
 		if(isFainted(enemyPokemon)){
+			if(enemy.party.allFainted()){
+				return false;
+			}
 			enemyPokemon = enemy.party.swapFromParty(true);
+		}
+		if(target.getStatus() == Status.FAINTED){
 			return false;
 		}
 		else{
@@ -147,11 +168,6 @@ public class Battle {
 		else{
 			target = playerPokemon;
 		}
-
-		if(user.getStatus() != Status.NONE){
-			Status.takeEffectOfStatus(user);
-		}
-		
 		if(user.canAttack){
 			useMove(user, target, move);
 		}

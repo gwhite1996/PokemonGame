@@ -11,6 +11,14 @@ public class Bag {
 	}
 	
 	public void add(Item item){
+		ItemType type = item.getItemType();
+		
+		for(Item i: itemList){ //checks if the bag already contains the ItemType
+			if(i.getItemType() == type){
+				i.count += item.count;
+				return;
+			}
+		}
 		itemList.add(item);
 	}
 	

@@ -105,7 +105,7 @@ public abstract class Trainer extends TurnablePiece{
 			itemUsed = bag.chooseItem();
 			
 			if(itemUsed != null){
-				if(itemUsed.getItemType() == ItemType.USEDONSELF){
+				if(itemUsed.getItemType().getItemCategory() == ItemCategory.USEDONSELF){
 					System.out.println("Which pokemon will " + itemUsed + " be used on?");
 					targetPokemon = party.choosePokemon();
 					
@@ -114,7 +114,7 @@ public abstract class Trainer extends TurnablePiece{
 						return true;
 					}
 				}
-				else if(itemUsed.getItemType() == ItemType.OUTOFBATTLE){
+				else if(itemUsed.getItemType().getItemCategory() == ItemCategory.OUTOFBATTLE){
 					System.out.println(itemUsed + " can only be used outside of battle!");
 				}
 				else{ //no target pokemon but the move does it's thing

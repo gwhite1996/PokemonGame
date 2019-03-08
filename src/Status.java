@@ -173,22 +173,26 @@ public enum Status{
 		System.out.println(pokemon + " was hurt by poison for " + poisonDamage + " HP!");
 	}
 
-	public static void takeEffectOfStatus(Pokemon pokemon){
+	public static void takeEffectOfStatusBeforeAction(Pokemon pokemon){
 		switch(pokemon.getStatus()){
 		case ASLEEP:takeEffectOfSleep(pokemon);
-		break;
-		case BURNED:takeEffectOfBurn(pokemon);
 		break;
 		case FROZEN:takeEffectOfFreeze(pokemon);
 		break;
 		case PARALYZED:takeEffectOfParalysis(pokemon);
 		break;
-		case POISONED:takeEffectOfPoison(pokemon);
-		break;
 		case NONE: //Just returns
 		break;
-		default:System.out.println("Invalid status in TakeEffectOfStatus " + pokemon + ".getStatus() gives: " + pokemon.getStatus());
+		default: return;
+		}
+	}
+	public static void takeEffectOfStatusAfterAction(Pokemon pokemon){
+		switch(pokemon.getStatus()){
+		case BURNED:takeEffectOfBurn(pokemon);
 		break;
+		case POISONED:takeEffectOfPoison(pokemon);
+		break;
+		default: return;
 		}
 	}
 }
