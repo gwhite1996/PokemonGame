@@ -5,8 +5,10 @@ public class TestBattle {
 		Player player = new Player("Player", 1, 1);
 		Trainer mike = new Hiker("Hiker Mike", 4,4); //arbitrary coordinates
 		
-		SpeciesList.createSpeciesList();
+		
+		SpeciesList.createSpeciesList();// temp. should not be a method to do this!
 
+		
 		Pokemon pika = new Pokemon("Pikachu", SpeciesList.pikachu );
 		Pokemon charm = new Pokemon("Charmander", SpeciesList.charmander);
 		Pokemon squirt = new Pokemon("Squirtle", SpeciesList.squirtle);
