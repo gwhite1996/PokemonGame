@@ -1,6 +1,5 @@
+public class SpeciesList{
 
-public class SpeciesList {
-	
 	final static Species bulbasaur = new Species("Bulbasaur", Type.GRASS, Type.POISON);
 	final static Species ivysaur = new Species("Ivysaur", Type.GRASS, Type.POISON);
 	final static Species venusaur = new Species("Venusaur", Type.GRASS, Type.POISON);
@@ -15,14 +14,13 @@ public class SpeciesList {
 	final static Species butterfree = new Species("Butterfree", Type.BUG, Type.FLYING);
 	final static Species pikachu = new Species("Pikachu", Type.ELECTRIC);
 	final static Species articuno = new Species("Articuno", Type.ICE, Type.FLYING);
-	
-	
-	public static void createSpeciesList() {
+
+	public static void createSpeciesList(){
 		setAllEvolutions();
 		setAllStats();
 	}
-	
-	public static void setAllEvolutions(){ //there has to be a better way to write this
+
+	public static void setAllEvolutions(){ // temp. there has to be a better way to write this
 		bulbasaur.SetEvolution(ivysaur, 16);
 		ivysaur.SetEvolution(venusaur, 32);
 		charmander.SetEvolution(charmeleon, 16);
@@ -32,6 +30,7 @@ public class SpeciesList {
 		caterpie.SetEvolution(metapod, 7);
 		metapod.SetEvolution(butterfree, 10);
 	}
+
 	public static void setAllStats(){
 		bulbasaur.setBaseStats(new Stats(45, 49, 49, 65, 65, 45));
 		ivysaur.setBaseStats(new Stats(60, 62, 63, 80, 80, 60));

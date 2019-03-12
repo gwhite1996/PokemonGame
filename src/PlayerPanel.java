@@ -1,7 +1,6 @@
-
 public class PlayerPanel extends TurnablePiecePanel{
 
-	public PlayerPanel(int gridWidth, Direction dir) {
+	public PlayerPanel(int gridWidth, Direction dir){
 		super(gridWidth, "brandon", dir);
 	}
 }

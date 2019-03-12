@@ -1,16 +1,20 @@
-public enum Direction {
-
+public enum Direction{
 	NORTH("north"),
 	EAST("east"),
 	SOUTH("south"),
 	WEST("west");
-	
+
 	private String name = null;
 
 	private Direction(String s){
 		name = s;
 	}
-	public String getName() {
+
+	public String getName(){
 		return name;
+	}
+
+	public String toString(){
+		return getName();
 	}
 }
