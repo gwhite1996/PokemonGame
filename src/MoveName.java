@@ -141,12 +141,16 @@ public class MoveName{ // important to realize this does NOT extend Action
 		}
 	}
 
-	public String toString(){
-		return getName();
-	}
-
 	public String getName(){
 		return name;
+	}
+
+	public Type getType(){
+		return type;
+	}
+
+	public MoveCategory getMoveCategory(){
+		return moveCategory;
 	}
 
 	public int getPower(){
@@ -165,11 +169,7 @@ public class MoveName{ // important to realize this does NOT extend Action
 		return basePP;
 	}
 
-	public Type getType(){
-		return type;
-	}
-
-	public MoveCategory getMoveCategory(){
-		return moveCategory;
+	public String toString(){
+		return getName();
 	}
 }

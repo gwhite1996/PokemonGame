@@ -47,9 +47,32 @@ public enum Type{
 		this.noEffect = noEffect;
 	}
 
-	@Override
-	public String toString(){
-		return name;
+	public static double typeEffectiveness(Type moveType, Species targetSpecies){
+		double multiplier = 1;
+		for(String s : moveType.noEffect){
+			if(s == targetSpecies.type1.name() || s == targetSpecies.type2.name()){
+				return 0;
+			}
+		}
+		for(String s : moveType.superEffective){
+			if(s == targetSpecies.type1.name() || s == targetSpecies.type2.name()){
+				multiplier *= 2;
+			}
+		}
+		for(String s : moveType.notVeryEffective){
+			if(s == targetSpecies.type1.name() || s == targetSpecies.type2.name()){
+				multiplier *= 0.5;
+			}
+		}
+		return multiplier;
+	}
+
+	public static double stab(Type moveType, Species userSpecies){ // Same Type Attack Bonus
+		if(moveType == userSpecies.type1 || moveType == userSpecies.type2){
+			return 1.5;
+		}
+		else
+			return 1;
 	}
 
 	public void printTypeInfo(){ // prints out type effectiveness info
@@ -81,31 +104,8 @@ public enum Type{
 		System.out.println("*******************************************");
 	}
 
-	public static double typeEffectiveness(Type moveType, Species targetSpecies){
-		double multiplier = 1;
-		for(String s : moveType.noEffect){
-			if(s == targetSpecies.type1.name() || s == targetSpecies.type2.name()){
-				return 0;
-			}
-		}
-		for(String s : moveType.superEffective){
-			if(s == targetSpecies.type1.name() || s == targetSpecies.type2.name()){
-				multiplier *= 2;
-			}
-		}
-		for(String s : moveType.notVeryEffective){
-			if(s == targetSpecies.type1.name() || s == targetSpecies.type2.name()){
-				multiplier *= 0.5;
-			}
-		}
-		return multiplier;
-	}
-
-	public static double stab(Type moveType, Species userSpecies){ // Same Type Attack Bonus
-		if(moveType == userSpecies.type1 || moveType == userSpecies.type2){
-			return 1.5;
-		}
-		else
-			return 1;
+	@Override
+	public String toString(){
+		return name;
 	}
 }

@@ -18,19 +18,6 @@ public class Move extends Action{ // a Move in an instance of a moveName. Each
 		moveName.useMoveName(user, target);
 	}
 
-	public void printMove(){
-		System.out.print(this + ": " + moveName.getType() + ", " + moveName.getMoveCategory() + ", PP(" + ppLeft + "/"
-				+ totalPP + "), Power(" + moveName.getPower() + "), Accuracy(" + moveName.getAccuracy() + ")");
-		if(disabled){
-			System.out.print(", {DISABLED}");
-		}
-		System.out.println();
-	}
-
-	public String toString(){
-		return getName();
-	}
-
 	public MoveName getMoveName(){
 		return moveName;
 	}
@@ -57,5 +44,18 @@ public class Move extends Action{ // a Move in an instance of a moveName. Each
 
 	public void setDisabled(boolean disabled){
 		this.disabled = disabled;
+	}
+
+	public void printMove(){
+		System.out.print(this + ": " + moveName.getType() + ", " + moveName.getMoveCategory() + ", PP(" + ppLeft + "/"
+				+ totalPP + "), Power(" + moveName.getPower() + "), Accuracy(" + moveName.getAccuracy() + ")");
+		if(disabled){
+			System.out.print(", {DISABLED}");
+		}
+		System.out.println();
+	}
+
+	public String toString(){
+		return getName();
 	}
 }

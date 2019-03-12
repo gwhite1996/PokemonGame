@@ -14,14 +14,6 @@ public abstract class TurnablePiece extends InteractablePiece{
 		findSpaceAhead();
 	}
 
-	public int getXAhead(){
-		return xAhead;
-	}
-
-	public int getYAhead(){
-		return yAhead;
-	}
-
 	public void moveForward(){
 		if(canMoveForward()){
 			switch(getDirection()){
@@ -82,5 +74,13 @@ public abstract class TurnablePiece extends InteractablePiece{
 	public void update(){
 		findSpaceAhead();
 		// more can be done here in the future
+	}
+
+	public int getXAhead(){
+		return xAhead;
+	}
+
+	public int getYAhead(){
+		return yAhead;
 	}
 }

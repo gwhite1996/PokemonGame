@@ -50,18 +50,6 @@ public class Stat{
 		}
 	}
 
-	public int getBattleValue(){
-		return (int) (trueValue * getTotalMultiplier());
-	}
-
-	public int getTrueValue(){
-		return trueValue;
-	}
-
-	public int getStage(){
-		return stage;
-	}
-
 	// stacks on another multiplier
 	public void addMultiplier(double multiplicationFactor){
 		otherMultipliers *= multiplicationFactor;
@@ -81,6 +69,18 @@ public class Stat{
 
 	public void resetStage(){
 		stage = 0;
+	}
+
+	public int getStage(){
+		return stage;
+	}
+
+	public int getTrueValue(){
+		return trueValue;
+	}
+
+	public int getBattleValue(){
+		return (int) (trueValue * getTotalMultiplier());
 	}
 
 	public void printStat(){

@@ -94,19 +94,6 @@ public abstract class Trainer extends TurnablePiece{
 		return true;
 	}
 
-	@Override
-	public String toString(){
-		return name;
-	}
-
-	public Action getAction(){
-		return action;
-	}
-
-	public void setAction(Action action){
-		this.action = action;
-	}
-
 	public boolean willSwapPokemon(){
 		Pokemon nextPokemon = party.swapFromParty(false);
 		if(nextPokemon != null){
@@ -161,5 +148,18 @@ public abstract class Trainer extends TurnablePiece{
 		else{
 			return null;
 		}
+	}
+
+	public Action getAction(){
+		return action;
+	}
+
+	public void setAction(Action action){
+		this.action = action;
+	}
+
+	@Override
+	public String toString(){
+		return name;
 	}
 }

@@ -9,17 +9,6 @@ public class Bag{
 		itemList = new ArrayList<Item>();
 	}
 
-	public void add(Item item){
-		ItemType type = item.getItemType();
-		for(Item i : itemList){ // checks if the bag already contains the ItemType
-			if(i.getItemType() == type){
-				i.count += item.count;
-				return;
-			}
-		}
-		itemList.add(item);
-	}
-
 	public Item chooseItem(){
 		removeEmptyItems();
 		if(itemList.size() < 1){
@@ -37,6 +26,17 @@ public class Bag{
 			item = itemList.get(index - 1); // User input selects item
 		}
 		return item;
+	}
+
+	public void add(Item item){
+		ItemType type = item.getItemType();
+		for(Item i : itemList){ // checks if the bag already contains the ItemType
+			if(i.getItemType() == type){
+				i.count += item.count;
+				return;
+			}
+		}
+		itemList.add(item);
 	}
 
 	public void removeEmptyItems(){

@@ -19,14 +19,6 @@ public class Model{
 		interactableList.add(hikerMike);
 	}
 
-	public Player getPlayer(){
-		return player;
-	}
-
-	public Hiker getHikerMike(){
-		return hikerMike;
-	}
-
 	public void update(KeyEvent userInput){
 		player.setTryingToInteract(false);
 		if(userInput != null){
@@ -57,5 +49,13 @@ public class Model{
 
 	public String getMessage(){
 		return message;
+	}
+
+	public Player getPlayer(){
+		return player;
+	}
+
+	public Hiker getHikerMike(){
+		return hikerMike;
 	}
 }

@@ -8,27 +8,6 @@ public class LostMethods{ // these methods don't have a home. Just yet.
 	public static final Action flee = new Action("Flee", -7);
 	public static final Action none = new Action("None", -10);
 
-	public static void printMoveSet(Pokemon pokemon){
-		System.out.println("-------" + pokemon + "'s Move Set-------");
-		System.out.print("[1] ");
-		pokemon.move1.printMove();
-		System.out.print("[2] ");
-		pokemon.move2.printMove();
-		System.out.print("[3] ");
-		pokemon.move3.printMove();
-		System.out.print("[4] ");
-		pokemon.move4.printMove();
-		System.out.println("------------------------------");
-	}
-
-	public static void printHealth(Pokemon pokemon){
-		System.out.println(pokemon + "'s HP is: " + pokemon.stats.hpRemaining + "/" + pokemon.stats.totalHP
-				+ ", Status Ailment: " + pokemon.getStatus());
-		if(pokemon.getStatus() != Status.NONE){
-			System.out.println(" Turns of status ailment left: " + pokemon.statusTurnsRemaining);
-		}
-	}
-
 	public static void healStatus(Pokemon pokemon){ // Full Heal
 		Status.removeStatus(pokemon);
 	}
@@ -101,6 +80,27 @@ public class LostMethods{ // these methods don't have a home. Just yet.
 			}
 		}
 		return index;
+	}
+
+	public static void printMoveSet(Pokemon pokemon){
+		System.out.println("-------" + pokemon + "'s Move Set-------");
+		System.out.print("[1] ");
+		pokemon.move1.printMove();
+		System.out.print("[2] ");
+		pokemon.move2.printMove();
+		System.out.print("[3] ");
+		pokemon.move3.printMove();
+		System.out.print("[4] ");
+		pokemon.move4.printMove();
+		System.out.println("------------------------------");
+	}
+
+	public static void printHealth(Pokemon pokemon){
+		System.out.println(pokemon + "'s HP is: " + pokemon.stats.hpRemaining + "/" + pokemon.stats.totalHP
+				+ ", Status Ailment: " + pokemon.getStatus());
+		if(pokemon.getStatus() != Status.NONE){
+			System.out.println(" Turns of status ailment left: " + pokemon.statusTurnsRemaining);
+		}
 	}
 
 	public static void printReturnOption(){

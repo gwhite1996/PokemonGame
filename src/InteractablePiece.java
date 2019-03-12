@@ -10,6 +10,10 @@ public abstract class InteractablePiece extends GamePiece implements Interactabl
 		pieceStatus = PieceStatus.TALK_ON_INTERACT; // default
 	}
 
+	public void onInteraction(Player p){
+		// Most GamePieces will do nothing
+	}
+
 	public String getMessage(){
 		return message;
 	}
@@ -32,9 +36,5 @@ public abstract class InteractablePiece extends GamePiece implements Interactabl
 
 	public void setInteracting(boolean interacting){
 		this.interacting = interacting;
-	}
-
-	public void onInteraction(Player p){
-		// Most GamePieces will do nothing
 	}
 }

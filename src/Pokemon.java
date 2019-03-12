@@ -66,14 +66,6 @@ public class Pokemon{
 		secondMove = tempMove;
 	}
 
-	public Status getStatus(){
-		return status;
-	}
-
-	void setStatus(Status status){
-		this.status = status;
-	}
-
 	boolean hasPPLeft(){ // if false, only struggle can be used
 		if(move1.getPPLeft() > 0)
 			return true;
@@ -86,9 +78,18 @@ public class Pokemon{
 		return false;
 	}
 
-	@Override
-	public String toString(){
-		return name;
+	public void viewSummary(){
+		System.out.println("=======" + this + "'s Summary=======");
+		stats.printStats();
+		System.out.println("====================================");
+	}
+
+	public Status getStatus(){
+		return status;
+	}
+
+	void setStatus(Status status){
+		this.status = status;
 	}
 
 	public void setMove(MoveName moveName, int moveNumber){
@@ -111,9 +112,8 @@ public class Pokemon{
 		}
 	}
 
-	public void viewSummary(){
-		System.out.println("=======" + this + "'s Summary=======");
-		stats.printStats();
-		System.out.println("====================================");
+	@Override
+	public String toString(){
+		return name;
 	}
 }

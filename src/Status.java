@@ -9,7 +9,32 @@ public enum Status{
 	FAINTED,
 	NONE;
 
-	// Methods to inflict each status ailment
+	public static boolean inflictStatus(Pokemon pokemon, Status status){
+		if(pokemon.getStatus() == status){
+			System.out.println(pokemon + " is already " + status + ".");
+			return false;
+		}
+		else{
+			switch(status){
+			case ASLEEP:
+				return Status.putToSleep(pokemon);
+			case BURNED:
+				return Status.burn(pokemon);
+			case FROZEN:
+				return Status.freeze(pokemon);
+			case PARALYZED:
+				return Status.paralyze(pokemon);
+			case POISONED:
+				return Status.poison(pokemon);
+			case NONE:
+				return false;
+			default:
+				System.out.println("Invalid status in inflictStatus()");
+				return false;
+			}
+		}
+	}
+
 	private static boolean putToSleep(Pokemon pokemon){
 		removeStatus(pokemon);
 		pokemon.setStatus(Status.ASLEEP);
@@ -75,32 +100,6 @@ public enum Status{
 			}
 	}
 
-	public static boolean inflictStatus(Pokemon pokemon, Status status){
-		if(pokemon.getStatus() == status){
-			System.out.println(pokemon + " is already " + status + ".");
-			return false;
-		}
-		else{
-			switch(status){
-			case ASLEEP:
-				return Status.putToSleep(pokemon);
-			case BURNED:
-				return Status.burn(pokemon);
-			case FROZEN:
-				return Status.freeze(pokemon);
-			case PARALYZED:
-				return Status.paralyze(pokemon);
-			case POISONED:
-				return Status.poison(pokemon);
-			case NONE:
-				return false;
-			default:
-				System.out.println("Invalid status in inflictStatus()");
-				return false;
-			}
-		}
-	}
-
 	public static boolean removeStatus(Pokemon pokemon){
 		Status status = pokemon.getStatus();
 		switch(status){ // special action that must be taken for certain statuses when removed
@@ -155,6 +154,37 @@ public enum Status{
 	}
 
 	// the following methods run each turn while the pokemon is affected
+	public static void takeEffectOfStatusBeforeAction(Pokemon pokemon){
+		switch(pokemon.getStatus()){
+		case ASLEEP:
+			takeEffectOfSleep(pokemon);
+			break;
+		case FROZEN:
+			takeEffectOfFreeze(pokemon);
+			break;
+		case PARALYZED:
+			takeEffectOfParalysis(pokemon);
+			break;
+		case NONE: // Just returns
+			break;
+		default:
+			return;
+		}
+	}
+
+	public static void takeEffectOfStatusAfterAction(Pokemon pokemon){
+		switch(pokemon.getStatus()){
+		case BURNED:
+			takeEffectOfBurn(pokemon);
+			break;
+		case POISONED:
+			takeEffectOfPoison(pokemon);
+			break;
+		default:
+			return;
+		}
+	}
+
 	private static void takeEffectOfSleep(Pokemon pokemon){
 		if(pokemon.statusTurnsRemaining > 0){
 			System.out.println(pokemon + " is fast asleep!");
@@ -198,36 +228,5 @@ public enum Status{
 		int poisonDamage = (int) (((double) pokemon.stats.totalHP) / 8.0);
 		pokemon.stats.hpRemaining -= poisonDamage;
 		System.out.println(pokemon + " was hurt by poison for " + poisonDamage + " HP!");
-	}
-
-	public static void takeEffectOfStatusBeforeAction(Pokemon pokemon){
-		switch(pokemon.getStatus()){
-		case ASLEEP:
-			takeEffectOfSleep(pokemon);
-			break;
-		case FROZEN:
-			takeEffectOfFreeze(pokemon);
-			break;
-		case PARALYZED:
-			takeEffectOfParalysis(pokemon);
-			break;
-		case NONE: // Just returns
-			break;
-		default:
-			return;
-		}
-	}
-
-	public static void takeEffectOfStatusAfterAction(Pokemon pokemon){
-		switch(pokemon.getStatus()){
-		case BURNED:
-			takeEffectOfBurn(pokemon);
-			break;
-		case POISONED:
-			takeEffectOfPoison(pokemon);
-			break;
-		default:
-			return;
-		}
 	}
 }
