@@ -56,6 +56,6 @@ public class TestBattle{
 		player.bag.add(new Item(ItemList.pokeBall));
 		player.bag.add(new Item(ItemList.bike));
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
-		new Battle(player, mike);
+		new TrainerBattle(player, mike);
 	}
 }

@@ -1,13 +1,12 @@
 import java.util.Random;
 
-public class Battle{
+public class TrainerBattle{
 
 	private Player player;
 	private Trainer enemy;
-	boolean playerAttacksFirst;
 	private Random rand = new Random();
 
-	public Battle(Player player, Trainer enemy){
+	public TrainerBattle(Player player, Trainer enemy){
 		this.player = player;
 		this.enemy = enemy;
 		this.player.setCurrentPokemon(this.player.party.getPokemon(1)); // first pokemon in party is sent out
@@ -60,15 +59,16 @@ public class Battle{
 			((UsingItem)action).getItemUsed().use(((UsingItem)action).getTargetPokemon());
 		}
 		if(action == LostMethods.swapingPokemon){
-			Pokemon newCurrentPokemon = trainer.getPokemonOnDeck();
-			trainer.setCurrentPokemon(newCurrentPokemon);
+			Pokemon oldUser = user;
+			user = trainer.getPokemonOnDeck();
+			trainer.setCurrentPokemon(user);
 			trainer.setPokemonOnDeck(null);
-			System.out.println(user + " has been switched out for " + newCurrentPokemon);
+			System.out.println(oldUser + " has been switched out for " + user);
 		}
 		else if(user.getStatus() != Status.NONE && user.stats.hpRemaining > 0){ // only swapping the pokemon prevents damage from a status effect
 			Status.takeEffectOfStatusAfterAction(user);
 		}
-		if(isFainted(trainer.getCurrentPokemon())){
+		if(isFainted(user)){
 			if(trainer.party.allFainted()){
 				return false;
 			}
@@ -78,7 +78,7 @@ public class Battle{
 				trainer.setPokemonOnDeck(null);
 			}
 		}
-		if(isFainted(opponent.getCurrentPokemon())){
+		if(isFainted(target)){
 			if(!opponent.party.allFainted()){
 				opponent.pickPokemonOnDeck(true);
 				opponent.setCurrentPokemon(opponent.getPokemonOnDeck());
@@ -105,10 +105,7 @@ public class Battle{
 				actionHasBeenSelected = trainer.willUseItem();
 				break;
 			case 3:
-				if(trainer.pickPokemonOnDeck(false)){
-					trainer.setAction(LostMethods.swapingPokemon);
-					actionHasBeenSelected = true;
-				}
+				actionHasBeenSelected = trainer.pickPokemonOnDeck(false);
 				break;
 			case 4:
 				System.out.println("There is no running from a trainer battle you big fat pussy!");
@@ -117,11 +114,8 @@ public class Battle{
 		}
 		while(!actionHasBeenSelected);
 	}
-	
-	
 
 	public void useMove(Pokemon user, Pokemon target, Move move){
-		move.setPPLeft(move.getPPLeft() - 1);
 		double chanceOfHit = ((move.getMoveName().getAccuracy()) / 100d)
 				* (user.stats.accuracy.getBattleValue() / target.stats.evasion.getBattleValue());
 		if(chanceOfHit > rand.nextDouble() || move.getMoveName().getAccuracy() == 0){ // attack hits no matter what if accuracy is 0
@@ -130,11 +124,13 @@ public class Battle{
 		else{
 			System.out.println(user + " used " + move + " but it missed!");
 		}
+		move.setPPLeft(move.getPPLeft() - 1);
 	}
 
 	public boolean playerActsFirst(){
 		if(player.getAction().getPriority() == enemy.getAction().getPriority()){ // checks pokemon speed only if priorities are same
-			return player.getCurrentPokemon().stats.speed.getBattleValue() >= enemy.getCurrentPokemon().stats.speed.getBattleValue();
+			return player.getCurrentPokemon().stats.speed.getBattleValue() >= enemy.getCurrentPokemon().stats.speed
+					.getBattleValue();
 		}
 		else{
 			return player.getAction().getPriority() > enemy.getAction().getPriority();
@@ -180,13 +176,13 @@ public class Battle{
 	}
 
 	public void resetAllStatStages(){ // resets stages to 0 for both parties before and after battle
-		for(int i = 1; i < player.party.getPartyCount(); i++){
+		for(int i = 1; i <= player.party.getPartyCount(); i++){
 			Pokemon p = player.party.getPokemon(i);
 			if(p != null){
 				p.stats.resetAllStages();
 			}
 		}
-		for(int i = 1; i < enemy.party.getPartyCount(); i++){
+		for(int i = 1; i <= enemy.party.getPartyCount(); i++){
 			Pokemon p = enemy.party.getPokemon(i);
 			if(p != null){
 				p.stats.resetAllStages();

@@ -97,9 +97,9 @@ public abstract class Trainer extends TurnablePiece{
 	}
 
 	public boolean willUseItem(){
-		Item itemUsed = null;
+		Item itemUsed;
 		Pokemon targetPokemon = null;
-		while(targetPokemon == null){
+		do{
 			itemUsed = bag.chooseItem();
 			if(itemUsed != null){
 				if(itemUsed.getItemType().getItemCategory() == ItemCategory.USEDONSELF){
@@ -122,6 +122,7 @@ public abstract class Trainer extends TurnablePiece{
 				return false;
 			}
 		}
+		while(targetPokemon == null);
 		return false; // temp. this is likely unreachable
 	}
 
@@ -129,7 +130,7 @@ public abstract class Trainer extends TurnablePiece{
 	public boolean pickPokemonOnDeck(boolean mustSwap){
 		Pokemon selectedPokemon = null;
 		System.out.println("Select a pokemon to swap out.");
-		while(selectedPokemon == null){
+		do{
 			selectedPokemon = party.choosePokemon();
 			if(selectedPokemon == null){
 				if(!mustSwap){
@@ -156,6 +157,7 @@ public abstract class Trainer extends TurnablePiece{
 					case 2:
 						if(selectedPokemon.getStatus() != Status.FAINTED){
 							pokemonOnDeck = selectedPokemon;
+							setAction(LostMethods.swapingPokemon);
 							return true;
 						}
 						else{
@@ -166,6 +168,7 @@ public abstract class Trainer extends TurnablePiece{
 				}
 			}
 		}
+		while(selectedPokemon == null);
 		System.out.println("Im fairly certain this is impossible to reach");
 		return false;
 	}

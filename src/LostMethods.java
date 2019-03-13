@@ -50,7 +50,7 @@ public class LostMethods{ // these methods don't have a home. Just yet.
 	}
 
 	public static void pokemonCenter(Party party){ // completely heals entire party
-		for(int i = 1; i < party.getPartyCount(); i++){
+		for(int i = 1; i <= party.getPartyCount(); i++){
 			Pokemon p = party.getPokemon(i);
 			if(p != null){
 				healFull(p);
