@@ -5,7 +5,8 @@ public class LostMethods{ // these methods don't have a home. Just yet.
 
 	static Scanner in = new Scanner(System.in);
 	// I'm not sure where i should put these
-	public static final Action flee = new Action("Flee", -7);
+	public static final Action swapingPokemon = new Action("Swaping Pokemon", 6);
+	public static final Action fleeing = new Action("Fleeing", -7);
 	public static final Action none = new Action("None", -10);
 
 	public static void healStatus(Pokemon pokemon){ // Full Heal

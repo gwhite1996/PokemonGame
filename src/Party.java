@@ -3,11 +3,9 @@ public class Party{
 	final static int maxPartySize = 6;
 	private Pokemon[] partyArray = new Pokemon[maxPartySize];
 	private int partyCount;
-	private Pokemon currentPokemon;
 
 	public Party(){
 		partyCount = 0; // empty party
-		currentPokemon = null;
 	}
 
 	public void add(Pokemon pokemon){
@@ -21,49 +19,7 @@ public class Party{
 		}
 	}
 
-	// returns the pokemon to be swapped out. null if the user decides to keep the current pokemon
-	public Pokemon swapFromParty(boolean mustSwap){
-		Pokemon selectedPokemon = null;
-		System.out.println("Select a pokemon to swap out.");
-		while(selectedPokemon == null){
-			selectedPokemon = choosePokemon();
-			if(selectedPokemon == null){
-				if(!mustSwap){
-					return null;
-				}
-				else{
-					System.out.println("You must select a pokemon to swap out!");
-				}
-			}
-			else{
-				int choice = -1;
-				while(choice != 0){
-					System.out.println(" What do you want to do with: " + selectedPokemon + "?");
-					LostMethods.printReturnOption();
-					System.out.println("[1] Summary");
-					System.out.println("[2] Swap Out");
-					switch(choice = LostMethods.chooseOption(0, 2)){
-					case 0:
-						selectedPokemon = null;
-						break;
-					case 1:
-						selectedPokemon.viewSummary();
-						break;
-					case 2:
-						if(selectedPokemon.getStatus() != Status.FAINTED){
-							return selectedPokemon;
-						}
-						else{
-							System.out.println(selectedPokemon + " has no HP remaining!");
-						}
-						break;
-					}
-				}
-			}
-		}
-		System.out.println("Within swapFromParty() Im fairly certain this is impossible to reach");
-		return null;
-	}
+	
 
 	// simply selects a pokemon in the party
 	public Pokemon choosePokemon(){
@@ -82,7 +38,7 @@ public class Party{
 		return selectedPokemon;
 	}
 
-	public void swapWithinParty(int partyIndex1, int partyIndex2){
+	public void swapSpotsWithinParty(int partyIndex1, int partyIndex2){
 		if(indexWithinParty(partyIndex1) && indexWithinParty(partyIndex2)){
 			Pokemon temp = partyArray[partyIndex1];
 			partyArray[partyIndex1] = partyArray[partyIndex2];
@@ -107,13 +63,12 @@ public class Party{
 		if(index >= 0 && index < partyCount){
 			return true;
 		}
-		else
-			if(partyCount == 0){
-				System.out.println("The party is empty!");
-			}
-			else{
-				System.out.println("The party only contains " + partyCount + " pokemon.");
-			}
+		else if(partyCount == 0){
+			System.out.println("The party is empty!");
+		}
+		else{
+			System.out.println("The party only contains " + partyCount + " pokemon.");
+		}
 		return false;
 	}
 
@@ -157,14 +112,6 @@ public class Party{
 
 	public int getPartyCount(){
 		return partyCount;
-	}
-
-	public Pokemon getCurrentPokemon(){
-		return currentPokemon;
-	}
-
-	public void setCurrentPokemon(Pokemon pokemon){
-		currentPokemon = pokemon;
 	}
 
 	public void printParty(){

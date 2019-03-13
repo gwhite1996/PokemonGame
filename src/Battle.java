@@ -4,22 +4,20 @@ public class Battle{
 
 	private Player player;
 	private Trainer enemy;
-	private Pokemon playerPokemon;
-	private Pokemon enemyPokemon;
 	boolean playerAttacksFirst;
 	private Random rand = new Random();
 
 	public Battle(Player player, Trainer enemy){
 		this.player = player;
 		this.enemy = enemy;
-		playerPokemon = player.getCurrentPokemon();
-		enemyPokemon = enemy.getCurrentPokemon();
+		this.player.setCurrentPokemon(this.player.party.getPokemon(1)); // first pokemon in party is sent out
+		this.enemy.setCurrentPokemon(this.enemy.party.getPokemon(1));
 		resetAllStatStages();
 		while(!(player.party.allFainted() || enemy.party.allFainted())){
 			fullTurn();
 		}
-		player.party.setCurrentPokemon(null);
-		enemy.party.setCurrentPokemon(null);
+		player.setCurrentPokemon(null);
+		enemy.setCurrentPokemon(null);
 		resetAllStatStages();
 	}
 
@@ -30,125 +28,97 @@ public class Battle{
 		selectAction(enemy);
 		System.out.println("\n******** Turn Results ********");
 		if(playerActsFirst()){
-			if(halfTurn(player)){
-				halfTurn(enemy);
+			if(halfTurn(player, enemy)){
+				halfTurn(enemy, player);
 			}
 		}
 		else{
-			if(halfTurn(enemy)){
-				halfTurn(player);
+			if(halfTurn(enemy, player)){
+				halfTurn(player, enemy);
 			}
 		}
 		System.out.println();
-		LostMethods.printHealth(playerPokemon);
-		// LostMethods.showStats(playerPokemon);
-		LostMethods.printHealth(enemyPokemon);
-		// LostMethods.showStats(enemyPokemon);
-		// playerPokemon.stats.printStats();
-		// enemyPokemon.stats.printStats();
+		LostMethods.printHealth(player.getCurrentPokemon());
+		LostMethods.printHealth(enemy.getCurrentPokemon());
 		System.out.println("******************************\n\n");
 	}
 
 	// returns false if target faints to prevent the next halfturn
-	private boolean halfTurn(Trainer trainer){
-		Pokemon user;
-		Pokemon target;
+	private boolean halfTurn(Trainer trainer, Trainer opponent){
+		Pokemon user = trainer.getCurrentPokemon();
+		Pokemon target = opponent.getCurrentPokemon();
 		Action action = trainer.getAction();
-		if(trainer == player){
-			user = playerPokemon;
-			target = enemyPokemon;
-		}
-		else{
-			user = enemyPokemon;
-			target = playerPokemon;
-		}
 		if(user.getStatus() != Status.NONE){
 			Status.takeEffectOfStatusBeforeAction(user);
 		}
 		if(action instanceof Move){// was always told not to use instanceof!!
-			fight(user, (Move) action);
-		}
-		else
-			if(action instanceof UseItem){
-				((UseItem) action).getItemUsed().use(((UseItem) action).getTargetPokemon());
+			if(user.canAttack){
+				useMove(user, target, (Move)action);
 			}
-		if(action instanceof SwapPokemon){
-			Pokemon nextPokemon = ((SwapPokemon) action).getNextPokemon();
-			if(trainer == player){ // temp. there has to be a better way than just constantly checking this
-				playerPokemon = nextPokemon;
+		}
+		else if(action instanceof UsingItem){
+			((UsingItem)action).getItemUsed().use(((UsingItem)action).getTargetPokemon());
+		}
+		if(action == LostMethods.swapingPokemon){
+			Pokemon newCurrentPokemon = trainer.getPokemonOnDeck();
+			trainer.setCurrentPokemon(newCurrentPokemon);
+			trainer.setPokemonOnDeck(null);
+			System.out.println(user + " has been switched out for " + newCurrentPokemon);
+		}
+		else if(user.getStatus() != Status.NONE && user.stats.hpRemaining > 0){ // only swapping the pokemon prevents damage from a status effect
+			Status.takeEffectOfStatusAfterAction(user);
+		}
+		if(isFainted(trainer.getCurrentPokemon())){
+			if(trainer.party.allFainted()){
+				return false;
 			}
 			else{
-				enemyPokemon = nextPokemon;
-			}
-			System.out.println(user + " has been switched out for " + nextPokemon);
-		}
-		else{ // only swapping the pokemon will prevent damage from a status effect
-			if(user.getStatus() != Status.NONE && user.stats.hpRemaining > 0){
-				Status.takeEffectOfStatusAfterAction(user);
+				trainer.pickPokemonOnDeck(true);
+				trainer.setCurrentPokemon(trainer.getPokemonOnDeck());
+				trainer.setPokemonOnDeck(null);
 			}
 		}
-		if(isFainted(playerPokemon)){
-			if(player.party.allFainted()){
-				return false;
+		if(isFainted(opponent.getCurrentPokemon())){
+			if(!opponent.party.allFainted()){
+				opponent.pickPokemonOnDeck(true);
+				opponent.setCurrentPokemon(opponent.getPokemonOnDeck());
+				opponent.setPokemonOnDeck(null);
 			}
-			playerPokemon = player.party.swapFromParty(true);
-		}
-		if(isFainted(enemyPokemon)){
-			if(enemy.party.allFainted()){
-				return false;
-			}
-			enemyPokemon = enemy.party.swapFromParty(true);
-		}
-		if(target.getStatus() == Status.FAINTED){
-			return false;
+			return false; // target cannot carry out half turn if fainted
 		}
 		else{
-			return true; // allows the target to carry out their half turn
+			return true;
 		}
 	}
 
 	public void selectAction(Trainer trainer){
-		Pokemon user;
-		if(trainer == player){
-			user = playerPokemon;
-		}
-		else{
-			user = enemyPokemon;
-		}
-		boolean actionSelected = false;
+		Pokemon user = trainer.getCurrentPokemon();
+		boolean actionHasBeenSelected = false;
 		do{
 			System.out.println(
 					"What will " + trainer + " do?\n[1] Fight (" + user + ")\n[2] Bag\n[3] Swap Pokemon\n[4] Run");
 			switch(LostMethods.chooseOption(1, 4)){
 			case 1:
-				actionSelected = trainer.chooseMove(user);
+				actionHasBeenSelected = trainer.chooseMove();
 				break;
 			case 2:
-				actionSelected = trainer.willUseItem();
+				actionHasBeenSelected = trainer.willUseItem();
 				break;
 			case 3:
-				actionSelected = trainer.willSwapPokemon();
+				if(trainer.pickPokemonOnDeck(false)){
+					trainer.setAction(LostMethods.swapingPokemon);
+					actionHasBeenSelected = true;
+				}
 				break;
 			case 4:
 				System.out.println("There is no running from a trainer battle you big fat pussy!");
 				break;
 			}
 		}
-		while(!actionSelected);
+		while(!actionHasBeenSelected);
 	}
-
-	private void fight(Pokemon user, Move move){ // Basically a turn for a single pokemon
-		Pokemon target; // sets the other pokemon to the target
-		if(user == playerPokemon){
-			target = enemyPokemon;
-		}
-		else{
-			target = playerPokemon;
-		}
-		if(user.canAttack){
-			useMove(user, target, move);
-		}
-	}
+	
+	
 
 	public void useMove(Pokemon user, Pokemon target, Move move){
 		move.setPPLeft(move.getPPLeft() - 1);
@@ -164,7 +134,7 @@ public class Battle{
 
 	public boolean playerActsFirst(){
 		if(player.getAction().getPriority() == enemy.getAction().getPriority()){ // checks pokemon speed only if priorities are same
-			return playerPokemon.stats.speed.getBattleValue() >= enemyPokemon.stats.speed.getBattleValue();
+			return player.getCurrentPokemon().stats.speed.getBattleValue() >= enemy.getCurrentPokemon().stats.speed.getBattleValue();
 		}
 		else{
 			return player.getAction().getPriority() > enemy.getAction().getPriority();
@@ -222,13 +192,5 @@ public class Battle{
 				p.stats.resetAllStages();
 			}
 		}
-	}
-
-	public void setPlayerPokemon(Pokemon playerPokemon){
-		this.playerPokemon = playerPokemon;
-	}
-
-	public void setEnemyPokemon(Pokemon enemyPokemon){
-		this.enemyPokemon = enemyPokemon;
 	}
 }

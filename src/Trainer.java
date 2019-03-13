@@ -2,6 +2,8 @@ public abstract class Trainer extends TurnablePiece{
 
 	private String name;
 	private Action action;
+	private Pokemon currentPokemon; // the one being used in battle
+	private Pokemon pokemonOnDeck; // the pokemon which will be swapped out
 	String greeting;
 	String battleIntro;
 	String battleDefeated;
@@ -58,9 +60,9 @@ public abstract class Trainer extends TurnablePiece{
 		}
 	}
 
-	public boolean chooseMove(Pokemon user){
-		if(!user.hasPPLeft()){
-			System.out.println(user + " has no PP left for any move!");
+	public boolean chooseMove(){
+		if(!currentPokemon.hasPPLeft()){
+			System.out.println(currentPokemon + " has no PP left for any move!");
 			setAction(MoveList.struggle);
 			return true;
 		}
@@ -68,21 +70,21 @@ public abstract class Trainer extends TurnablePiece{
 		do{
 			moveUsed = MoveList.none;
 			LostMethods.printReturnOption();
-			LostMethods.printMoveSet(user);
+			LostMethods.printMoveSet(currentPokemon);
 			switch(LostMethods.chooseOption(0, 4)){
 			case 0:
 				return false;
 			case 1:
-				moveUsed = user.move1;
+				moveUsed = currentPokemon.move1;
 				break;
 			case 2:
-				moveUsed = user.move2;
+				moveUsed = currentPokemon.move2;
 				break;
 			case 3:
-				moveUsed = user.move3;
+				moveUsed = currentPokemon.move3;
 				break;
 			case 4:
-				moveUsed = user.move4;
+				moveUsed = currentPokemon.move4;
 				break;
 			}
 			if(moveUsed != MoveList.none && moveUsed.getPPLeft() <= 0){
@@ -92,17 +94,6 @@ public abstract class Trainer extends TurnablePiece{
 		while(moveUsed.getPPLeft() <= 0);
 		setAction(moveUsed); // sets action so the loop in selectAction() ends
 		return true;
-	}
-
-	public boolean willSwapPokemon(){
-		Pokemon nextPokemon = party.swapFromParty(false);
-		if(nextPokemon != null){
-			setAction(new SwapPokemon(nextPokemon));
-			return true;
-		}
-		else{
-			return false;
-		}
 	}
 
 	public boolean willUseItem(){
@@ -115,18 +106,17 @@ public abstract class Trainer extends TurnablePiece{
 					System.out.println("Which pokemon will " + itemUsed + " be used on?");
 					targetPokemon = party.choosePokemon();
 					if(targetPokemon != null){
-						setAction(new UseItem(itemUsed, targetPokemon));
+						setAction(new UsingItem(itemUsed, targetPokemon));
 						return true;
 					}
 				}
-				else
-					if(itemUsed.getItemType().getItemCategory() == ItemCategory.OUTOFBATTLE){
-						System.out.println(itemUsed + " can only be used outside of battle!");
-					}
-					else{ // no target pokemon but the move does it's thing
-						setAction(new UseItem(itemUsed, null));
-						return true;
-					}
+				else if(itemUsed.getItemType().getItemCategory() == ItemCategory.OUTOFBATTLE){
+					System.out.println(itemUsed + " can only be used outside of battle!");
+				}
+				else{ // no target pokemon but the move does it's thing
+					setAction(new UsingItem(itemUsed, null));
+					return true;
+				}
 			}
 			else{
 				return false;
@@ -135,19 +125,68 @@ public abstract class Trainer extends TurnablePiece{
 		return false; // temp. this is likely unreachable
 	}
 
-	public Pokemon getCurrentPokemon(){
-		if(party.getPartyCount() > 0){
-			Pokemon currentPokemon = party.getCurrentPokemon();
-			if(currentPokemon == null){
-				return party.getPokemon(1); // the default currentPokemon is the first one in the party
+	// selects the pokemon to swap out
+	public boolean pickPokemonOnDeck(boolean mustSwap){
+		Pokemon selectedPokemon = null;
+		System.out.println("Select a pokemon to swap out.");
+		while(selectedPokemon == null){
+			selectedPokemon = party.choosePokemon();
+			if(selectedPokemon == null){
+				if(!mustSwap){
+					return false;
+				}
+				else{
+					System.out.println("You must select a pokemon to swap out!");
+				}
 			}
 			else{
-				return currentPokemon;
+				int choice = -1;
+				while(choice != 0){
+					System.out.println(" What do you want to do with: " + selectedPokemon + "?");
+					LostMethods.printReturnOption();
+					System.out.println("[1] Summary");
+					System.out.println("[2] Swap Out");
+					switch(choice = LostMethods.chooseOption(0, 2)){
+					case 0:
+						selectedPokemon = null;
+						break;
+					case 1:
+						selectedPokemon.viewSummary();
+						break;
+					case 2:
+						if(selectedPokemon.getStatus() != Status.FAINTED){
+							pokemonOnDeck = selectedPokemon;
+							return true;
+						}
+						else{
+							System.out.println(selectedPokemon + " has no HP remaining!");
+						}
+						break;
+					}
+				}
 			}
 		}
-		else{
-			return null;
+		System.out.println("Im fairly certain this is impossible to reach");
+		return false;
+	}
+
+	public Pokemon getCurrentPokemon(){
+		return currentPokemon;
+	}
+
+	public void setCurrentPokemon(Pokemon currentPokemon){
+		this.currentPokemon = currentPokemon;
+		if(currentPokemon == null){ // indicates end of battle
+			pokemonOnDeck = null;
 		}
+	}
+
+	public Pokemon getPokemonOnDeck(){
+		return pokemonOnDeck;
+	}
+
+	public void setPokemonOnDeck(Pokemon pokemonOnDeck){
+		this.pokemonOnDeck = pokemonOnDeck;
 	}
 
 	public Action getAction(){
