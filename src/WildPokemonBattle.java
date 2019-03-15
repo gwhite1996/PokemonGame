@@ -60,6 +60,7 @@ public class WildPokemonBattle extends Battle{
 		System.out.println("******************************\n\n");
 	}
 
+	// returning false prevents the next halfTurn and ends the battle
 	private boolean playerHalfTurn(){
 		Pokemon user = player.getCurrentPokemon();
 		Action action = player.getAction();
@@ -72,16 +73,7 @@ public class WildPokemonBattle extends Battle{
 			}
 		}
 		else if(action == LostMethods.fleeing){
-			escapeAttempts++;
-			double chanceOfEscape = (((player.getCurrentPokemon().stats.speed.getTrueValue() * 128)
-					/ wildPokemon.stats.speed.getTrueValue()) + 30 * escapeAttempts) % 256;
-			if(rand.nextInt(256) < chanceOfEscape){
-				escaped = true;
-				return false;
-			}
-			else{
-				System.out.println("Can't escape!");
-			}
+			return !successfullyEscaped();
 		}
 		else if(action instanceof UsingItem){
 			((UsingItem)action).getItemUsed().use(((UsingItem)action).getTargetPokemon());
@@ -135,5 +127,19 @@ public class WildPokemonBattle extends Battle{
 		else{
 			return true;
 		}
+	}
+
+	// returns true if the escape is successful
+	private boolean successfullyEscaped(){
+		escapeAttempts++;
+		double chanceOfEscape = (((player.getCurrentPokemon().stats.speed.getTrueValue() * 128)
+				/ wildPokemon.stats.speed.getTrueValue()) + 30 * escapeAttempts) % 256;
+		if(rand.nextInt(256) < chanceOfEscape){
+			escaped = true;
+		}
+		else{
+			System.out.println("Can't escape!");
+		}
+		return escaped;
 	}
 }
