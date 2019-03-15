@@ -39,7 +39,7 @@ public class TestBattle{
 		cater.setMove(MoveList.tackle, 1);
 		cater.setMove(MoveList.stringShot, 2);
 		cater.setMove(MoveList.bugBite, 3);
-		bulb.setMove(MoveList.shoot1, 1);
+		// pika.setMove(MoveList.shoot1, 1);
 		// pika.setMove(MoveList.shoot2, 2);
 		// pika.setMove(MoveList.zapCannon, 4);
 		player.party = new Party();
@@ -57,5 +57,6 @@ public class TestBattle{
 		player.bag.add(new Item(ItemList.bike));
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
 		new TrainerBattle(player, mike);
+		// new WildPokemonBattle(player, arct);
 	}
 }

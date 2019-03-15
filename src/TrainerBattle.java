@@ -1,10 +1,6 @@
-import java.util.Random;
+public class TrainerBattle extends Battle{
 
-public class TrainerBattle{
-
-	private Player player;
 	private Trainer enemy;
-	private Random rand = new Random();
 
 	public TrainerBattle(Player player, Trainer enemy){
 		this.player = player;
@@ -20,15 +16,16 @@ public class TrainerBattle{
 		// todo. opening dialog
 		this.player.takeOutFirstPokemon();
 		this.enemy.takeOutFirstPokemon();
-		resetAllStatStages();
+		resetAllStatStages(player.party);
+		resetAllStatStages(enemy.party);
 	}
 
 	public void endBattle(){
 		Trainer winner, loser;
 		player.putAwayAllPokemon();
 		enemy.putAwayAllPokemon();
-		resetAllStatStages();
-		
+		resetAllStatStages(player.party);
+		resetAllStatStages(enemy.party);
 		if(player.party.allFainted()){
 			winner = enemy;
 			loser = player;
@@ -49,7 +46,7 @@ public class TrainerBattle{
 		selectAction(player);
 		selectAction(enemy);
 		System.out.println("\n******** Turn Results ********");
-		if(playerActsFirst()){
+		if(playerActsFirst(enemy.getCurrentPokemon(), enemy.getAction())){
 			if(halfTurn(player, enemy)){
 				halfTurn(enemy, player);
 			}
@@ -82,7 +79,6 @@ public class TrainerBattle{
 			((UsingItem)action).getItemUsed().use(((UsingItem)action).getTargetPokemon());
 		}
 		if(action == LostMethods.swapingPokemon){
-			Pokemon oldUser = user;
 			trainer.onDeckToCurrent();
 			user = trainer.getCurrentPokemon();
 		}
@@ -110,6 +106,7 @@ public class TrainerBattle{
 		}
 	}
 
+	@Override // disabled the option to run away
 	public void selectAction(Trainer trainer){
 		Pokemon user = trainer.getCurrentPokemon();
 		boolean actionHasBeenSelected = false;
@@ -132,80 +129,5 @@ public class TrainerBattle{
 			}
 		}
 		while(!actionHasBeenSelected);
-	}
-
-	public void useMove(Pokemon user, Pokemon target, Move move){
-		double chanceOfHit = ((move.getMoveName().getAccuracy()) / 100d)
-				* (user.stats.accuracy.getBattleValue() / target.stats.evasion.getBattleValue());
-		if(chanceOfHit > rand.nextDouble() || move.getMoveName().getAccuracy() == 0){ // attack hits no matter what if accuracy is 0
-			move.useMove(user, target);
-		}
-		else{
-			System.out.println(user + " used " + move + " but it missed!");
-		}
-		move.setPPLeft(move.getPPLeft() - 1);
-	}
-
-	public boolean playerActsFirst(){
-		if(player.getAction().getPriority() == enemy.getAction().getPriority()){ // checks pokemon speed only if priorities are same
-			return player.getCurrentPokemon().stats.speed.getBattleValue() >= enemy.getCurrentPokemon().stats.speed
-					.getBattleValue();
-		}
-		else{
-			return player.getAction().getPriority() > enemy.getAction().getPriority();
-		}
-	}
-
-	// called each halfturn to check if either current pokemon has fainted
-	public boolean isFainted(Pokemon pokemon){
-		if(pokemon.stats.hpRemaining <= 0){
-			pokemon.stats.hpRemaining = 0;
-			pokemon.setStatus(Status.FAINTED);
-			System.out.println(pokemon + " has fainted!");
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
-	public boolean PPLeft(Pokemon user, int moveNumber){
-		int ppLeft = 0;
-		switch(moveNumber){
-		case 1:
-			ppLeft = user.move1.getPPLeft();
-			break;
-		case 2:
-			ppLeft = user.move2.getPPLeft();
-			break;
-		case 3:
-			ppLeft = user.move3.getPPLeft();
-			break;
-		case 4:
-			ppLeft = user.move4.getPPLeft();
-			break;
-		default:
-			System.out.println("Problem in PPLeft()");
-		}
-		if(ppLeft > 0){
-			return true;
-		}
-		System.out.println("No pp left!");
-		return false;
-	}
-
-	public void resetAllStatStages(){ // resets stages to 0 for both parties before and after battle
-		for(int i = 1; i <= player.party.getPartyCount(); i++){
-			Pokemon p = player.party.getPokemon(i);
-			if(p != null){
-				p.stats.resetAllStages();
-			}
-		}
-		for(int i = 1; i <= enemy.party.getPartyCount(); i++){
-			Pokemon p = enemy.party.getPokemon(i);
-			if(p != null){
-				p.stats.resetAllStages();
-			}
-		}
 	}
 }

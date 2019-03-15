@@ -98,7 +98,7 @@ public class MoveName{ // important to realize this does NOT extend Action
 			hpRestored = user.stats.totalHP - user.stats.hpRemaining;
 		}
 		user.stats.hpRemaining += hpRestored;
-		System.out.println(user + " healed itself for " + hpRestored + " HP.");
+		System.out.println(user + " healed itself with " + this + " for " + hpRestored + " HP.");
 	}
 
 	void takeRecoil(Pokemon user, int hpTaken){

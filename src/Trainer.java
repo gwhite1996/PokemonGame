@@ -177,6 +177,11 @@ public abstract class Trainer extends TurnablePiece{
 		return false;
 	}
 
+	public boolean willFlee(){
+		setAction(LostMethods.fleeing);
+		return true;
+	}
+
 	public Pokemon getCurrentPokemon(){
 		return currentPokemon;
 	}
