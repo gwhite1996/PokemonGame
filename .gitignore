@@ -1,1 +1,7 @@
+% Bytecode
 bin
+
+# Eclipse
+.classpath
+.project
+.settings
