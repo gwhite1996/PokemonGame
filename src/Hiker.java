@@ -35,12 +35,11 @@ public class Hiker extends Trainer{
 					break;
 				}
 			}
-			else
-				if(delay == 5){ // moves forward 1/3rd of updates
-					if(rand.nextInt(3) == 0){
-						moveForward();
-					}
+			else if(delay == 5){ // moves forward 1/3rd of updates
+				if(rand.nextInt(3) == 0){
+					moveForward();
 				}
+			}
 		}
 		super.update();
 	}

@@ -19,8 +19,6 @@ public class Party{
 		}
 	}
 
-	
-
 	// simply selects a pokemon in the party
 	public Pokemon choosePokemon(){
 		Pokemon selectedPokemon = null;
@@ -55,7 +53,6 @@ public class Party{
 				}
 			}
 		}
-		System.out.println("The party has no more usable pokemon.");
 		return true; // no pokemon has hp left
 	}
 

@@ -155,15 +155,19 @@ public abstract class Trainer extends TurnablePiece{
 						selectedPokemon.viewSummary();
 						break;
 					case 2:
-						if(selectedPokemon.getStatus() != Status.FAINTED){
+						if(selectedPokemon.getStatus() == Status.FAINTED){
+							System.out.println(selectedPokemon + " has no HP remaining!");
+							break;
+						}
+						else if(selectedPokemon == currentPokemon){
+							System.out.println(currentPokemon + " is already out!");
+							break;
+						}
+						else{
 							pokemonOnDeck = selectedPokemon;
 							setAction(LostMethods.swapingPokemon);
 							return true;
 						}
-						else{
-							System.out.println(selectedPokemon + " has no HP remaining!");
-						}
-						break;
 					}
 				}
 			}
@@ -177,10 +181,16 @@ public abstract class Trainer extends TurnablePiece{
 		return currentPokemon;
 	}
 
-	public void setCurrentPokemon(Pokemon currentPokemon){
-		this.currentPokemon = currentPokemon;
-		if(currentPokemon == null){ // indicates end of battle
+	public boolean onDeckToCurrent(){
+		if(pokemonOnDeck == null){
+			System.out.println("No pokemon on deck to switch out!");
+			return false;
+		}
+		else{
+			System.out.println(currentPokemon + " has been switched out for " + pokemonOnDeck);
+			currentPokemon = pokemonOnDeck;
 			pokemonOnDeck = null;
+			return true;
 		}
 	}
 
@@ -198,6 +208,16 @@ public abstract class Trainer extends TurnablePiece{
 
 	public void setAction(Action action){
 		this.action = action;
+	}
+
+	public void takeOutFirstPokemon(){ // first pokemon in party is sent out
+		currentPokemon = party.getPokemon(1);
+		pokemonOnDeck = null;
+	}
+
+	public void putAwayAllPokemon(){
+		currentPokemon = null;
+		pokemonOnDeck = null;
 	}
 
 	@Override

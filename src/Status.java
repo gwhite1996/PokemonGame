@@ -88,16 +88,15 @@ public enum Status{
 			System.out.println("Poison type pokemon can't be poisoned!");
 			return false;
 		}
-		else
-			if(pokemon.species.type1 == Type.STEEL || pokemon.species.type2 == Type.STEEL){
-				System.out.println("Steel type pokemon can't be poisoned!");
-				return false;
-			}
-			else{
-				removeStatus(pokemon);
-				pokemon.setStatus(Status.POISONED);
-				return true;
-			}
+		else if(pokemon.species.type1 == Type.STEEL || pokemon.species.type2 == Type.STEEL){
+			System.out.println("Steel type pokemon can't be poisoned!");
+			return false;
+		}
+		else{
+			removeStatus(pokemon);
+			pokemon.setStatus(Status.POISONED);
+			return true;
+		}
 	}
 
 	public static boolean removeStatus(Pokemon pokemon){
@@ -196,7 +195,7 @@ public enum Status{
 	}
 
 	private static void takeEffectOfBurn(Pokemon pokemon){
-		int burnDamage = (int) (((double) pokemon.stats.totalHP) / 8.0);
+		int burnDamage = (int)(((double)pokemon.stats.totalHP) / 8.0);
 		pokemon.stats.hpRemaining -= burnDamage;
 		System.out.println(pokemon + " was hurt for " + burnDamage + " HP by it's burn!");
 	}
@@ -225,7 +224,7 @@ public enum Status{
 	}
 
 	private static void takeEffectOfPoison(Pokemon pokemon){
-		int poisonDamage = (int) (((double) pokemon.stats.totalHP) / 8.0);
+		int poisonDamage = (int)(((double)pokemon.stats.totalHP) / 8.0);
 		pokemon.stats.hpRemaining -= poisonDamage;
 		System.out.println(pokemon + " was hurt by poison for " + poisonDamage + " HP!");
 	}

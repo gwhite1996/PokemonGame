@@ -12,7 +12,7 @@ public class TextPanel extends JPanel{
 	private JLabel message;
 
 	public TextPanel(int frameWidth){
-		panelDimensions = new Dimension(frameWidth, (int) (frameWidth / 4.0)); // Makes frame a little bigger than frameWidth for window edges
+		panelDimensions = new Dimension(frameWidth, (int)(frameWidth / 4.0)); // Makes frame a little bigger than frameWidth for window edges
 		this.setMinimumSize(panelDimensions);
 		this.setMaximumSize(panelDimensions);
 		this.setPreferredSize(panelDimensions);

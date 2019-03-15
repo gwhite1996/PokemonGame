@@ -12,7 +12,7 @@ public class View extends JFrame{
 
 	public View(int frameWidth){
 		super("Pokemon Game Alpha");
-		this.setSize((int) (frameWidth * 1.15), (int) (frameWidth * 1.45));
+		this.setSize((int)(frameWidth * 1.15), (int)(frameWidth * 1.45));
 		this.setLocationRelativeTo(null); // centers window
 		// this.setUndecorated(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

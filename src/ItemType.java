@@ -21,10 +21,9 @@ public class ItemType{ // the type of item. i.e. poke ball, escape rope
 			System.out.println(this + " had no effect on the fainted " + target);
 			return;
 		}
-		else
-			if(target.stats.hpRemaining + hpRestored > target.stats.totalHP){
-				hpRestored = target.stats.totalHP - target.stats.hpRemaining;
-			}
+		else if(target.stats.hpRemaining + hpRestored > target.stats.totalHP){
+			hpRestored = target.stats.totalHP - target.stats.hpRemaining;
+		}
 		target.stats.hpRemaining += hpRestored;
 		System.out.println(target + " was healed for for " + hpRestored + " HP.");
 	}

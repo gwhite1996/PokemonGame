@@ -43,8 +43,8 @@ public class MoveName{ // important to realize this does NOT extend Action
 			calculatedDeffense = target.stats.spDef.getBattleValue();
 		}
 		double modifier = typeEffectiveness * stab * criticalHit; // can be affected by many things
-		int damage = (int) (((((((2 * user.level) / 5) + 2) * this.power * (calculatedAttack / calculatedDeffense))
-				/ 50) + 2) * modifier + 0.5); // formula from bulbapedia
+		int damage = (int)(((((((2 * user.level) / 5) + 2) * this.power * (calculatedAttack / calculatedDeffense)) / 50)
+				+ 2) * modifier + 0.5); // formula from bulbapedia
 		System.out.println(user + " hit " + target + " with " + this + " for " + damage + " damage.");
 		System.out.println(" It was " + typeEffectivenessMessage(typeEffectiveness) + " and STAB was " + stab + "."); // (temporarily here);
 		target.stats.hpRemaining -= damage;
@@ -123,7 +123,7 @@ public class MoveName{ // important to realize this does NOT extend Action
 	}
 
 	public String typeEffectivenessMessage(double typeEffectiveness){
-		switch((int) (typeEffectiveness * 4)){
+		switch((int)(typeEffectiveness * 4)){
 		case 0:
 			return "Not effective at all";
 		case 1:

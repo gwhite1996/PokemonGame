@@ -19,13 +19,13 @@ public abstract class GamePiecePanel extends JPanel{
 	public GamePiecePanel(int gridWidth){
 		imageName = "temporary_image";
 		img = createImage();
-		this.scaleFactor = (double) gridWidth / img.getWidth();
+		this.scaleFactor = (double)gridWidth / img.getWidth();
 	}
 
 	public GamePiecePanel(int gridWidth, String imageName){
 		this.imageName = imageName;
 		img = createImage();
-		this.scaleFactor = (double) gridWidth / img.getWidth();
+		this.scaleFactor = (double)gridWidth / img.getWidth();
 	}
 
 	void update(int x, int y){
@@ -35,7 +35,7 @@ public abstract class GamePiecePanel extends JPanel{
 
 	// the image is scaled and drawn at the correct x and y
 	protected void paintComponent(Graphics g){
-		Graphics2D g2d = (Graphics2D) g;
+		Graphics2D g2d = (Graphics2D)g;
 		AffineTransform at = AffineTransform.getTranslateInstance(xDrawLoc, yDrawLoc);
 		at.scale(scaleFactor, scaleFactor);
 		g2d.drawImage(img, at, null);

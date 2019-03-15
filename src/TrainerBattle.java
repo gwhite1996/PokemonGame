@@ -9,15 +9,38 @@ public class TrainerBattle{
 	public TrainerBattle(Player player, Trainer enemy){
 		this.player = player;
 		this.enemy = enemy;
-		this.player.setCurrentPokemon(this.player.party.getPokemon(1)); // first pokemon in party is sent out
-		this.enemy.setCurrentPokemon(this.enemy.party.getPokemon(1));
-		resetAllStatStages();
+		startBattle();
 		while(!(player.party.allFainted() || enemy.party.allFainted())){
 			fullTurn();
 		}
-		player.setCurrentPokemon(null);
-		enemy.setCurrentPokemon(null);
+		endBattle();
+	}
+
+	public void startBattle(){
+		// todo. opening dialog
+		this.player.takeOutFirstPokemon();
+		this.enemy.takeOutFirstPokemon();
 		resetAllStatStages();
+	}
+
+	public void endBattle(){
+		Trainer winner, loser;
+		player.putAwayAllPokemon();
+		enemy.putAwayAllPokemon();
+		resetAllStatStages();
+		
+		if(player.party.allFainted()){
+			winner = enemy;
+			loser = player;
+		}
+		else{
+			winner = player;
+			loser = enemy;
+		}
+		System.out.println(loser + " has no more usable pokemon!");
+		System.out.println(winner + " is the winner.");
+		// todo. closing dialog
+		// todo. payment to winner
 	}
 
 	private void fullTurn(){ // comprised of a half turn for each pokemon
@@ -60,10 +83,8 @@ public class TrainerBattle{
 		}
 		if(action == LostMethods.swapingPokemon){
 			Pokemon oldUser = user;
-			user = trainer.getPokemonOnDeck();
-			trainer.setCurrentPokemon(user);
-			trainer.setPokemonOnDeck(null);
-			System.out.println(oldUser + " has been switched out for " + user);
+			trainer.onDeckToCurrent();
+			user = trainer.getCurrentPokemon();
 		}
 		else if(user.getStatus() != Status.NONE && user.stats.hpRemaining > 0){ // only swapping the pokemon prevents damage from a status effect
 			Status.takeEffectOfStatusAfterAction(user);
@@ -74,15 +95,13 @@ public class TrainerBattle{
 			}
 			else{
 				trainer.pickPokemonOnDeck(true);
-				trainer.setCurrentPokemon(trainer.getPokemonOnDeck());
-				trainer.setPokemonOnDeck(null);
+				trainer.onDeckToCurrent();
 			}
 		}
 		if(isFainted(target)){
 			if(!opponent.party.allFainted()){
 				opponent.pickPokemonOnDeck(true);
-				opponent.setCurrentPokemon(opponent.getPokemonOnDeck());
-				opponent.setPokemonOnDeck(null);
+				opponent.onDeckToCurrent();
 			}
 			return false; // target cannot carry out half turn if fainted
 		}

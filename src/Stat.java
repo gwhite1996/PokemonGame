@@ -60,10 +60,9 @@ public class Stat{
 		if(stage > 6){
 			stage = 6; // Doesn't change actual value
 		}
-		else
-			if(stage < -6){
-				stage = -6;
-			}
+		else if(stage < -6){
+			stage = -6;
+		}
 		// should probably be a message if the multiplier can't be raised any more
 	}
 
@@ -80,7 +79,7 @@ public class Stat{
 	}
 
 	public int getBattleValue(){
-		return (int) (trueValue * getTotalMultiplier());
+		return (int)(trueValue * getTotalMultiplier());
 	}
 
 	public void printStat(){

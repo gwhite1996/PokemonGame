@@ -17,7 +17,7 @@ public abstract class TurnablePiecePanel extends GamePiecePanel{
 		this.imageName = imageName;
 		this.dir = dir;
 		createDirectionImages();
-		this.scaleFactor = (double) gridWidth / imgNorth.getWidth(); // scale factor changed from that of default temporary_image
+		this.scaleFactor = (double)gridWidth / imgNorth.getWidth(); // scale factor changed from that of default temporary_image
 	}
 
 	void createDirectionImages(){
