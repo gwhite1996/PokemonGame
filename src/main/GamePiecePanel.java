@@ -47,9 +47,10 @@ abstract class GamePiecePanel extends JPanel{
 	BufferedImage createImage(){
 		BufferedImage img = null;
 		try{
-			img = ImageIO.read(new File("images/" + imageName + ".png"));
+			img = ImageIO.read(new File("images/" + imageName + ".png")); // TEMP. should not be relative to where java.exe is called
 		}
 		catch(IOException e){
+			System.out.println("Could not locate file within createImage()");
 		}
 		return img;
 	}
