@@ -1,6 +1,7 @@
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 public class View extends JFrame{
 
@@ -15,7 +16,7 @@ public class View extends JFrame{
 		this.setSize((int)(frameWidth * 1.15), (int)(frameWidth * 1.45));
 		this.setLocationRelativeTo(null); // centers window
 		// this.setUndecorated(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		mainPanel = new JPanel(); // holds the current top panel and text panel
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		textPanel = new TextPanel(frameWidth);

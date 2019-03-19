@@ -195,7 +195,7 @@ public enum Status{
 	}
 
 	private static void takeEffectOfBurn(Pokemon pokemon){
-		int burnDamage = (int)(((double)pokemon.stats.totalHP) / 8.0);
+		int burnDamage = (int)((pokemon.stats.totalHP) / 8.0);
 		pokemon.stats.hpRemaining -= burnDamage;
 		System.out.println(pokemon + " was hurt for " + burnDamage + " HP by it's burn!");
 	}
@@ -224,7 +224,7 @@ public enum Status{
 	}
 
 	private static void takeEffectOfPoison(Pokemon pokemon){
-		int poisonDamage = (int)(((double)pokemon.stats.totalHP) / 8.0);
+		int poisonDamage = (int)((pokemon.stats.totalHP) / 8.0);
 		pokemon.stats.hpRemaining -= poisonDamage;
 		System.out.println(pokemon + " was hurt by poison for " + poisonDamage + " HP!");
 	}

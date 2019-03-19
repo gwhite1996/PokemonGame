@@ -14,6 +14,7 @@ public enum Direction{
 		return name;
 	}
 
+	@Override
 	public String toString(){
 		return getName();
 	}

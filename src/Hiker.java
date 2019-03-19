@@ -14,6 +14,7 @@ public class Hiker extends Trainer{
 		afterBattle = "Good luck out there pussy.";
 	}
 
+	@Override
 	public void update(){
 		if(!getInteracting()){
 			delay = (delay + 1) % 10;

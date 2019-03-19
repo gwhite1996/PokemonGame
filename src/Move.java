@@ -55,6 +55,7 @@ public class Move extends Action{ // a Move in an instance of a moveName. Each
 		System.out.println();
 	}
 
+	@Override
 	public String toString(){
 		return getName();
 	}

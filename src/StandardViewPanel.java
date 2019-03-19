@@ -33,6 +33,7 @@ public class StandardViewPanel extends JPanel{
 		this.repaint();
 	}
 
+	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g); // replaces what was painted before
 		hikerPanel.paintComponent(g);

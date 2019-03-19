@@ -39,9 +39,11 @@ public class Controller{
 		final Controller c = new Controller();
 		EventQueue.invokeLater(new Runnable(){
 
+			@Override
 			public void run(){
 				Timer t = new Timer(DRAWDELAY, new AbstractAction(){
 
+					@Override
 					public void actionPerformed(ActionEvent e){
 						c.update();
 					}

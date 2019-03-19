@@ -169,6 +169,7 @@ public class MoveName{ // important to realize this does NOT extend Action
 		return basePP;
 	}
 
+	@Override
 	public String toString(){
 		return getName();
 	}

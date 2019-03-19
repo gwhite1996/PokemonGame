@@ -50,7 +50,7 @@ public class Battle{
 		}
 	}
 
-	// called each halfturn to check if either current pokemon has fainted
+	// called each halfTurn to check if either current pokemon has fainted
 	public boolean isFainted(Pokemon pokemon){
 		if(pokemon.stats.hpRemaining <= 0){
 			pokemon.stats.hpRemaining = 0;

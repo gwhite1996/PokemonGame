@@ -32,6 +32,7 @@ public class Item{ // a specific instance of an ItemType. Bags contain these
 		return itemType;
 	}
 
+	@Override
 	public String toString(){
 		return itemType.getName();
 	}

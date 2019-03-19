@@ -34,6 +34,7 @@ public abstract class GamePiecePanel extends JPanel{
 	}
 
 	// the image is scaled and drawn at the correct x and y
+	@Override
 	protected void paintComponent(Graphics g){
 		Graphics2D g2d = (Graphics2D)g;
 		AffineTransform at = AffineTransform.getTranslateInstance(xDrawLoc, yDrawLoc);

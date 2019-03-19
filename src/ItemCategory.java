@@ -11,6 +11,7 @@ public enum ItemCategory{
 		this.name = name;
 	}
 
+	@Override
 	public String toString(){
 		return name;
 	}

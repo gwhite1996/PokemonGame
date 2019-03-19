@@ -10,6 +10,7 @@ public abstract class InteractablePiece extends GamePiece implements Interactabl
 		pieceStatus = PieceStatus.TALK_ON_INTERACT; // default
 	}
 
+	@Override
 	public void onInteraction(Player p){
 		// Most GamePieces will do nothing
 	}
