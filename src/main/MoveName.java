@@ -2,7 +2,7 @@ package main;
 
 import java.util.Random;
 
-class MoveName{ // important to realize this does NOT extend Action
+class MoveName { // important to realize this does NOT extend Action
 
 	private String name;
 	private int priority;
@@ -14,7 +14,7 @@ class MoveName{ // important to realize this does NOT extend Action
 	private Random rand = new Random();
 
 	// constructor takes the basic move info
-	MoveName(String name, Type type, MoveCategory moveCategory, int power, int accuracy, int basePP){
+	MoveName(String name, Type type, MoveCategory moveCategory, int power, int accuracy, int basePP) {
 		this.name = name;
 		this.type = type;
 		this.moveCategory = moveCategory;
@@ -25,46 +25,46 @@ class MoveName{ // important to realize this does NOT extend Action
 	}
 
 	// must be overridden for each specific move
-	void useMoveName(Pokemon user, Pokemon target){
+	void useMoveName(Pokemon user, Pokemon target) {
 		System.out.println(this + " doesn't do anything! You must define it's useMove() method");
 	}
 
-	int damageAttack(Pokemon user, Pokemon target){
+	int damageAttack(Pokemon user, Pokemon target) {
 		double typeEffectiveness = Type.typeEffectiveness(this.type, target.species);
 		double stab = Type.stab(this.type, user.species);
 		double criticalHit = criticalHit();
 		// double randomAttackFactor = randomAttackFactor(); //Real Pokemon games include this
 		double calculatedAttack;
 		double calculatedDeffense;
-		if(this.moveCategory == MoveCategory.PHYSICAL){
+		if(this.moveCategory == MoveCategory.PHYSICAL) {
 			calculatedAttack = user.stats.attack.getBattleValue();
 			calculatedDeffense = target.stats.deffense.getBattleValue();
 		}
-		else{
+		else {
 			calculatedAttack = user.stats.spAtk.getBattleValue();
 			calculatedDeffense = target.stats.spDef.getBattleValue();
 		}
 		double modifier = typeEffectiveness * stab * criticalHit; // can be affected by many things
-		int damage = (int)(((((((2 * user.level) / 5) + 2) * this.power * (calculatedAttack / calculatedDeffense)) / 50)
-				+ 2) * modifier + 0.5); // formula from bulbapedia
+		int damage = (int) (((((((2 * user.level) / 5) + 2) * this.power * (calculatedAttack / calculatedDeffense))
+				/ 50) + 2) * modifier + 0.5); // formula from bulbapedia
 		System.out.println(user + " hit " + target + " with " + this + " for " + damage + " damage.");
 		System.out.println(" It was " + typeEffectivenessMessage(typeEffectiveness) + " and STAB was " + stab + "."); // (temporarily here);
 		target.stats.hpRemaining -= damage;
 		return damage; // the return value is only sometimes used
 	}
 
-	void statusAttack(Pokemon user, Pokemon target, Status statusInflicted, int chancePercentage){
+	void statusAttack(Pokemon user, Pokemon target, Status statusInflicted, int chancePercentage) {
 		System.out.println(user + " used " + this + " on " + target);
-		if((chancePercentage / 100d) > rand.nextDouble()){ // most moves only have a certain chance of inflicting the
+		if((chancePercentage / 100d) > rand.nextDouble()) { // most moves only have a certain chance of inflicting the
 															// status
-			if(Status.inflictStatus(target, statusInflicted)){
+			if(Status.inflictStatus(target, statusInflicted)) {
 				System.out.println(" " + target + " is now " + statusInflicted);
 			}
 		}
 	}
 
-	void statAttack(Pokemon user, Pokemon target, String statAffected, int stageIncrease){
-		switch(statAffected){ // IMPORTANT that statAffected is lowercase
+	void statAttack(Pokemon user, Pokemon target, String statAffected, int stageIncrease) {
+		switch(statAffected) { // IMPORTANT that statAffected is lowercase
 		case "attack":
 			target.stats.attack.increaseStage(stageIncrease);
 			break;
@@ -95,24 +95,24 @@ class MoveName{ // important to realize this does NOT extend Action
 		;
 	}
 
-	void healAttack(Pokemon user, int hpRestored){
-		if(user.stats.hpRemaining + hpRestored > user.stats.totalHP){
+	void healAttack(Pokemon user, int hpRestored) {
+		if(user.stats.hpRemaining + hpRestored > user.stats.totalHP) {
 			hpRestored = user.stats.totalHP - user.stats.hpRemaining;
 		}
 		user.stats.hpRemaining += hpRestored;
 		System.out.println(user + " healed itself with " + this + " for " + hpRestored + " HP.");
 	}
 
-	void takeRecoil(Pokemon user, int hpTaken){
-		if(user.stats.hpRemaining - hpTaken < 0){
+	void takeRecoil(Pokemon user, int hpTaken) {
+		if(user.stats.hpRemaining - hpTaken < 0) {
 			hpTaken = user.stats.hpRemaining;
 		}
 		user.stats.hpRemaining -= hpTaken;
 		System.out.println(user + " took " + hpTaken + " damage from recoil.");
 	}
 
-	double criticalHit(){
-		if(rand.nextInt(16) == 0){
+	double criticalHit() {
+		if(rand.nextInt(16) == 0) {
 			System.out.println("  A critical hit!!");
 			return 1.5;
 		}
@@ -120,12 +120,12 @@ class MoveName{ // important to realize this does NOT extend Action
 	}
 
 	// This factor is not included in damage calculation since I don't like the luck involved
-	double randomAttackFactor(){ // gives random number from .85 to 1 (inclusive);
+	double randomAttackFactor() { // gives random number from .85 to 1 (inclusive);
 		return (rand.nextInt(16) + 85) / 100.0;
 	}
 
-	String typeEffectivenessMessage(double typeEffectiveness){
-		switch((int)(typeEffectiveness * 4)){
+	String typeEffectivenessMessage(double typeEffectiveness) {
+		switch((int) (typeEffectiveness * 4)) {
 		case 0:
 			return "Not effective at all";
 		case 1:
@@ -143,36 +143,36 @@ class MoveName{ // important to realize this does NOT extend Action
 		}
 	}
 
-	String getName(){
+	String getName() {
 		return name;
 	}
 
-	Type getType(){
+	Type getType() {
 		return type;
 	}
 
-	MoveCategory getMoveCategory(){
+	MoveCategory getMoveCategory() {
 		return moveCategory;
 	}
 
-	int getPower(){
+	int getPower() {
 		return power;
 	}
 
-	int getAccuracy(){
+	int getAccuracy() {
 		return accuracy;
 	}
 
-	int getPriority(){
+	int getPriority() {
 		return priority;
 	}
 
-	int getBasePP(){
+	int getBasePP() {
 		return basePP;
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return getName();
 	}
 }

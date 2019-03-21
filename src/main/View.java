@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-class View extends JFrame{
+class View extends JFrame {
 
 	private JPanel mainPanel;
 	private TextPanel textPanel;
@@ -13,9 +13,9 @@ class View extends JFrame{
 	// private MainMenuPanel mainMenuPanel;
 	// private BattleViewPanel battleViewPanel;
 
-	View(int frameWidth){
+	View(int frameWidth) {
 		super("Pokemon Game Alpha");
-		this.setSize((int)(frameWidth * 1.15), (int)(frameWidth * 1.45));
+		this.setSize((int) (frameWidth * 1.15), (int) (frameWidth * 1.45));
 		this.setLocationRelativeTo(null); // centers window
 		// this.setUndecorated(true);
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -29,7 +29,7 @@ class View extends JFrame{
 		this.setVisible(true); // necessary to see it
 	}
 
-	void update(Model m){
+	void update(Model m) {
 		standardViewPanel.update(m);
 		textPanel.update(m);
 	}

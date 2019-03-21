@@ -1,6 +1,6 @@
 package main;
 
-class Pokemon{
+class Pokemon {
 
 	private String name;
 	Species species;
@@ -15,7 +15,7 @@ class Pokemon{
 	int statusTurnsRemaining;
 	boolean canAttack;
 
-	Pokemon(String name, Species species){
+	Pokemon(String name, Species species) {
 		this.name = name;
 		this.species = species;
 		canAttack = true;
@@ -26,10 +26,10 @@ class Pokemon{
 		move4 = MoveList.none;
 	}
 
-	void swapMoves(int firstMoveNumber, int secondMoveNumber){
+	void swapMoves(int firstMoveNumber, int secondMoveNumber) {
 		Move firstMove;
 		Move secondMove;
-		switch(firstMoveNumber){
+		switch(firstMoveNumber) {
 		case 1:
 			firstMove = move1;
 			break;
@@ -46,7 +46,7 @@ class Pokemon{
 			System.out.println("Invalid moveNumber in swapMoves()");
 			return;
 		}
-		switch(secondMoveNumber){
+		switch(secondMoveNumber) {
 		case 1:
 			secondMove = move1;
 			break;
@@ -68,7 +68,7 @@ class Pokemon{
 		secondMove = tempMove;
 	}
 
-	boolean hasPPLeft(){ // if false, only struggle can be used
+	boolean hasPPLeft() { // if false, only struggle can be used
 		if(move1.getPPLeft() > 0)
 			return true;
 		if(move2.getPPLeft() > 0)
@@ -80,22 +80,22 @@ class Pokemon{
 		return false;
 	}
 
-	void viewSummary(){
+	void viewSummary() {
 		System.out.println("=======" + this + "'s Summary=======");
 		stats.printStats();
 		System.out.println("====================================");
 	}
 
-	Status getStatus(){
+	Status getStatus() {
 		return status;
 	}
 
-	void setStatus(Status status){
+	void setStatus(Status status) {
 		this.status = status;
 	}
 
-	void setMove(MoveName moveName, int moveNumber){
-		switch(moveNumber){
+	void setMove(MoveName moveName, int moveNumber) {
+		switch(moveNumber) {
 		case 1:
 			move1 = new Move(moveName);
 			break;
@@ -115,7 +115,7 @@ class Pokemon{
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return name;
 	}
 }

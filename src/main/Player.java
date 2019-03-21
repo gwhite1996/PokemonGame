@@ -2,20 +2,20 @@ package main;
 
 import java.awt.event.KeyEvent;
 
-class Player extends Trainer{
+class Player extends Trainer {
 
 	private boolean tryingToInteract; // Indicates the interact button was pressed
 
-	Player(String name, int xStart, int yStart){
+	Player(String name, int xStart, int yStart) {
 		super(name, xStart, yStart);
 		tryingToInteract = false;
 	}
 
 	// If arrow key is pressed, player direction/location is updated
-	void update(KeyEvent userInput){
+	void update(KeyEvent userInput) {
 		Direction moveDirection = null;
 		int key = userInput.getKeyCode();
-		switch(key){
+		switch(key) {
 		case KeyEvent.VK_LEFT:
 			moveDirection = Direction.WEST;
 			break;
@@ -35,22 +35,22 @@ class Player extends Trainer{
 			System.out.println("Invalid key input. In Player");
 			return;
 		}
-		if(moveDirection != null){
-			if(moveDirection == getDirection()){
+		if(moveDirection != null) {
+			if(moveDirection == getDirection()) {
 				moveForward();
 			}
-			else{
+			else {
 				setDirection(moveDirection);
 			}
 		}
 		super.update();// after moving or turning, the space ahead is found
 	}
 
-	boolean getTryingToInteract(){
+	boolean getTryingToInteract() {
 		return tryingToInteract;
 	}
 
-	void setTryingToInteract(boolean tryingToInteract){
+	void setTryingToInteract(boolean tryingToInteract) {
 		this.tryingToInteract = tryingToInteract;
 	}
 }

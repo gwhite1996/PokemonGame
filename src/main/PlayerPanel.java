@@ -1,8 +1,8 @@
 package main;
 
-class PlayerPanel extends TurnablePiecePanel{
+class PlayerPanel extends TurnablePiecePanel {
 
-	PlayerPanel(int gridWidth, Direction dir){
+	PlayerPanel(int gridWidth, Direction dir) {
 		super(gridWidth, "brandon", dir);
 	}
 }

@@ -1,6 +1,6 @@
 package main;
 
-class Move extends Action{ // a Move in an instance of a moveName. Each
+class Move extends Action { // a Move in an instance of a moveName. Each
 							// Pokemon has 4
 
 	private MoveName moveName;
@@ -8,7 +8,7 @@ class Move extends Action{ // a Move in an instance of a moveName. Each
 	private int ppLeft;
 	private boolean disabled;
 
-	Move(MoveName moveName){
+	Move(MoveName moveName) {
 		super(moveName.getName(), moveName.getPriority());
 		this.moveName = moveName;
 		totalPP = moveName.getBasePP();
@@ -16,49 +16,49 @@ class Move extends Action{ // a Move in an instance of a moveName. Each
 		disabled = false;
 	}
 
-	void useMove(Pokemon user, Pokemon target){
+	void useMove(Pokemon user, Pokemon target) {
 		moveName.useMoveName(user, target);
 	}
 
-	MoveName getMoveName(){
+	MoveName getMoveName() {
 		return moveName;
 	}
 
-	int getTotalPP(){
+	int getTotalPP() {
 		return totalPP;
 	}
 
-	void setTotalPP(int totalPP){ // called when PPup is used
+	void setTotalPP(int totalPP) { // called when PPup is used
 		this.totalPP = totalPP;
 	}
 
-	int getPPLeft(){
+	int getPPLeft() {
 		return ppLeft;
 	}
 
-	void setPPLeft(int ppLeft){
+	void setPPLeft(int ppLeft) {
 		this.ppLeft = ppLeft;
 	}
 
-	boolean isDisabled(){
+	boolean isDisabled() {
 		return disabled;
 	}
 
-	void setDisabled(boolean disabled){
+	void setDisabled(boolean disabled) {
 		this.disabled = disabled;
 	}
 
-	void printMove(){
+	void printMove() {
 		System.out.print(this + ": " + moveName.getType() + ", " + moveName.getMoveCategory() + ", PP(" + ppLeft + "/"
 				+ totalPP + "), Power(" + moveName.getPower() + "), Accuracy(" + moveName.getAccuracy() + ")");
-		if(disabled){
+		if(disabled) {
 			System.out.print(", {DISABLED}");
 		}
 		System.out.println();
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return getName();
 	}
 }

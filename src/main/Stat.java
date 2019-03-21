@@ -1,26 +1,26 @@
 package main;
 
 //updated way of doing stats
-class Stat{
+class Stat {
 
 	private String name;
 	private int trueValue;
 	private int stage;
 	private double otherMultipliers;
 
-	Stat(String name, int trueValue){
+	Stat(String name, int trueValue) {
 		this.name = name;
 		this.trueValue = trueValue;
 		stage = 0;
 		otherMultipliers = 1;
 	}
 
-	private double getTotalMultiplier(){
+	private double getTotalMultiplier() {
 		return getStageMultiplier() * otherMultipliers;
 	}
 
-	private double getStageMultiplier(){
-		switch(stage){
+	private double getStageMultiplier() {
+		switch(stage) {
 		case -6:
 			return 2 / 8d;
 		case -5:
@@ -53,44 +53,45 @@ class Stat{
 	}
 
 	// stacks on another multiplier
-	void addMultiplier(double multiplicationFactor){
+	void addMultiplier(double multiplicationFactor) {
 		otherMultipliers *= multiplicationFactor;
 	}
 
-	void increaseStage(int increaseAmount){
+	void increaseStage(int increaseAmount) {
 		stage += increaseAmount;
-		if(stage > 6){
+		if(stage > 6) {
 			stage = 6; // Doesn't change actual value
 		}
-		else if(stage < -6){
-			stage = -6;
-		}
+		else
+			if(stage < -6) {
+				stage = -6;
+			}
 		// should probably be a message if the multiplier can't be raised any more
 	}
 
-	void resetStage(){
+	void resetStage() {
 		stage = 0;
 	}
 
-	int getStage(){
+	int getStage() {
 		return stage;
 	}
 
-	int getTrueValue(){
+	int getTrueValue() {
 		return trueValue;
 	}
 
-	int getBattleValue(){
-		return (int)(trueValue * getTotalMultiplier());
+	int getBattleValue() {
+		return (int) (trueValue * getTotalMultiplier());
 	}
 
-	void printStat(){
+	void printStat() {
 		System.out.println(name + ": Fixed(" + getTrueValue() + "), Stage(" + getStage() + "), Multiplier("
 				+ getTotalMultiplier() + "), Battle Value(" + getBattleValue() + ")");
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return name;
 	}
 }

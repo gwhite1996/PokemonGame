@@ -9,13 +9,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-class TextPanel extends JPanel{
+class TextPanel extends JPanel {
 
 	private Dimension panelDimensions;
 	private JLabel message;
 
-	TextPanel(int frameWidth){
-		panelDimensions = new Dimension(frameWidth, (int)(frameWidth / 4.0)); // Makes frame a little bigger than frameWidth for window edges
+	TextPanel(int frameWidth) {
+		panelDimensions = new Dimension(frameWidth, (int) (frameWidth / 4.0)); // Makes frame a little bigger than frameWidth for window edges
 		this.setMinimumSize(panelDimensions);
 		this.setMaximumSize(panelDimensions);
 		this.setPreferredSize(panelDimensions);
@@ -27,13 +27,13 @@ class TextPanel extends JPanel{
 		this.add(message);
 	}
 
-	void update(Model m){
+	void update(Model m) {
 		message.setText(m.getMessage());
 		this.repaint();
 	}
 
 	@Override
-	protected void paintComponent(Graphics g){
+	protected void paintComponent(Graphics g) {
 		super.paintComponent(g); // replaces what was painted before
 	}
 }

@@ -1,6 +1,6 @@
 package main;
 
-class Stats{
+class Stats {
 
 	int totalHP;
 	int hpRemaining;
@@ -13,7 +13,7 @@ class Stats{
 	Stat evasion;
 
 	// constructor takes the trueValue of each stat
-	Stats(int totalHP, int attack, int deffense, int spAtk, int spDef, int speed){ // all pokemon are hardy nature with 0 EV and IV
+	Stats(int totalHP, int attack, int deffense, int spAtk, int spDef, int speed) { // all pokemon are hardy nature with 0 EV and IV
 		this.totalHP = totalHP;
 		this.attack = new Stat("Attack", attack);
 		this.deffense = new Stat("Deffense", deffense);
@@ -24,7 +24,7 @@ class Stats{
 		evasion = new Stat("Evasion", 100);
 	}
 
-	void resetAllStages(){ // resets each stat back to 0
+	void resetAllStages() { // resets each stat back to 0
 		attack.resetStage();
 		deffense.resetStage();
 		spAtk.resetStage();
@@ -34,7 +34,7 @@ class Stats{
 		evasion.resetStage();
 	}
 
-	void printStats(){
+	void printStats() {
 		System.out.println("......... Stats ..........");
 		System.out.println("HP: (" + hpRemaining + "/" + totalHP + ")");
 		attack.printStat();

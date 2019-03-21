@@ -2,7 +2,7 @@ package main;
 
 import java.util.Random;
 
-enum Status{
+enum Status {
 	ASLEEP,
 	BURNED,
 	FROZEN,
@@ -11,13 +11,13 @@ enum Status{
 	FAINTED,
 	NONE;
 
-	static boolean inflictStatus(Pokemon pokemon, Status status){
-		if(pokemon.getStatus() == status){
+	static boolean inflictStatus(Pokemon pokemon, Status status) {
+		if(pokemon.getStatus() == status) {
 			System.out.println(pokemon + " is already " + status + ".");
 			return false;
 		}
-		else{
-			switch(status){
+		else {
+			switch(status) {
 			case ASLEEP:
 				return Status.putToSleep(pokemon);
 			case BURNED:
@@ -37,7 +37,7 @@ enum Status{
 		}
 	}
 
-	private static boolean putToSleep(Pokemon pokemon){
+	private static boolean putToSleep(Pokemon pokemon) {
 		removeStatus(pokemon);
 		pokemon.setStatus(Status.ASLEEP);
 		pokemon.canAttack = false;
@@ -45,12 +45,12 @@ enum Status{
 		return true;
 	}
 
-	private static boolean burn(Pokemon pokemon){
-		if(pokemon.species.type1 == Type.FIRE || pokemon.species.type2 == Type.FIRE){
+	private static boolean burn(Pokemon pokemon) {
+		if(pokemon.species.type1 == Type.FIRE || pokemon.species.type2 == Type.FIRE) {
 			System.out.println("Fire type pokemon can't be burned!");
 			return false;
 		}
-		else{
+		else {
 			removeStatus(pokemon);
 			pokemon.setStatus(Status.BURNED);
 			pokemon.stats.deffense.addMultiplier(0.5);
@@ -58,12 +58,12 @@ enum Status{
 		}
 	}
 
-	private static boolean freeze(Pokemon pokemon){
-		if(pokemon.species.type1 == Type.ICE || pokemon.species.type2 == Type.ICE){
+	private static boolean freeze(Pokemon pokemon) {
+		if(pokemon.species.type1 == Type.ICE || pokemon.species.type2 == Type.ICE) {
 			System.out.println("Ice type pokemon can't be frozen!");
 			return false;
 		}
-		else{
+		else {
 			removeStatus(pokemon);
 			pokemon.setStatus(Status.FROZEN);
 			pokemon.canAttack = false;
@@ -72,12 +72,12 @@ enum Status{
 		}
 	}
 
-	private static boolean paralyze(Pokemon pokemon){
-		if(pokemon.species.type1 == Type.ELECTRIC || pokemon.species.type2 == Type.ELECTRIC){
+	private static boolean paralyze(Pokemon pokemon) {
+		if(pokemon.species.type1 == Type.ELECTRIC || pokemon.species.type2 == Type.ELECTRIC) {
 			System.out.println("Electric type pokemon can't be paralyzed!");
 			return false;
 		}
-		else{
+		else {
 			removeStatus(pokemon);
 			pokemon.setStatus(Status.PARALYZED);
 			pokemon.stats.speed.addMultiplier(0.25);
@@ -85,25 +85,26 @@ enum Status{
 		}
 	}
 
-	private static boolean poison(Pokemon pokemon){
-		if(pokemon.species.type1 == Type.POISON || pokemon.species.type2 == Type.POISON){
+	private static boolean poison(Pokemon pokemon) {
+		if(pokemon.species.type1 == Type.POISON || pokemon.species.type2 == Type.POISON) {
 			System.out.println("Poison type pokemon can't be poisoned!");
 			return false;
 		}
-		else if(pokemon.species.type1 == Type.STEEL || pokemon.species.type2 == Type.STEEL){
-			System.out.println("Steel type pokemon can't be poisoned!");
-			return false;
-		}
-		else{
-			removeStatus(pokemon);
-			pokemon.setStatus(Status.POISONED);
-			return true;
-		}
+		else
+			if(pokemon.species.type1 == Type.STEEL || pokemon.species.type2 == Type.STEEL) {
+				System.out.println("Steel type pokemon can't be poisoned!");
+				return false;
+			}
+			else {
+				removeStatus(pokemon);
+				pokemon.setStatus(Status.POISONED);
+				return true;
+			}
 	}
 
-	static boolean removeStatus(Pokemon pokemon){
+	static boolean removeStatus(Pokemon pokemon) {
 		Status status = pokemon.getStatus();
-		switch(status){ // special action that must be taken for certain statuses when removed
+		switch(status) { // special action that must be taken for certain statuses when removed
 		case ASLEEP:
 			removeSleep(pokemon);
 			break;
@@ -129,34 +130,34 @@ enum Status{
 		return true;
 	}
 
-	private static void removePoison(Pokemon pokemon){
+	private static void removePoison(Pokemon pokemon) {
 		System.out.println(pokemon + " is no longer poisoned.");
 	}
 
-	private static void removeParalysis(Pokemon pokemon){
+	private static void removeParalysis(Pokemon pokemon) {
 		pokemon.stats.speed.addMultiplier(4);
 		pokemon.canAttack = true;
 		System.out.println(pokemon + "is no longer paralyzed.");
 	}
 
-	private static void removeFreeze(Pokemon pokemon){
+	private static void removeFreeze(Pokemon pokemon) {
 		pokemon.canAttack = true;
 		System.out.println(pokemon + " thawed.");
 	}
 
-	private static void removeBurn(Pokemon pokemon){
+	private static void removeBurn(Pokemon pokemon) {
 		pokemon.stats.deffense.addMultiplier(2);
 		System.out.println(pokemon + " is no longer burned.");
 	}
 
-	private static void removeSleep(Pokemon pokemon){
+	private static void removeSleep(Pokemon pokemon) {
 		pokemon.canAttack = true;
 		System.out.println(pokemon + " woke up.");
 	}
 
 	// the following methods run each turn while the pokemon is affected
-	static void takeEffectOfStatusBeforeAction(Pokemon pokemon){
-		switch(pokemon.getStatus()){
+	static void takeEffectOfStatusBeforeAction(Pokemon pokemon) {
+		switch(pokemon.getStatus()) {
 		case ASLEEP:
 			takeEffectOfSleep(pokemon);
 			break;
@@ -173,8 +174,8 @@ enum Status{
 		}
 	}
 
-	static void takeEffectOfStatusAfterAction(Pokemon pokemon){
-		switch(pokemon.getStatus()){
+	static void takeEffectOfStatusAfterAction(Pokemon pokemon) {
+		switch(pokemon.getStatus()) {
 		case BURNED:
 			takeEffectOfBurn(pokemon);
 			break;
@@ -186,47 +187,47 @@ enum Status{
 		}
 	}
 
-	private static void takeEffectOfSleep(Pokemon pokemon){
-		if(pokemon.statusTurnsRemaining > 0){
+	private static void takeEffectOfSleep(Pokemon pokemon) {
+		if(pokemon.statusTurnsRemaining > 0) {
 			System.out.println(pokemon + " is fast asleep!");
 			pokemon.statusTurnsRemaining--;
 		}
-		else{
+		else {
 			removeSleep(pokemon);
 		}
 	}
 
-	private static void takeEffectOfBurn(Pokemon pokemon){
-		int burnDamage = (int)((pokemon.stats.totalHP) / 8.0);
+	private static void takeEffectOfBurn(Pokemon pokemon) {
+		int burnDamage = (int) ((pokemon.stats.totalHP) / 8.0);
 		pokemon.stats.hpRemaining -= burnDamage;
 		System.out.println(pokemon + " was hurt for " + burnDamage + " HP by it's burn!");
 	}
 
-	private static void takeEffectOfFreeze(Pokemon pokemon){
-		if(pokemon.statusTurnsRemaining > 0){
+	private static void takeEffectOfFreeze(Pokemon pokemon) {
+		if(pokemon.statusTurnsRemaining > 0) {
 			System.out.println(pokemon + " is frozen solid and cannot move!");
-			if(new Random().nextInt(5) == 0){
+			if(new Random().nextInt(5) == 0) {
 				pokemon.statusTurnsRemaining = 0;
 				return; // next turn it will be thawed
 			}
 		}
-		else{
+		else {
 			removeFreeze(pokemon);
 		}
 	}
 
-	private static void takeEffectOfParalysis(Pokemon pokemon){
-		if(new Random().nextInt(4) == 0){
+	private static void takeEffectOfParalysis(Pokemon pokemon) {
+		if(new Random().nextInt(4) == 0) {
 			pokemon.canAttack = false;
 			System.out.println(pokemon + " is paralyzed. It can't move!");
 		}
-		else{
+		else {
 			pokemon.canAttack = true;
 		}
 	}
 
-	private static void takeEffectOfPoison(Pokemon pokemon){
-		int poisonDamage = (int)((pokemon.stats.totalHP) / 8.0);
+	private static void takeEffectOfPoison(Pokemon pokemon) {
+		int poisonDamage = (int) ((pokemon.stats.totalHP) / 8.0);
 		pokemon.stats.hpRemaining -= poisonDamage;
 		System.out.println(pokemon + " was hurt by poison for " + poisonDamage + " HP!");
 	}

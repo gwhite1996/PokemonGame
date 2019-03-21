@@ -1,8 +1,8 @@
 package main;
 
-class TestBattle{
+class TestBattle {
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		System.out.println("By the way args is: >>>>> " + args + " <<<<< of length: " + args.length);
 		Player player = new Player("Player", 1, 1);
 		Trainer mike = new Hiker("Hiker Mike", 4, 4); // arbitrary coordinates

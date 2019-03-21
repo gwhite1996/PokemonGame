@@ -1,6 +1,6 @@
 package main;
 
-enum MoveCategory{
+enum MoveCategory {
 	PHYSICAL("physical"),
 	SPECIAL("special"),
 	STATUS("status"),
@@ -8,12 +8,12 @@ enum MoveCategory{
 
 	private String name;
 
-	private MoveCategory(String name){
+	private MoveCategory(String name) {
 		this.name = name;
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return name;
 	}
 }

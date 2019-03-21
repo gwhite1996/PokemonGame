@@ -6,7 +6,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-class StandardViewPanel extends JPanel{
+class StandardViewPanel extends JPanel {
 
 	// needs to contain a panel for each piece to be displayed
 	private PlayerPanel playerPanel;
@@ -14,7 +14,7 @@ class StandardViewPanel extends JPanel{
 	private int gridWidth;
 	private Dimension panelDimensions;
 
-	StandardViewPanel(int frameWidth){
+	StandardViewPanel(int frameWidth) {
 		panelDimensions = new Dimension(frameWidth, frameWidth);
 		this.setMinimumSize(panelDimensions);
 		this.setMaximumSize(panelDimensions);
@@ -27,7 +27,7 @@ class StandardViewPanel extends JPanel{
 		this.add(playerPanel);
 	}
 
-	void update(Model m){
+	void update(Model m) {
 		hikerPanel.update(m.getHikerMike().getXLoc() * gridWidth, m.getHikerMike().getYLoc() * gridWidth,
 				m.getHikerMike().getDirection());
 		playerPanel.update(m.getPlayer().getXLoc() * gridWidth, m.getPlayer().getYLoc() * gridWidth,
@@ -36,7 +36,7 @@ class StandardViewPanel extends JPanel{
 	}
 
 	@Override
-	protected void paintComponent(Graphics g){
+	protected void paintComponent(Graphics g) {
 		super.paintComponent(g); // replaces what was painted before
 		hikerPanel.paintComponent(g);
 		playerPanel.paintComponent(g);

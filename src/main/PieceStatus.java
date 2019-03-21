@@ -1,6 +1,6 @@
 package main;
 
-enum PieceStatus{
+enum PieceStatus {
 	CANNOT_INTERACT, // at this time
 	LOOKING_TO_TALK,
 	LOOKING_TO_BATTLE,

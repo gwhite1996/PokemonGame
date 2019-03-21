@@ -3,7 +3,7 @@ package main;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-class Model{
+class Model {
 
 	private final int width;
 	private final int height;
@@ -12,7 +12,7 @@ class Model{
 	private String message;
 	private ArrayList<InteractablePiece> interactableList;
 
-	Model(){
+	Model() {
 		this.width = 16;
 		this.height = 16;
 		interactableList = new ArrayList<InteractablePiece>();
@@ -21,15 +21,15 @@ class Model{
 		interactableList.add(hikerMike);
 	}
 
-	void update(KeyEvent userInput){
+	void update(KeyEvent userInput) {
 		player.setTryingToInteract(false);
-		if(userInput != null){
+		if(userInput != null) {
 			player.update(userInput);
 		}
-		if(player.getTryingToInteract()){
-			for(InteractablePiece interactablePiece : interactableList){
+		if(player.getTryingToInteract()) {
+			for(InteractablePiece interactablePiece : interactableList) {
 				if(player.getXAhead() == interactablePiece.getXLoc()
-						&& player.getYAhead() == interactablePiece.getYLoc()){
+						&& player.getYAhead() == interactablePiece.getYLoc()) {
 					interactablePiece.onInteraction(player);
 					interactablePiece.setInteracting(true);
 					player.setInteracting(true); // this pauses (stops the game from updating)
@@ -41,23 +41,23 @@ class Model{
 		hikerMike.update();
 	}
 
-	int getWidth(){
+	int getWidth() {
 		return width;
 	}
 
-	int getHeight(){
+	int getHeight() {
 		return height;
 	}
 
-	String getMessage(){
+	String getMessage() {
 		return message;
 	}
 
-	Player getPlayer(){
+	Player getPlayer() {
 		return player;
 	}
 
-	Hiker getHikerMike(){
+	Hiker getHikerMike() {
 		return hikerMike;
 	}
 }

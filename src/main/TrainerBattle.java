@@ -1,20 +1,20 @@
 package main;
 
-class TrainerBattle extends Battle{
+class TrainerBattle extends Battle {
 
 	private Trainer enemy;
 
-	TrainerBattle(Player player, Trainer enemy){
+	TrainerBattle(Player player, Trainer enemy) {
 		this.player = player;
 		this.enemy = enemy;
 		startBattle();
-		while(!(player.party.allFainted() || enemy.party.allFainted())){
+		while(!(player.party.allFainted() || enemy.party.allFainted())) {
 			fullTurn();
 		}
 		endBattle();
 	}
 
-	void startBattle(){
+	void startBattle() {
 		// todo. opening dialog
 		this.player.takeOutFirstPokemon();
 		this.enemy.takeOutFirstPokemon();
@@ -22,17 +22,17 @@ class TrainerBattle extends Battle{
 		resetAllStatStages(enemy.party);
 	}
 
-	void endBattle(){
+	void endBattle() {
 		Trainer winner, loser;
 		player.putAwayAllPokemon();
 		enemy.putAwayAllPokemon();
 		resetAllStatStages(player.party);
 		resetAllStatStages(enemy.party);
-		if(player.party.allFainted()){
+		if(player.party.allFainted()) {
 			winner = enemy;
 			loser = player;
 		}
-		else{
+		else {
 			winner = player;
 			loser = enemy;
 		}
@@ -42,19 +42,19 @@ class TrainerBattle extends Battle{
 		// todo. payment to winner
 	}
 
-	private void fullTurn(){ // comprised of a half turn for each pokemon
+	private void fullTurn() { // comprised of a half turn for each pokemon
 		player.setAction(LostMethods.none);
 		enemy.setAction(LostMethods.none); // both trainers have their action reset to none
 		selectAction(player);
 		selectAction(enemy);
 		System.out.println("\n******** Turn Results ********");
-		if(playerActsFirst(enemy.getCurrentPokemon(), enemy.getAction())){
-			if(halfTurn(player, enemy)){
+		if(playerActsFirst(enemy.getCurrentPokemon(), enemy.getAction())) {
+			if(halfTurn(player, enemy)) {
 				halfTurn(enemy, player);
 			}
 		}
-		else{
-			if(halfTurn(enemy, player)){
+		else {
+			if(halfTurn(enemy, player)) {
 				halfTurn(player, enemy);
 			}
 		}
@@ -65,57 +65,59 @@ class TrainerBattle extends Battle{
 	}
 
 	// returns false if target faints to prevent the next halfturn
-	private boolean halfTurn(Trainer trainer, Trainer opponent){
+	private boolean halfTurn(Trainer trainer, Trainer opponent) {
 		Pokemon user = trainer.getCurrentPokemon();
 		Pokemon target = opponent.getCurrentPokemon();
 		Action action = trainer.getAction();
-		if(user.getStatus() != Status.NONE){
+		if(user.getStatus() != Status.NONE) {
 			Status.takeEffectOfStatusBeforeAction(user);
 		}
-		if(action instanceof Move){// was always told not to use instanceof!!
-			if(user.canAttack){
-				useMove(user, target, (Move)action);
+		if(action instanceof Move) {// was always told not to use instanceof!!
+			if(user.canAttack) {
+				useMove(user, target, (Move) action);
 			}
 		}
-		else if(action instanceof UsingItem){
-			((UsingItem)action).getItemUsed().use(((UsingItem)action).getTargetPokemon());
-		}
-		if(action == LostMethods.swapingPokemon){
+		else
+			if(action instanceof UsingItem) {
+				((UsingItem) action).getItemUsed().use(((UsingItem) action).getTargetPokemon());
+			}
+		if(action == LostMethods.swapingPokemon) {
 			trainer.onDeckToCurrent();
 			user = trainer.getCurrentPokemon();
 		}
-		else if(user.getStatus() != Status.NONE && user.stats.hpRemaining > 0){ // only swapping the pokemon prevents damage from a status effect
-			Status.takeEffectOfStatusAfterAction(user);
-		}
-		if(isFainted(user)){
-			if(trainer.party.allFainted()){
+		else
+			if(user.getStatus() != Status.NONE && user.stats.hpRemaining > 0) { // only swapping the pokemon prevents damage from a status effect
+				Status.takeEffectOfStatusAfterAction(user);
+			}
+		if(isFainted(user)) {
+			if(trainer.party.allFainted()) {
 				return false;
 			}
-			else{
+			else {
 				trainer.pickPokemonOnDeck(true);
 				trainer.onDeckToCurrent();
 			}
 		}
-		if(isFainted(target)){
-			if(!opponent.party.allFainted()){
+		if(isFainted(target)) {
+			if(!opponent.party.allFainted()) {
 				opponent.pickPokemonOnDeck(true);
 				opponent.onDeckToCurrent();
 			}
 			return false; // target cannot carry out half turn if fainted
 		}
-		else{
+		else {
 			return true;
 		}
 	}
 
 	@Override // disabled the option to run away
-	void selectAction(Trainer trainer){
+	void selectAction(Trainer trainer) {
 		Pokemon user = trainer.getCurrentPokemon();
 		boolean actionHasBeenSelected = false;
-		do{
+		do {
 			System.out.println(
 					"What will " + trainer + " do?\n[1] Fight (" + user + ")\n[2] Bag\n[3] Swap Pokemon\n[4] Run");
-			switch(LostMethods.chooseOption(1, 4)){
+			switch(LostMethods.chooseOption(1, 4)) {
 			case 1:
 				actionHasBeenSelected = trainer.chooseMove();
 				break;

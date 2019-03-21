@@ -1,6 +1,6 @@
 package main;
 
-enum Direction{
+enum Direction {
 	NORTH("north"),
 	EAST("east"),
 	SOUTH("south"),
@@ -8,16 +8,16 @@ enum Direction{
 
 	private String name = null;
 
-	private Direction(String s){
+	private Direction(String s) {
 		name = s;
 	}
 
-	String getName(){
+	String getName() {
 		return name;
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return getName();
 	}
 }
